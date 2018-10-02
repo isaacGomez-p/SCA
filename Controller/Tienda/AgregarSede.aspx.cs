@@ -5,13 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class View_Inventario_AgregarSede : System.Web.UI.Page
+public partial class View_Tienda_AgregarSede : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         GridView1.DataBind();
     }
-    
+
     protected void B_AgregarSede_Click(object sender, EventArgs e)
     {
         Sede sede = new Sede();
@@ -35,7 +35,7 @@ public partial class View_Inventario_AgregarSede : System.Web.UI.Page
 
     }
 
-    
+
     protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName.Equals("Delete"))
@@ -45,6 +45,4 @@ public partial class View_Inventario_AgregarSede : System.Web.UI.Page
             dAO.eliminarSede(id);
         }
     }
-
-    
 }

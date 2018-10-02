@@ -17,6 +17,8 @@
             <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">Olvide la contraseña</asp:LinkButton>
             <br />
             <asp:Button ID="Button1" runat="server" OnClick="B_Login_Click" Text="Ingresar" />
+            <br />
+            <asp:Label ID="L_Aviso" runat="server" Text="..."></asp:Label>
         </div>
     </form>
 </body>
