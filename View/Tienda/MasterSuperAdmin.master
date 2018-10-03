@@ -70,7 +70,7 @@
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton2" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black">Agregar Sede</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton2" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton2_Click">Agregar Sede</asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
@@ -80,7 +80,7 @@
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton4" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black">CRUD Producto</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton4" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton4_Click">CRUD Producto</asp:LinkButton>
                             </td>
                         </tr>
                         <tr>

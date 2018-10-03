@@ -11,4 +11,14 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
     {
 
     }
+
+    protected void LinkButton2_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AgregarSede.aspx");
+    }
+
+    protected void LinkButton4_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("CRUDProducto.aspx");
+    }
 }

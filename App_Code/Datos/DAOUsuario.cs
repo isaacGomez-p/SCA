@@ -326,6 +326,53 @@ public class DAOUsuario
         return sedes;
     }
 
+    public List<Producto> Productos()
+    {
+        DataTable productos = verProductos();
+        
+        List<Producto> referencias = new List<Producto>();
+        foreach (DataRow row in productos.Rows)
+        {
+            Producto producto = new Producto();
+            producto.Idproducto = Convert.ToInt32(row["idproducto"]);
+            producto.ReferenciaProducto = Convert.ToString(row["referenciaproducto"]);
+            producto.Cantidad = Convert.ToInt64(row["cantidad"]);
+            producto.Talla = Convert.ToDouble(row["talla"]);
+            producto.Precio = Convert.ToDouble(row["precio"]);
+            referencias.Add(producto);
+        }
+        return referencias;
+    }
+
+    public List<Producto> pruebaaa()
+    {
+        DataTable productos = verProductos();
+
+        List<Producto> referencias = new List<Producto>();
+        foreach (DataRow row in productos.Rows)
+        {
+            Producto producto = new Producto();
+            
+            producto.ReferenciaProducto = Convert.ToString(row["referenciaproducto"]);
+            producto.Talla = Convert.ToDouble(row["talla"]);
+            producto.Precio = Convert.ToDouble(row["precio"]);
+            referencias.Add(producto);
+        }
+        return referencias;
+    }
+
+    public List<string> ReferenciasProducto()
+    {
+        DataTable productos = verProductos();
+        List<string> referencias = new List<string>();
+        foreach(DataRow row in productos.Rows)
+        {
+            string temp = Convert.ToString(row["referenciaproducto"]);
+            referencias.Add(temp);
+        }
+        return referencias;
+    }
+
     public void eliminarSede(int idsede)
     {
         DataTable a = new DataTable();
@@ -352,6 +399,7 @@ public class DAOUsuario
             }
         }
     }
+
     public void crearProducto(Producto producto)
     {
         DataTable productos = new DataTable();
@@ -362,9 +410,11 @@ public class DAOUsuario
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearproducto", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
             
-            dataAdapter.SelectCommand.Parameters.Add("_nombreproducto", NpgsqlDbType.Text).Value = producto.NombreProducto;
+            dataAdapter.SelectCommand.Parameters.Add("_referenciaproducto", NpgsqlDbType.Text).Value = producto.ReferenciaProducto;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Bigint).Value = producto.Cantidad;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = producto.Talla;
             dataAdapter.SelectCommand.Parameters.Add("_precio", NpgsqlDbType.Double).Value = producto.Precio;
-            dataAdapter.SelectCommand.Parameters.Add("_idsede", NpgsqlDbType.Integer).Value = producto.IdSede;
+            
 
             conection.Open();
             dataAdapter.Fill(productos);
@@ -409,6 +459,67 @@ public class DAOUsuario
         }
         return productos;
 
+    }
+
+    public DataTable verProductosEditar(int refe)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verproductoseditar", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_id", NpgsqlDbType.Integer).Value = refe;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public void editarProducto(Producto producto)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_editarproducto", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_referenciaproducto", NpgsqlDbType.Text).Value = producto.ReferenciaProducto;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Bigint).Value = producto.Cantidad;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = producto.Talla;
+            dataAdapter.SelectCommand.Parameters.Add("_precio", NpgsqlDbType.Double).Value = producto.Precio;
+
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
     }
 
     public void eliminarProducto(int idproducto)
