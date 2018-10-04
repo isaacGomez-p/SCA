@@ -90,7 +90,7 @@
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton6" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black">Asignar </asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton6" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton6_Click">Asignar </asp:LinkButton>
                             </td>
                         </tr>
                         <tr>

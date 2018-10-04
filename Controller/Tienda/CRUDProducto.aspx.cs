@@ -8,6 +8,12 @@ using System.Web.UI.WebControls;
 
 public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
 {
+    String compara
+    {
+        get { return Session["compara"] as String ; }
+        set { Session["compara"] = value;  }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -39,8 +45,8 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
         else
         {
             //-------------------VALIDACIONES AQUI ANTES DE ENVIARLO------------------------//
-            if (referencias.Contains(producto.ReferenciaProducto))
-            {
+            //if (referencias.Contains(producto.ReferenciaProducto))
+            //{
                 dAO.crearProducto(producto);
                 DL_ReferenciaProducto.DataBind();
                 GV_Productos.DataBind();
@@ -52,7 +58,7 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
                 RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Producto registrado exitosamente.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
 
-            }
+            //}
 
         }
     }
@@ -90,7 +96,7 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
 
         }
         }
-
+        Session["compara"] = Convert.ToString(producto.Cantidad);
         TB_EditarReferencia.Text = producto.ReferenciaProducto;
         TB_EditarCantidad.Text = Convert.ToString(producto.Cantidad);
         TB_EditarPrecio.Text = Convert.ToString(producto.Precio);
@@ -105,18 +111,36 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
     {
         DAOUsuario dAO = new DAOUsuario();
         Producto producto = new Producto();
-
-        producto.Idproducto = Convert.ToInt32(DL_EditarTallas.SelectedValue);
+        string comp;
+        producto.Idproducto = Convert.ToInt32(DL_ReferenciaProducto.SelectedValue);
         producto.ReferenciaProducto = TB_EditarReferencia.Text;
         producto.Cantidad = Convert.ToInt64(TB_EditarCantidad.Text);
         producto.Precio = Convert.ToDouble(TB_EditarPrecio.Text);
         producto.Talla = Convert.ToDouble(DL_EditarTallas.SelectedValue);
         //VALIDACIONES //
-        dAO.editarProducto(producto);
-        dAO.crearProducto(producto);
-        DL_ReferenciaProducto.DataBind();
-        B_EditarProducto.Enabled = false;
-        B_Cancelar.Enabled = false;
+        comp = Convert.ToString(Session["compara"]);
+        if (Convert.ToInt32(producto.Cantidad) < Convert.ToInt32(comp))
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('El numero de elementos de esta referencia debe ser mayor o igual a los ya existente.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+        else
+        {
+            dAO.editarProducto(producto);
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Producto editado exitosamente.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+            DL_ReferenciaProducto.DataBind();
+            GV_Productos.DataBind();
+            TB_EditarReferencia.Text = "";
+            TB_EditarCantidad.Text = "";
+            TB_EditarPrecio.Text = "";
+            DL_EditarTallas.SelectedIndex = 0;
+            B_EditarProducto.Enabled = false;
+            B_Cancelar.Enabled = false;
+            Session["compara"] = null;
+        }
     }
 
     protected void B_Cancelar_Click(object sender, EventArgs e)

@@ -313,6 +313,7 @@ public class DAOUsuario
     {
         List <Sede> sedes= new List<Sede>();
         DataTable a = this.verSedes();
+        
         foreach (DataRow r in a.Rows)
         {
             Sede sede = new Sede();
@@ -329,8 +330,8 @@ public class DAOUsuario
     public List<Producto> Productos()
     {
         DataTable productos = verProductos();
-        
         List<Producto> referencias = new List<Producto>();
+
         foreach (DataRow row in productos.Rows)
         {
             Producto producto = new Producto();
@@ -339,6 +340,7 @@ public class DAOUsuario
             producto.Cantidad = Convert.ToInt64(row["cantidad"]);
             producto.Talla = Convert.ToDouble(row["talla"]);
             producto.Precio = Convert.ToDouble(row["precio"]);
+            producto.Entregado = Convert.ToInt32(row["entregado"]);
             referencias.Add(producto);
         }
         return referencias;
@@ -499,7 +501,7 @@ public class DAOUsuario
         {
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_editarproducto", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-
+            dataAdapter.SelectCommand.Parameters.Add("_idproducto", NpgsqlDbType.Integer).Value = producto.Idproducto;
             dataAdapter.SelectCommand.Parameters.Add("_referenciaproducto", NpgsqlDbType.Text).Value = producto.ReferenciaProducto;
             dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Bigint).Value = producto.Cantidad;
             dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = producto.Talla;
@@ -535,6 +537,154 @@ public class DAOUsuario
 
             conection.Open();
             dataAdapter.Fill(a);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public void crearAsignacion(Asignacion asignacion)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearasignacion", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_referencia", NpgsqlDbType.Text).Value = asignacion.Referencia;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Bigint).Value = asignacion.Cantidad;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = asignacion.Talla;
+            dataAdapter.SelectCommand.Parameters.Add("_precio", NpgsqlDbType.Integer).Value = asignacion.Sede;
+
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable verAsignaciones()
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verasignaciones", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public void eliminarAsignacion(int id)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_eliminarasignacion", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_id", NpgsqlDbType.Integer).Value = id;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable validarAsignacion(string a, double b)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_validarasignar", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_referencia", NpgsqlDbType.Text).Value = a;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = b;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public void editarCantidad(int id, int entre)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_editarcantidad", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_idproducto", NpgsqlDbType.Integer).Value = id;
+            dataAdapter.SelectCommand.Parameters.Add("_entregado", NpgsqlDbType.Bigint).Value = entre;
+            
+
+
+            conection.Open();
+            dataAdapter.Fill(productos);
         }
         catch (Exception Ex)
         {

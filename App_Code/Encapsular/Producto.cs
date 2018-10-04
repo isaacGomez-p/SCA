@@ -14,11 +14,19 @@ public class Producto: IEquatable<Producto>
         // TODO: Agregar aquí la lógica del constructor
         //
     }
+
+    public Producto(string _ref, double _talla)
+    {
+        this.ReferenciaProducto = _ref;
+        
+        this.Talla = _talla;
+    }
     private int idproducto;
     private string referenciaProducto;
     private long cantidad;
     private double talla;
     private double precio;
+    private int entregado;
 
 
     public string ReferenciaProducto { get => referenciaProducto; set => referenciaProducto = value; }
@@ -26,6 +34,7 @@ public class Producto: IEquatable<Producto>
     public double Talla { get => talla; set => talla = value; }
     public double Precio { get => precio; set => precio = value; }
     public int Idproducto { get => idproducto; set => idproducto = value; }
+    public int Entregado { get => entregado; set => entregado = value; }
 
     bool IEquatable<Producto>.Equals(Producto other)
     {

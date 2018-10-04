@@ -8,9 +8,9 @@
         .auto-style11 {
             height: 23px;
         }
-        .auto-style12 {
-            text-align: center;
-        }
+    .auto-style12 {
+        text-align: center;
+    }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" Runat="Server">

@@ -21,4 +21,9 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
     {
         Response.Redirect("CRUDProducto.aspx");
     }
+
+    protected void LinkButton6_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Asignar.aspx");
+    }
 }
