@@ -46,6 +46,9 @@
         .auto-style9 {
             color: #000000;
         }
+        .auto-style10 {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -70,27 +73,27 @@
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton2" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton2_Click">Agregar Sede</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton2" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton2_Click" CssClass="auto-style10">Agregar Sede</asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton3" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black">CRUD Admin</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton3" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" CssClass="auto-style10">CRUD Admin</asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton4" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton4_Click">CRUD Producto</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton4" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton4_Click" CssClass="auto-style10">CRUD Producto</asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton5" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black">Reporte Producto</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton5" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" CssClass="auto-style10">Reporte Producto</asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton6" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton6_Click">Asignar </asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton6" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton6_Click" CssClass="auto-style10">Asignar </asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
