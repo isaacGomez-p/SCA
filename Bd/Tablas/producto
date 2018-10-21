@@ -1,0 +1,14 @@
+CREATE TABLE tienda.producto
+(
+    idproducto integer NOT NULL DEFAULT nextval('tienda.producto_idproducto_seq'::regclass),
+    referenciaproducto text COLLATE pg_catalog."default",
+    cantidad bigint,
+    talla double precision,
+    precio double precision,
+    entregado bigint,
+    CONSTRAINT pk_producto PRIMARY KEY (idproducto)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;

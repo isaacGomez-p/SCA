@@ -1,0 +1,5 @@
+CREATE OR REPLACE VIEW tienda.v_asignacion AS
+ SELECT 0 AS idasignacion,
+    ''::text AS sede,
+    '2000-01-01'::date AS fecha,
+    0::boolean AS estado;

@@ -1,0 +1,23 @@
+CREATE OR REPLACE FUNCTION tienda.f_verpedido(
+	)
+    RETURNS SETOF tienda.v_pedido 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+RETURN QUERY
+SELECT 
+uu.idpedido AS idpedido,
+uu.sede AS sede,
+uu.fecha AS fecha,
+uu.estado
+
+FROM tienda.pedido uu
+WHERE estado = false;
+END;
+
+$BODY$;

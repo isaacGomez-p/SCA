@@ -1,0 +1,12 @@
+CREATE TABLE tienda.pedido
+(
+    idpedido integer NOT NULL DEFAULT nextval('tienda.pedido_idpedido_seq'::regclass),
+    sede text COLLATE pg_catalog."default",
+    fecha date,
+    estado boolean,
+    CONSTRAINT pk_pedido PRIMARY KEY (idpedido)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;

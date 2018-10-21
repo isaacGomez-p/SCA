@@ -1,0 +1,5 @@
+CREATE OR REPLACE VIEW tienda.v_sedes AS
+ SELECT 0 AS idsede,
+    ''::text AS nombresede,
+    ''::text AS ciudad,
+    ''::text AS direccion;

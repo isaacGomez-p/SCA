@@ -2,10 +2,12 @@
 
 <!DOCTYPE html>
 
+
+
 <html>
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>SCA: Administrador</title>
+    <title>SCA: Vendedor</title>
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
     <style type="text/css">
@@ -42,10 +44,11 @@
     </style>
 </head>
 <body style="height: 360px">
-    
+    <form id="form2" runat="server">
+    <div>
     <table class="auto-style1">
         <tr>
-            <td class="auto-style13" rowspan="2">
+            <td class="auto-style13" rowspan="2" runat="server">
                 <table class="auto-style2">
                     <tr>
                         <td class="auto-style10">
@@ -67,31 +70,42 @@
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                                <asp:LinkButton ID="LinkButton2" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton2_Click" CssClass="auto-style12">Pedir Productos</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton2" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton2_Click" CssClass="auto-style12">Nueva Venta</asp:LinkButton>
                             </td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
+                        <td class="auto-style10">
+                                <asp:LinkButton ID="LinkVerPedido" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton3_Click" CssClass="auto-style12">AGREGAR CLIENTE</asp:LinkButton>
+                            </td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
+                        <td class="auto-style10">
+                                <asp:LinkButton ID="LinkRecibirPedido" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton3_Click" CssClass="auto-style12">MIS VENTAS</asp:LinkButton>
+                            </td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
+                        <td class="auto-style10">
+                                <asp:LinkButton ID="LinkBodega" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkBodega_Click" CssClass="auto-style12">BODEGA</asp:LinkButton>
+                            </td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
+                        <td class="auto-style10">
+                                <asp:LinkButton ID="LinkBodega0" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkBodega_Click" CssClass="auto-style12">Mis CLientes</asp:LinkButton>
+                            </td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
+                        <td class="auto-style10">
+                                <asp:LinkButton ID="LinkBodega1" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkBodega_Click" CssClass="auto-style12">ABONOS</asp:LinkButton>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td class="auto-style10">
+                            &nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style10">
                             <asp:Button ID="B_CerrarSesion" runat="server" Text="O" />
                         </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
                     </tr>
                 </table>
             </td>
@@ -101,14 +115,16 @@
         </tr>
         <tr>
             <td class="auto-style15">
-                <form id="form1" runat="server">
+                
                     <div>
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                         </asp:ContentPlaceHolder>
                     </div>
-                </form>
+                
             </td>
         </tr>
     </table>
+        </div>
+        </form>
 </body>
 </html>

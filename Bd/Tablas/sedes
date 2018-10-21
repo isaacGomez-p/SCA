@@ -1,0 +1,12 @@
+CREATE TABLE tienda.sedes
+(
+    idsede integer NOT NULL,
+    nombresede text COLLATE pg_catalog."default",
+    ciudad text COLLATE pg_catalog."default",
+    direccion text COLLATE pg_catalog."default",
+    CONSTRAINT pk_sedes PRIMARY KEY (idsede)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;

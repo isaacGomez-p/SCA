@@ -1,0 +1,32 @@
+
+CREATE OR REPLACE FUNCTION tienda.f_crearsede(
+	_id integer,
+	_nombresede text,
+	_ciudad text,
+	_direccion text)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+INSERT INTO tienda.sedes
+(
+idsede,
+nombresede,
+ciudad,
+direccion
+)
+VALUES
+(
+_id,
+_nombresede,
+_ciudad,
+_direccion 
+);
+END
+
+$BODY$;

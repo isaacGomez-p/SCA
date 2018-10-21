@@ -11,4 +11,14 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
     {
 
     }
+
+    protected void LinkButton2_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("NuevaVenta.aspx");
+    }
+
+    protected void LinkBodega_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Bodega");
+    }
 }

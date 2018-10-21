@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION tienda.f_actualizarpedido(
+	_estado boolean,
+	_idpedido integer)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+UPDATE tienda.pedido
+SET estado = _estado
+	WHERE idpedido = _idpedido;
+END
+
+$BODY$;

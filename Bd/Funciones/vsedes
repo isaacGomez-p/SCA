@@ -1,0 +1,23 @@
+CREATE OR REPLACE FUNCTION tienda.f_versedes(
+	)
+    RETURNS SETOF tienda.v_sedes 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+RETURN QUERY
+SELECT
+
+uu.idsede AS idsede,
+uu.nombresede AS nombresede,
+uu.ciudad AS ciudad,
+direccion
+
+FROM tienda.sedes uu;
+END;
+
+$BODY$;

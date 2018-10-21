@@ -1,0 +1,12 @@
+CREATE TABLE tienda.inventario
+(
+    idproducto integer NOT NULL DEFAULT nextval('tienda.inventario_idproducto_seq'::regclass),
+    referencia text COLLATE pg_catalog."default",
+    talla double precision,
+    cantidad integer,
+    sede text COLLATE pg_catalog."default"
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;

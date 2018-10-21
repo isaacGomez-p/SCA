@@ -1,0 +1,6 @@
+CREATE OR REPLACE VIEW tienda.v_inventario AS
+ SELECT 0 AS idproducto,
+    ''::text AS referencia,
+    0::double precision AS talla,
+    0 AS cantidad,
+    ''::text AS sede;

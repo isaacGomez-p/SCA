@@ -551,20 +551,20 @@ public class DAOUsuario
         }
     }
 
-    public void crearAsignacion(Asignacion asignacion)
+    public void crearAsignaciones(Asignacion asignacion, int id)
     {
         DataTable productos = new DataTable();
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
 
         try
         {
-            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearasignacion", conection);
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearasignaciones", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
             dataAdapter.SelectCommand.Parameters.Add("_referencia", NpgsqlDbType.Text).Value = asignacion.Referencia;
-            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Bigint).Value = asignacion.Cantidad;
             dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = asignacion.Talla;
-            dataAdapter.SelectCommand.Parameters.Add("_precio", NpgsqlDbType.Integer).Value = asignacion.Sede;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Integer).Value = asignacion.Cantidad;
+            dataAdapter.SelectCommand.Parameters.Add("_idasignacion", NpgsqlDbType.Integer).Value = id;
 
 
             conection.Open();
@@ -583,7 +583,38 @@ public class DAOUsuario
         }
     }
 
-    public DataTable verAsignaciones()
+    public void crearAsignacion(Asignacion asignacion)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearasignacion", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = asignacion.Sede;
+            dataAdapter.SelectCommand.Parameters.Add("_fecha", NpgsqlDbType.Text).Value = asignacion.Fecha;
+            dataAdapter.SelectCommand.Parameters.Add("_estado", NpgsqlDbType.Boolean).Value = asignacion.Estado;
+
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable verAsignaciones(int id)
     {
         DataTable productos = new DataTable();
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
@@ -592,7 +623,36 @@ public class DAOUsuario
         {
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verasignaciones", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-            
+            dataAdapter.SelectCommand.Parameters.Add("_id", NpgsqlDbType.Integer).Value = id;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public DataTable verAsignacion(string a)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verasignacion", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = a;
 
             conection.Open();
             dataAdapter.Fill(productos);
@@ -698,4 +758,339 @@ public class DAOUsuario
             }
         }
     }
+
+    public void crearPedido(Pedido pedido)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearpedido", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = pedido.Sede;
+            dataAdapter.SelectCommand.Parameters.Add("_fecha", NpgsqlDbType.Text).Value = pedido.Fecha;
+            dataAdapter.SelectCommand.Parameters.Add("_estado", NpgsqlDbType.Boolean).Value = pedido.Estado;
+
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable verPedido()
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verpedido", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public void eliminarPedidos(int id)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_eliminarpedidos", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_id", NpgsqlDbType.Integer).Value = id;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable verUltimoId()
+    {
+        DataTable a = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verultimoid", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+
+            conection.Open();
+            dataAdapter.Fill(a);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return a;
+
+    }
+
+    public DataTable verUltimoId2()
+    {
+        DataTable a = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verultimoid2", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+
+            conection.Open();
+            dataAdapter.Fill(a);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return a;
+
+    }
+
+    public void crearPedidos(Asignacion asignacion, int id)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearpedidos", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+
+            dataAdapter.SelectCommand.Parameters.Add("_referencia", NpgsqlDbType.Text).Value = asignacion.Referencia;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = asignacion.Talla;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Integer).Value = asignacion.Cantidad;
+            dataAdapter.SelectCommand.Parameters.Add("_idpedido", NpgsqlDbType.Integer).Value = id;
+
+
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable verPedidos(int id)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verpedidos", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_id", NpgsqlDbType.Integer).Value = id;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public DataTable actualizarPedido(bool estado, int idpedido)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_actualizarpedido", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_estado", NpgsqlDbType.Boolean).Value = estado;
+            dataAdapter.SelectCommand.Parameters.Add("_idpedido", NpgsqlDbType.Integer).Value = idpedido;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public void crearInventario(Inventario inventario)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearinventario", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+
+            dataAdapter.SelectCommand.Parameters.Add("_referencia", NpgsqlDbType.Text).Value = inventario.Referencia;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = inventario.Talla;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Integer).Value = inventario.Cantidad;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = inventario.Sede;
+                       
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable actualizarAsignacion(bool estado, int idpedido)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_actualizarasignacion", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_estado", NpgsqlDbType.Boolean).Value = estado;
+            dataAdapter.SelectCommand.Parameters.Add("_idasignacion", NpgsqlDbType.Integer).Value = idpedido;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public DataTable verInventario()
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verinventario", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+
+
 }

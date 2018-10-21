@@ -1,0 +1,23 @@
+CREATE OR REPLACE FUNCTION tienda.f_verultimoid2(
+	)
+    RETURNS integer
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+DECLARE 
+val integer;
+BEGIN
+SELECT INTO val max(idasignacion) AS idasignacion
+	FROM tienda.asignacion;
+	IF VAL ISNULL THEN
+		RETURN (0) AS idasignacion;
+	ELSE
+		RETURN (val) AS idasignacion;
+	END IF;
+
+END;
+
+$BODY$;

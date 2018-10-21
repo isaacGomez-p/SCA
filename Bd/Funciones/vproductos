@@ -1,0 +1,25 @@
+CREATE OR REPLACE FUNCTION tienda.f_verproductos(
+	)
+    RETURNS SETOF tienda.v_producto 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+RETURN QUERY
+SELECT
+
+uu.idproducto AS idproducto,
+uu.referenciaproducto AS referenciaproducto,
+uu.cantidad AS cantidad,
+uu.talla AS talla,
+uu.precio AS precio,
+uu.entregado
+
+FROM tienda.producto uu;
+END;
+
+$BODY$;

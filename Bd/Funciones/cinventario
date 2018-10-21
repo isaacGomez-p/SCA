@@ -1,0 +1,44 @@
+CREATE OR REPLACE FUNCTION tienda.f_crearinventario(
+	_referencia text,
+	_talla double precision,
+	_cantidad integer,
+	_sede text)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+IF NOT EXISTS (
+	SELECT referencia,
+		   talla,
+		   sede
+	FROM tienda.inventario
+	WHERE referencia = _referencia AND
+	      talla = _talla AND
+		  sede = _sede)
+THEN
+	INSERT INTO tienda.inventario(
+		referencia, 
+		talla, 
+		cantidad, 
+		sede)
+	VALUES (
+		_referencia, 
+		_talla, 
+		_cantidad, 
+		_sede);
+ELSE 
+	UPDATE tienda.inventario
+	SET 
+		cantidad=(_cantidad + cantidad)
+	WHERE referencia = _referencia AND
+		talla = _talla AND
+		sede = _sede;
+END IF;
+END
+
+$BODY$;

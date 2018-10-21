@@ -1,0 +1,13 @@
+CREATE TABLE tienda.asignaciones
+(
+    idasignaciones integer NOT NULL DEFAULT nextval('tienda.asignaciones_idasignaciones_seq'::regclass),
+    referencia text COLLATE pg_catalog."default",
+    talla double precision,
+    cantidad integer,
+    idasignacion integer,
+    CONSTRAINT pk_asignaciones PRIMARY KEY (idasignaciones)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;

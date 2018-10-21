@@ -16,4 +16,16 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
     {
         Response.Redirect("PedirProductos.aspx");
     }
+
+    protected void LinkButton3_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("RecibirPedido.aspx");
+
+    }
+
+    protected void LinkBodega_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Bodega.aspx");
+
+    }
 }

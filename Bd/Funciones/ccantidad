@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION tienda.f_editarcantidad(
+	_idproducto integer,
+	_entregado bigint)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+UPDATE tienda.producto
+SET entregado = _entregado
+	WHERE idproducto = _idproducto;
+END
+
+$BODY$;

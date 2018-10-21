@@ -1,0 +1,24 @@
+CREATE OR REPLACE FUNCTION tienda.f_crearasignacion(
+	_sede text,
+	_fecha text,
+	_estado boolean)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+INSERT INTO tienda.asignacion(
+	sede, 
+	fecha, 
+	estado)
+	VALUES (
+	_sede,
+	_fecha::date, 
+	_estado);
+END
+
+$BODY$;

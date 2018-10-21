@@ -1,0 +1,33 @@
+CREATE OR REPLACE FUNCTION tienda.f_crearproducto(
+	_referenciaproducto text,
+	_cantidad bigint,
+	_talla double precision,
+	_precio double precision)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+INSERT INTO tienda.producto
+(
+referenciaproducto,
+cantidad,
+talla,
+precio,
+entregado
+)
+VALUES
+(
+_referenciaproducto,
+_cantidad,
+_talla,
+_precio,
+0
+);
+END
+
+$BODY$;

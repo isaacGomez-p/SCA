@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION tienda.f_actualizarasignacion(
+	_estado boolean,
+	_idasignacion integer)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+UPDATE tienda.asignacion
+SET estado = _estado
+	WHERE idasignacion = _idasignacion;
+END
+
+$BODY$;

@@ -1,0 +1,6 @@
+CREATE OR REPLACE VIEW tienda.v_pedidos AS
+ SELECT 0::bigint AS idpedidos,
+    ''::text AS referencia,
+    0::double precision AS talla,
+    0 AS cantidad,
+    0 AS idpedido;

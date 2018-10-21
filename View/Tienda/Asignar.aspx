@@ -25,6 +25,7 @@
         .auto-style16 {
             width: 206px;
             height: 24px;
+            text-align: left;
         }
         .auto-style17 {
             width: 152px;
@@ -77,6 +78,29 @@
             height: 23px;
             text-align: center;
         }
+        .auto-style29 {
+            width: 206px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .auto-style30 {
+            text-align: center;
+        }
+        .auto-style31 {
+            height: 26px;
+            text-align: center;
+        }
+        .auto-style32 {
+            height: 23px;
+            text-align: center;
+        }
+        .auto-style33 {
+            height: 30px;
+            text-align: center;
+        }
+        .auto-style34 {
+            margin-right: 0px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" Runat="Server">
@@ -84,18 +108,18 @@
     <table class="auto-style1">
         <tr>
             <td>&nbsp;</td>
-            <td class="auto-style10">
+            <td class="auto-style29">
                 <asp:Label ID="Label9" runat="server" Text="Productos en bodega."></asp:Label>
             </td>
             <td class="auto-style13">
-                <asp:Label ID="Label10" runat="server" Text="Asignaciones pendientes."></asp:Label>
-            </td>
+                &nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
             <td class="auto-style10">
-                <asp:GridView ID="GV_ProductosBodega" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource4">
+                <div class="auto-style30">
+                <asp:GridView ID="GV_ProductosBodega" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource4" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4">
                     <Columns>
                         <asp:BoundField DataField="ReferenciaProducto" HeaderText="ReferenciaProducto" SortExpression="ReferenciaProducto" />
                         <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" SortExpression="Cantidad" />
@@ -104,149 +128,66 @@
                         <asp:BoundField DataField="Idproducto" HeaderText="Idproducto" SortExpression="Idproducto" />
                         <asp:BoundField DataField="Entregado" HeaderText="Entregado" SortExpression="Entregado" />
                     </Columns>
+                    <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
+                    <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+                    <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+                    <RowStyle BackColor="White" ForeColor="#003399" />
+                    <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                    <SortedAscendingCellStyle BackColor="#EDF6F6" />
+                    <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
+                    <SortedDescendingCellStyle BackColor="#D6DFDF" />
+                    <SortedDescendingHeaderStyle BackColor="#002876" />
                 </asp:GridView>
+                </div>
                 <asp:ObjectDataSource ID="ObjectDataSource4" runat="server" SelectMethod="Productos" TypeName="DAOUsuario"></asp:ObjectDataSource>
             </td>
             <td class="auto-style13">
-                <asp:GridView ID="GV_Pendiente" runat="server">
-                </asp:GridView>
-            </td>
+                &nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style11"></td>
+            <td class="auto-style11">
+                <asp:Label ID="Label10" runat="server" Text="Asignaciones pendientes."></asp:Label>
+                <asp:Label ID="L_CantidadPendientes" runat="server"></asp:Label>
+            </td>
             <td class="auto-style28">
-                <asp:Label ID="Label11" runat="server" Text="Asignar Productos"></asp:Label>
+                <asp:Label ID="Label11" runat="server" Text="Detalle del Pedido"></asp:Label>
             </td>
-            <td class="auto-style14"></td>
+            <td class="auto-style14">
+                &nbsp;</td>
             <td class="auto-style11"></td>
         </tr>
         <tr>
-            <td class="auto-style11"></td>
-            <td class="auto-style12">
-                <asp:Label ID="Label4" runat="server" Text="Referencia"></asp:Label>
-            </td>
-            <td class="auto-style19">
-                <asp:DropDownList ID="DL_ReferenciaProducto" runat="server" DataSourceID="ObjectDataSource2" DataTextField="ReferenciaProducto" DataValueField="Idproducto">
-                </asp:DropDownList>
-                <asp:ObjectDataSource ID="ObjectDataSource2" runat="server" SelectMethod="Productos" TypeName="DAOUsuario"></asp:ObjectDataSource>
-            </td>
-            <td class="auto-style11"></td>
-        </tr>
-        <tr>
-            <td class="auto-style15"></td>
-            <td class="auto-style16">
-                <asp:Label ID="Label5" runat="server" Text="Cantidad"></asp:Label>
-            </td>
-            <td class="auto-style17">
-                <asp:TextBox ID="TB_Cantidad" runat="server" TextMode="Number"></asp:TextBox>
-            </td>
-            <td class="auto-style15"></td>
-        </tr>
-        <tr>
-            <td class="auto-style20"></td>
-            <td class="auto-style21">
-                <asp:Label ID="Label6" runat="server" Text="Talla"></asp:Label>
-            </td>
-            <td class="auto-style22">
-                    <asp:DropDownList ID="DL_Tallas" runat="server" EnableTheming="False">
-                        <asp:ListItem>Seleccione una talla</asp:ListItem>
-                        <asp:ListItem>1</asp:ListItem>
-                        <asp:ListItem>1.5</asp:ListItem>
-                        <asp:ListItem>2</asp:ListItem>
-                        <asp:ListItem>2.5</asp:ListItem>
-                        <asp:ListItem>3</asp:ListItem>
-                        <asp:ListItem>3.5</asp:ListItem>
-                        <asp:ListItem>4</asp:ListItem>
-                        <asp:ListItem>4.5</asp:ListItem>
-                        <asp:ListItem>5</asp:ListItem>
-                        <asp:ListItem>5.5</asp:ListItem>
-                        <asp:ListItem>6</asp:ListItem>
-                        <asp:ListItem>6.5</asp:ListItem>
-                        <asp:ListItem>7</asp:ListItem>
-                        <asp:ListItem>7.5</asp:ListItem>
-                        <asp:ListItem>8</asp:ListItem>
-                        <asp:ListItem>8.5</asp:ListItem>
-                        <asp:ListItem>9</asp:ListItem>
-                        <asp:ListItem>9.5</asp:ListItem>
-                        <asp:ListItem>10</asp:ListItem>
-                        <asp:ListItem>10.5</asp:ListItem>
-                        <asp:ListItem>11</asp:ListItem>
-                        <asp:ListItem>11.5</asp:ListItem>
-                        <asp:ListItem>12</asp:ListItem>
-                    </asp:DropDownList>
-            </td>
-            <td class="auto-style20"></td>
-        </tr>
-        <tr>
-            <td class="auto-style11"></td>
-            <td class="auto-style12">
-                <asp:Label ID="Label7" runat="server" Text="Sede"></asp:Label>
-            </td>
-            <td class="auto-style19">
-                <asp:DropDownList ID="DL_Sedes" runat="server" DataSourceID="ObjectDataSource1" DataTextField="NombreSede" DataValueField="IdSede">
-                </asp:DropDownList>
-                <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="Sedes" TypeName="DAOUsuario"></asp:ObjectDataSource>
-            </td>
-            <td class="auto-style11"></td>
-        </tr>
-        <tr>
-            <td class="auto-style23"></td>
-            <td class="auto-style24">&nbsp;</td>
-            <td class="auto-style18">
-                <asp:Button ID="B_Asignar" runat="server" Text="Asignar" OnClick="B_Asignar_Click" />
-            </td>
-            <td class="auto-style23"></td>
-        </tr>
-        <tr>
-            <td class="auto-style11"></td>
-            <td class="auto-style12">
-                <asp:Label ID="Label8" runat="server" Text="Asignaciones"></asp:Label>
-            </td>
-            <td class="auto-style14"></td>
-            <td class="auto-style11"></td>
-        </tr>
-        <tr>
-            <td class="auto-style25">&nbsp;</td>
-            <td class="auto-style26">
-                <asp:ObjectDataSource ID="ObjectDataSource3" runat="server" SelectMethod="verAsignaciones" TypeName="DAOUsuario"></asp:ObjectDataSource>
-                <asp:GridView ID="GV_Asignaciones" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" DataSourceID="ObjectDataSource3" OnSelectedIndexChanged="GV_Asignaciones_SelectedIndexChanged" PageSize="5" OnRowCommand="GV_Asignaciones_RowCommand" EmptyDataText="No hay asignaciones.">
+            <td class="auto-style11">
+                <asp:GridView ID="GV_Pedido" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" DataSourceID="ObjectDataSource5" OnSelectedIndexChanged="GV_Pedido_SelectedIndexChanged" OnRowCommand="GV_Pedido_RowCommand" PageSize="5">
                     <Columns>
-                        <asp:TemplateField HeaderText="Eliminar" ShowHeader="False">
+                        <asp:TemplateField HeaderText="Seleccionar" ShowHeader="False">
                             <ItemTemplate>
-                                <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Delete" CommandArgument='<%# Bind("idasignacion") %>' Text="Eliminar"></asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Select" Text="Seleccionar" CommandArgument='<%# Bind("idpedido") %>'></asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Referencia">
+                        <asp:TemplateField HeaderText="IdPedido">
                             <EditItemTemplate>
-                                <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("referencia") %>'></asp:TextBox>
+                                <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("idpedido") %>'></asp:TextBox>
                             </EditItemTemplate>
                             <ItemTemplate>
-                                <asp:Label ID="Label1" runat="server" Text='<%# Bind("referencia") %>'></asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Cantidad">
-                            <EditItemTemplate>
-                                <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("cantidad") %>'></asp:TextBox>
-                            </EditItemTemplate>
-                            <ItemTemplate>
-                                <asp:Label ID="Label2" runat="server" Text='<%# Bind("cantidad") %>'></asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Talla">
-                            <EditItemTemplate>
-                                <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("talla") %>'></asp:TextBox>
-                            </EditItemTemplate>
-                            <ItemTemplate>
-                                <asp:Label ID="Label3" runat="server" Text='<%# Bind("talla") %>'></asp:Label>
+                                <asp:Label ID="Label1" runat="server" Text='<%# Bind("idpedido") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Sede">
                             <EditItemTemplate>
-                                <asp:TextBox ID="TextBox4" runat="server" Text='<%# Bind("sede") %>'></asp:TextBox>
+                                <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("sede") %>'></asp:TextBox>
                             </EditItemTemplate>
                             <ItemTemplate>
-                                <asp:Label ID="Label4" runat="server" Text='<%# Bind("sede") %>'></asp:Label>
+                                <asp:Label ID="Label2" runat="server" Text='<%# Bind("sede") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Fecha">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("fecha") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <ItemTemplate>
+                                <asp:Label ID="Label3" runat="server" Text='<%# Bind("fecha") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -260,7 +201,142 @@
                     <SortedDescendingCellStyle BackColor="#D6DFDF" />
                     <SortedDescendingHeaderStyle BackColor="#002876" />
                 </asp:GridView>
+                <asp:ObjectDataSource ID="ObjectDataSource2" runat="server"></asp:ObjectDataSource>
+                <asp:ObjectDataSource ID="ObjectDataSource5" runat="server" SelectMethod="verPedido" TypeName="DAOUsuario"></asp:ObjectDataSource>
+            </td>
+            <td class="auto-style28">
+                <asp:GridView ID="GV_Pedidos" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="Seleccione un pedido para ver su detalle." Width="326px">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Referencia">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("referencia") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <ItemTemplate>
+                                <asp:Label ID="L_Referencia" runat="server" Text='<%# Bind("referencia") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Talla">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("talla") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <ItemTemplate>
+                                <asp:Label ID="L_Talla" runat="server" Text='<%# Bind("talla") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Cantidad">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("Cantidad") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <ItemTemplate>
+                                <asp:Label ID="L_Cantidad" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
+                    <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+                    <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+                    <RowStyle BackColor="White" ForeColor="#003399" />
+                    <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                    <SortedAscendingCellStyle BackColor="#EDF6F6" />
+                    <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
+                    <SortedDescendingCellStyle BackColor="#D6DFDF" />
+                    <SortedDescendingHeaderStyle BackColor="#002876" />
+                </asp:GridView>
+            </td>
+            <td class="auto-style19">
+                &nbsp;</td>
+            <td class="auto-style11"></td>
+        </tr>
+        <tr>
+            <td class="auto-style15"></td>
+            <td class="auto-style16">
+                <asp:Label ID="Label12" runat="server" Text="Label" Visible="False"></asp:Label>
+                <asp:Label ID="Label13" runat="server" Text="Label" Visible="False"></asp:Label>
+                <asp:Label ID="Label14" runat="server" Text="Label" Visible="False"></asp:Label>
+                <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Asignar" />
+            </td>
+            <td class="auto-style17">
+                &nbsp;</td>
+            <td class="auto-style15"></td>
+        </tr>
+        <tr>
+            <td class="auto-style31">
+                &nbsp;</td>
+            <td class="auto-style21">
+            </td>
+            <td class="auto-style22">
+            </td>
+            <td class="auto-style20"></td>
+        </tr>
+        <tr>
+            <td class="auto-style32">
+                <asp:Label ID="Label15" runat="server" Text="Asignación Sin Pedido"></asp:Label>
+            </td>
+            <td class="auto-style12">
+                &nbsp;</td>
+            <td class="auto-style19">
+                &nbsp;</td>
+            <td class="auto-style11"></td>
+        </tr>
+        <tr>
+            <td class="auto-style33">
+                <asp:GridView ID="GV_AsignarSinPedido" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" CssClass="auto-style34" DataSourceID="ObjectDataSource1" PageSize="5">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Referencia">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("ReferenciaProducto") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <ItemTemplate>
+                                <asp:Label ID="L_Referencia" runat="server" Text='<%# Bind("ReferenciaProducto") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Talla">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("Talla") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <ItemTemplate>
+                                <asp:Label ID="L_Talla" runat="server" Text='<%# Bind("Talla") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Cantidad">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                            </EditItemTemplate>
+                            <ItemTemplate>
+                                <asp:TextBox ID="TB_Cantidad" runat="server" TextMode="Number">0</asp:TextBox>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
+                    <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+                    <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+                    <RowStyle BackColor="White" ForeColor="#003399" />
+                    <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                    <SortedAscendingCellStyle BackColor="#EDF6F6" />
+                    <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
+                    <SortedDescendingCellStyle BackColor="#D6DFDF" />
+                    <SortedDescendingHeaderStyle BackColor="#002876" />
+                </asp:GridView>
+                <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="Productos" TypeName="DAOUsuario"></asp:ObjectDataSource>
+            </td>
+            <td class="auto-style24">&nbsp;</td>
+            <td class="auto-style18">
+                &nbsp;</td>
+            <td class="auto-style23"></td>
+        </tr>
+        <tr>
+            <td class="auto-style32">
+                <asp:Button ID="B_Asignar" runat="server" OnClick="B_Asignar_Click" Text="Asignar" />
+            </td>
+            <td class="auto-style12">
                 </td>
+            <td class="auto-style14"></td>
+            <td class="auto-style11"></td>
+        </tr>
+        <tr>
+            <td class="auto-style25">&nbsp;</td>
+            <td class="auto-style26">
+                &nbsp;</td>
             <td class="auto-style27"></td>
             <td class="auto-style25"></td>
         </tr>

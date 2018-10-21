@@ -1,0 +1,23 @@
+CREATE OR REPLACE FUNCTION tienda.f_verasignacion(
+	_sede text)
+    RETURNS SETOF tienda.v_asignacion 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+RETURN QUERY
+
+SELECT idasignacion, 
+sede,
+fecha,
+estado
+FROM tienda.asignacion
+WHERE sede = _sede AND estado = false;
+
+END;
+
+$BODY$;

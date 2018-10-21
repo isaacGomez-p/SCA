@@ -1,0 +1,6 @@
+CREATE OR REPLACE VIEW tienda.v_asignaciones AS
+ SELECT 0 AS idasignaciones,
+    ''::text AS referencia,
+    0::double precision AS talla,
+    0 AS cantidad,
+    0 AS idasignacion;
