@@ -1,0 +1,42 @@
+CREATE OR REPLACE FUNCTION usuario.f_editar_usuario(
+	_cedula integer,
+	_nombre text,
+	_clave text,
+	_direccion text,
+	_telefono integer,
+	_sexo text,
+	_sede text,
+	_correo text,
+	_estado integer,
+	_session text,
+	_rol_id integer,
+	_last_modified timestamp without time zone)
+    RETURNS void
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+	
+BEGIN	
+UPDATE usuario.usuario 
+SET cedula = _cedula,
+	nombre = _nombre,
+	clave = _clave,
+	direccion = _direccion,
+	telefono = _telefono,
+	sexo = _sexo,
+	sede = _sede,
+	correo = _correo,
+	estado = _estado,
+	session = _session,
+	rol_id = _rol_id,
+	last_modified = _last_modified
+	
+	where cedula = _cedula;
+
+END
+
+$BODY$;
+

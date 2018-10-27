@@ -112,7 +112,7 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
             pedido.Sede = "Faca";
             pedido.Fecha = fechaHoy.ToString("d");
             pedido.Estado = false;
-            dao.crearPedido(pedido);
+            //dao.crearPedido(pedido);
 
             DataTable id = new DataTable();
             id = dao.verUltimoId();

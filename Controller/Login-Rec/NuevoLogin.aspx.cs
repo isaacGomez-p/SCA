@@ -54,6 +54,8 @@ public partial class View_NuevoLogin : System.Web.UI.Page
         {
             Session["clave"] = data.Rows[0]["clave"].ToString();
             Session["user_id"] = data.Rows[0]["cedula"].ToString();
+            Session["nombre"] = data.Rows[0]["nombre"].ToString();
+            Session["sede"] = data.Rows[0]["sede"].ToString();
 
             EUsuario datosUsuario = new EUsuario();
             MAC datosConexion = new MAC();
@@ -69,9 +71,20 @@ public partial class View_NuevoLogin : System.Web.UI.Page
             Session["user"] = datosUsuario;
             guardarUsuario.guardadoSession(datosUsuario);
             if (datosUsuario.RolId == 1)
-                Response.Redirect("Administrador.aspx");
-            else
-                Response.Redirect("MenuAdmin.aspx");
+            {
+                Response.Redirect("~/View/Tienda/AgregarSede.aspx");
+            }
+
+            if (datosUsuario.RolId == 2)
+            {
+                Response.Redirect("~/View/Tienda/CRUDProducto.aspx");
+            }
+
+            if (datosUsuario.RolId == 3)
+            {
+                Response.Redirect("~/View/Tienda/CRUDCliente.aspx");
+            }
+
         }
     }
 

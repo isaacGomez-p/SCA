@@ -1,0 +1,39 @@
+CREATE OR REPLACE FUNCTION tienda.f_crearsede(
+	_nombresede text,
+	_ciudad text,
+	_direccion text)
+    RETURNS boolean
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+DECLARE 
+val  boolean;
+BEGIN
+IF NOT EXISTS (SELECT * FROM tienda.sedes WHERE  UPPER(ciudad) = UPPER(_ciudad))
+THEN
+	INSERT INTO tienda.sedes
+	(
+	
+	nombresede,
+	ciudad,
+	direccion,
+	estado
+	)
+	VALUES
+	(
+	
+	UPPER(_nombresede),
+	UPPER(_ciudad),
+	_direccion,
+	true
+	);
+	RETURN true;
+	ELSE
+		RETURN false;
+	END IF;
+END
+
+$BODY$;

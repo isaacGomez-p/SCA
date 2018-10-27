@@ -1,0 +1,55 @@
+CREATE OR REPLACE FUNCTION usuario.f_insertar_usuario(
+	_cedula integer,
+	_nombre text,
+	_clave text,
+	_direccion text,
+	_telefono integer,
+	_sexo text,
+	_sede text,
+	_correo text,
+	_estado integer,
+	_session text,
+	_rol_id integer,
+	_last_modified timestamp without time zone)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+INSERT INTO usuario.usuario
+(
+cedula,
+nombre,
+clave,
+direccion,
+telefono,
+sexo,
+sede,
+correo,
+estado,
+session,
+rol_id,
+last_modified
+)
+VALUES
+(
+_cedula,
+_nombre,
+_clave,
+_direccion,
+_telefono,
+_sexo,
+_sede,
+_correo,
+_estado,
+_session,
+_rol_id,
+_last_modified
+);
+END
+
+$BODY$;

@@ -9,7 +9,8 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        Label_Usuario.Text = Session["nombre"].ToString();
+        L_Sede.Text = Session["sede"].ToString();
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)
@@ -25,5 +26,15 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
     protected void LinkButton6_Click(object sender, EventArgs e)
     {
         Response.Redirect("Asignar.aspx");
+    }
+
+    protected void B_CerrarSesion_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void LinkButton3_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("CRUDAdmin.aspx");
     }
 }

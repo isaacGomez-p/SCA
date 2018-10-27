@@ -1,0 +1,19 @@
+CREATE TABLE tienda.ventas
+(
+    id bigint NOT NULL DEFAULT nextval('tienda.ventas_id_seq'regclass),
+    nombre text COLLATE pg_catalog.default,
+    apellido text COLLATE pg_catalog.default,
+    productos json,
+    vendedor text COLLATE pg_catalog.default,
+    sede text COLLATE pg_catalog.default,
+    fecha timestamp without time zone,
+    precio double precision,
+    CONSTRAINT id PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE tienda.ventas
+    OWNER to postgres;

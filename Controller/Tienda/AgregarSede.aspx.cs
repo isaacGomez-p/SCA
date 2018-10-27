@@ -16,14 +16,26 @@ public partial class View_Tienda_AgregarSede : System.Web.UI.Page
     {
         Sede sede = new Sede();
         DAOUsuario dAO = new DAOUsuario();
-        sede.IdSede = Convert.ToInt32(DL_Ciudad.SelectedValue);
+        
         sede.NombreSede = TB_NombreSede.Text;
-        sede.Ciudad = Convert.ToString(DL_Ciudad.SelectedItem);
+        sede.Ciudad = TB_Ciudad.Text;
         sede.Direccion = TB_Direccion.Text;
 
-        dAO.crearSede(sede);
+        if (dAO.crearSede(sede) == true)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Sede creada exitosamente. ');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+        else
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ya hay una sede en esta ciudad.  ');</script>");
+            return;
+#pragma warning restore CS0618 // Type or member is obsolete
+        };
 
-        DL_Ciudad.SelectedIndex = 0;
+        TB_Ciudad.Text = "";
         TB_NombreSede.Text = "";
         TB_Direccion.Text = "";
         GridView1.DataBind();

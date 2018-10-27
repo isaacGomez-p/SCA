@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION usuario.f_obtener_usuarios_solo(
+	)
+    RETURNS SETOF usuario.usuario 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+	
+	BEGIN
+		RETURN QUERY
+			SELECT
+				*
+			FROM
+				usuario.usuario;
+			
+	END
+
+$BODY$;

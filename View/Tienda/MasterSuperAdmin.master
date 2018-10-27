@@ -66,6 +66,8 @@
                         <tr>
                             <td class="auto-style5">
                                 <asp:Label ID="Label_Usuario" runat="server" Font-Size="Medium" CssClass="auto-style9"></asp:Label>
+                                <br />
+                                <asp:Label ID="L_Sede" runat="server" CssClass="auto-style9" Text="Sede"></asp:Label>
                             </td>
                         </tr>
                         <tr>
@@ -78,7 +80,7 @@
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:LinkButton ID="LinkButton3" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" CssClass="auto-style10">CRUD Admin</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton3" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" CssClass="auto-style10" OnClick="LinkButton3_Click">CRUD Admin</asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
@@ -101,7 +103,7 @@
                         </tr>
                         <tr>
                             <td class="auto-style5">
-                                <asp:Button ID="B_CerrarSesion" runat="server" Text="O" Width="23px" />
+                                <asp:Button ID="B_CerrarSesion" runat="server" Text="O" Width="23px" OnClick="B_CerrarSesion_Click" />
                             </td>
                         </tr>
                     </table>

@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterSuperAdmin.master" AutoEventWireup="true" CodeFile="~/Controller/Tienda/AgregarSede.aspx.cs" Inherits="View_Tienda_AgregarSede" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <style type="text/css">
+        .auto-style11 {
+            height: 30px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" Runat="Server">
     <div>
@@ -21,15 +26,7 @@
                         <asp:Label ID="Ciudad" runat="server" Text="Ciudad:"></asp:Label>
                     </td>
                     <td>
-                        <asp:DropDownList ID="DL_Ciudad" runat="server">
-                            <asp:ListItem Selected="True" Value="0">Seleccione un elemento</asp:ListItem>
-                            <asp:ListItem Value="1">Bogotá</asp:ListItem>
-                            <asp:ListItem Value="2">Medellín</asp:ListItem>
-                            <asp:ListItem Value="3">Boyacá</asp:ListItem>
-                            <asp:ListItem Value="4">Barranquilla</asp:ListItem>
-                            <asp:ListItem Value="5">Cartagena</asp:ListItem>
-                            <asp:ListItem Value="6">San Andrés</asp:ListItem>
-                        </asp:DropDownList>
+                        <asp:TextBox ID="TB_Ciudad" runat="server"></asp:TextBox>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -44,12 +41,12 @@
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>
+                    <td class="auto-style11"></td>
+                    <td class="auto-style11"></td>
+                    <td class="auto-style11">
                         <asp:Button ID="B_AgregarSede" runat="server" OnClick="B_AgregarSede_Click" Text="Agregar" />
                     </td>
-                    <td>&nbsp;</td>
+                    <td class="auto-style11"></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

@@ -63,15 +63,15 @@
         height: 30px;
     }
         .auto-style25 {
-            height: 264px;
+            height: 89px;
         }
         .auto-style26 {
             width: 206px;
-            height: 264px;
+            height: 89px;
         }
         .auto-style27 {
             width: 152px;
-            height: 264px;
+            height: 89px;
         }
         .auto-style28 {
             width: 206px;
@@ -100,6 +100,10 @@
         }
         .auto-style34 {
             margin-right: 0px;
+        }
+        .auto-style35 {
+            height: 89px;
+            text-align: center;
         }
     </style>
 </asp:Content>
@@ -326,17 +330,22 @@
         </tr>
         <tr>
             <td class="auto-style32">
-                <asp:Button ID="B_Asignar" runat="server" OnClick="B_Asignar_Click" Text="Asignar" />
+                <asp:Label ID="Label16" runat="server" Text="Sede"></asp:Label>
             </td>
-            <td class="auto-style12">
+            <td class="auto-style28">
+                <asp:DropDownList ID="DL_Sedes" runat="server" DataSourceID="ObjectDataSource3" DataTextField="NombreSede" DataValueField="NombreSede" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
+                </asp:DropDownList>
+                <asp:ObjectDataSource ID="ObjectDataSource3" runat="server" SelectMethod="Sedes" TypeName="DAOUsuario"></asp:ObjectDataSource>
                 </td>
             <td class="auto-style14"></td>
             <td class="auto-style11"></td>
         </tr>
         <tr>
-            <td class="auto-style25">&nbsp;</td>
+            <td class="auto-style35">
+                <asp:Button ID="B_Asignar" runat="server" OnClick="B_Asignar_Click" Text="Asignar" />
+            </td>
             <td class="auto-style26">
-                &nbsp;</td>
+                </td>
             <td class="auto-style27"></td>
             <td class="auto-style25"></td>
         </tr>

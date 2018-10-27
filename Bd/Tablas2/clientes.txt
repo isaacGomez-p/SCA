@@ -1,0 +1,17 @@
+CREATE TABLE tienda.cliente
+(
+    cedula integer NOT NULL,
+    nombre character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    apellido character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    direccion character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    telefono integer NOT NULL,
+    sexo character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT id_cedula PRIMARY KEY (cedula)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE tienda.cliente
+    OWNER to postgres;

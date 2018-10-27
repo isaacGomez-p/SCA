@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION tienda.f_obtener_abonos_solo(
+	)
+    RETURNS SETOF tienda.abonos 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+	
+	BEGIN
+		RETURN QUERY
+			SELECT
+				*
+			FROM
+				tienda.abonos;
+			
+	END
+
+$BODY$;

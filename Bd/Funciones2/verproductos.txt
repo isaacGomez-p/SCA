@@ -1,0 +1,23 @@
+CREATE OR REPLACE FUNCTION tienda.f_obtener_productoss_solo(
+	_sede text)
+    RETURNS SETOF tienda.asignaciones 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+	
+	BEGIN
+		RETURN QUERY
+			SELECT
+				*
+			FROM
+				tienda.asignaciones
+			WHERE
+				sede = _sede;
+			
+	END
+
+$BODY$;

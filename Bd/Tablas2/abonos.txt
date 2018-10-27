@@ -1,0 +1,20 @@
+CREATE TABLE tienda.abonos
+(
+    id bigint NOT NULL DEFAULT nextval('tienda.abonos_id_seq'::regclass),
+    nombre text COLLATE pg_catalog."default",
+    apellido text COLLATE pg_catalog."default",
+    productos json,
+    vendedor text COLLATE pg_catalog."default",
+    sede text COLLATE pg_catalog."default",
+    fecha timestamp without time zone,
+    abono double precision,
+    saldo double precision,
+    CONSTRAINT abonos_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE tienda.abonos
+    OWNER to postgres;

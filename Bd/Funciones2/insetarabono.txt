@@ -1,0 +1,43 @@
+CREATE OR REPLACE FUNCTION tienda.f_insertar_abono(
+	_nombre text,
+	_apellido text,
+	_productos json,
+	_vendedor text,
+	_sede text,
+	_fecha timestamp without time zone,
+	_abono double precision,
+	_saldo double precision)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+	begin
+		INSERT INTO tienda.abonos
+		(
+			nombre,
+			apellido,
+			productos,
+			vendedor,
+			sede,
+			fecha,
+			abono,
+			saldo
+		)
+		VALUES 
+		(
+			_nombre,
+			_apellido,
+			_productos,
+			_vendedor,
+			_sede,
+			_fecha,
+			_abono,
+			_saldo
+		);
+	end
+
+$BODY$;

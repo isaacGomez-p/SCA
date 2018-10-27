@@ -80,8 +80,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                             DateTime fechaHoy = DateTime.Now;
                             asignacion.Fecha = fechaHoy.ToString("d");
                             asignacion.Estado = false;
-                            //aqui agrega la sede
-                            asignacion.Sede = "Faca";
+                            asignacion.Sede = DL_Sedes.SelectedValue;
                             if (cont == 1)
                             {
                                 d.crearAsignacion(asignacion);
@@ -275,5 +274,10 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 
 
 
-   
+
+
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
 }

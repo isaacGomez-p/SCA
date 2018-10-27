@@ -1,0 +1,37 @@
+CREATE OR REPLACE FUNCTION tienda.f_insertar_cliente(
+	_cedula integer,
+	_nombre text,
+	_apellido text,
+	_direccion text,
+	_telefono integer,
+	_sexo text)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+BEGIN
+INSERT INTO tienda.cliente
+(
+cedula,
+nombre,
+apellido,
+direccion,
+telefono,
+sexo
+)
+VALUES
+(
+_cedula,
+_nombre,
+_apellido,
+_direccion,
+_telefono,
+_sexo
+);
+END
+
+$BODY$;

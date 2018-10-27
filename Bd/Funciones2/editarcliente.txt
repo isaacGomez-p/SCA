@@ -1,0 +1,29 @@
+CREATE OR REPLACE FUNCTION tienda.f_editar_cliente(
+	_cedula integer,
+	_nombre text,
+	_apellido text,
+	_direccion text,
+	_telefono integer,
+	_sexo text)
+    RETURNS void
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+	
+BEGIN	
+UPDATE tienda.cliente 
+SET cedula = _cedula,
+	nombre = _nombre,
+	apellido = _apellido,
+	direccion = _direccion,
+	telefono = _telefono,
+	sexo = _sexo
+	
+	where cedula = _cedula;
+
+END
+
+$BODY$;

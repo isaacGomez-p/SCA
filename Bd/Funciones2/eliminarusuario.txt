@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION usuario.eliminar_usuario(
+	_cedula integer)
+    RETURNS void
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+BEGIN
+DELETE FROM usuario.usuario where cedula = _cedula;
+END
+
+$BODY$;

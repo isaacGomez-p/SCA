@@ -9,7 +9,8 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        Label_usuario.Text = Session["nombre"].ToString();
+        Label_Sede.Text = Session["sede"].ToString();
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)

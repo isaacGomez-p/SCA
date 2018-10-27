@@ -1,0 +1,40 @@
+CREATE OR REPLACE FUNCTION tienda.f_insertar_venta(
+	_nombre text,
+	_apellido text,
+	_productos json,
+	_vendedor text,
+	_sede text,
+	_fecha timestamp without time zone,
+	_precio double precision)
+    RETURNS SETOF void 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+	begin
+		INSERT INTO tienda.ventas
+		(
+			nombre,
+			apellido,
+			productos,
+			vendedor,
+			sede,
+			fecha,
+			precio
+		)
+		VALUES 
+		(
+			_nombre,
+			_apellido,
+			_productos,
+			_vendedor,
+			_sede,
+			_fecha,
+			_precio
+		);
+	end
+
+$BODY$;

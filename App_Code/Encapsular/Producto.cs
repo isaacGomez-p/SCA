@@ -38,8 +38,7 @@ public class Producto: IEquatable<Producto>
 
     bool IEquatable<Producto>.Equals(Producto other)
     {
-        if(this.ReferenciaProducto == other.ReferenciaProducto && this.Talla == other.Talla 
-            && this.Precio == other.Precio && this.Idproducto == other.Idproducto && this.Cantidad == other.Cantidad)
+        if(this.ReferenciaProducto == other.ReferenciaProducto && this.Talla == other.Talla )
         {
             return true;
         }
