@@ -204,7 +204,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                             asignacion.Fecha = fechaHoy.ToString("d");
                             asignacion.Estado = false;
                             //aqui agrega la sede
-                            asignacion.Sede = "Faca";
+                            asignacion.Sede = Convert.ToString(Session["sede"]);
                             if (cont == 1)
                             {
                                 d.crearAsignacion(asignacion);

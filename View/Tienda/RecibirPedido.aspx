@@ -37,7 +37,7 @@
         <tr>
             <td class="auto-style21">&nbsp;</td>
             <td class="auto-style18">
-                <asp:GridView ID="GV_Asignacion" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="Actualice para ver las asignaciones de su sede." OnRowCommand="GV_Asignacion_RowCommand" PageSize="5" OnPageIndexChanging="GV_Asignacion_PageIndexChanging">
+                <asp:GridView ID="GV_Asignacion" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="Actualice para ver las asignaciones de su sede." OnRowCommand="GV_Asignacion_RowCommand" PageSize="5" OnPageIndexChanging="GV_Asignacion_PageIndexChanging" OnSelectedIndexChanged="GV_Asignacion_SelectedIndexChanged">
                     <Columns>
                         <asp:TemplateField ShowHeader="False">
                             <ItemTemplate>

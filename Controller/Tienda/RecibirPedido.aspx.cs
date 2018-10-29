@@ -150,4 +150,9 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
 
         }
     }
+
+    protected void GV_Asignacion_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
 }

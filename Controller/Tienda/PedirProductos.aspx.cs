@@ -60,7 +60,6 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
                     Session["pedidos"] = pedidos;
 #pragma warning disable CS0618 // Type or member is obsolete
                     RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Productos agregados al pedido" + asignacion.Cantidad + asignacion.Referencia + asignacion.Talla + "');</script>");
-
 #pragma warning restore CS0618 // Type or member is obsolete
                 }
                 else
@@ -106,10 +105,10 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
         DateTime fechaHoy = DateTime.Now;
         pedidos = (List<Asignacion>) Session["pedidos"];
         
-        //aqui agrega la sede
+        
         if(Session["pedidos"] != null)
-        { 
-            pedido.Sede = "Faca";
+        {
+            pedido.Sede = Convert.ToString(Session["sede"]);
             pedido.Fecha = fechaHoy.ToString("d");
             pedido.Estado = false;
             //dao.crearPedido(pedido);

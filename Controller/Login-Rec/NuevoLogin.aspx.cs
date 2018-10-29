@@ -49,11 +49,13 @@ public partial class View_NuevoLogin : System.Web.UI.Page
     {
         DAOUsuario guardarUsuario = new DAOUsuario();
         DataTable data = guardarUsuario.loggin(TB_Cedula.Text.ToString(), TB_Clave.Text.ToString());
-
+        
         if (int.Parse(data.Rows[0]["cedula"].ToString()) > 0)
         {
             Session["clave"] = data.Rows[0]["clave"].ToString();
             Session["user_id"] = data.Rows[0]["cedula"].ToString();
+            Session["nombre_rol"] = data.Rows[0]["rol_name"].ToString();
+            Session["rol_id"] = data.Rows[0]["rol_id"].ToString();
             Session["nombre"] = data.Rows[0]["nombre"].ToString();
             Session["sede"] = data.Rows[0]["sede"].ToString();
 
@@ -85,6 +87,12 @@ public partial class View_NuevoLogin : System.Web.UI.Page
                 Response.Redirect("~/View/Tienda/CRUDCliente.aspx");
             }
 
+        }
+        else
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Usuario no está registrado o no esta activo. Consulte con el administrador.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 
