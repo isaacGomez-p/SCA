@@ -11,6 +11,7 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
     {
         Label_usuario.Text = Session["nombre"].ToString();
         Label_Sede.Text = Session["sede"].ToString();
+        L_Rol.Text = Session["rol_id"].ToString();
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)
@@ -28,5 +29,10 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
     {
         Response.Redirect("Bodega.aspx");
 
+    }
+
+    protected void LinkVendedor_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("CRUDAdmin.aspx");
     }
 }

@@ -11,6 +11,7 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
     {
         Label_Usuario.Text = Session["nombre"].ToString();
         L_Sede.Text = Session["sede"].ToString();
+        L_Rol.Text = Session["rol_id"].ToString();
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)

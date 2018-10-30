@@ -61,6 +61,8 @@
                     <tr>
                         <td class="auto-style10">
                             <asp:Label ID="Label_Sede" runat="server"></asp:Label>
+                            <br />
+                            <asp:Label ID="L_Rol" runat="server" Text="Rol"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -87,7 +89,9 @@
                             </td>
                     </tr>
                     <tr>
-                        <td>&nbsp;</td>
+                        <td class="auto-style10">
+                                <asp:LinkButton ID="LinkVendedor" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkVendedor_Click" CssClass="auto-style12">CRUDVENDEDOR</asp:LinkButton>
+                            </td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>

@@ -68,6 +68,8 @@
                                 <asp:Label ID="Label_Usuario" runat="server" Font-Size="Medium" CssClass="auto-style9"></asp:Label>
                                 <br />
                                 <asp:Label ID="L_Sede" runat="server" CssClass="auto-style9" Text="Sede"></asp:Label>
+                                <br />
+                                <asp:Label ID="L_Rol" runat="server" CssClass="auto-style9" Text="Rol"></asp:Label>
                             </td>
                         </tr>
                         <tr>
