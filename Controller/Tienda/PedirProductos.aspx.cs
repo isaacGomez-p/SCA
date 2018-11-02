@@ -109,7 +109,7 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
         //aqui agrega la sede
         if(Session["pedidos"] != null)
         { 
-            pedido.Sede = "Faca";
+            pedido.Sede = Convert.ToString(Session["sede"]);
             pedido.Fecha = fechaHoy.ToString("d");
             pedido.Estado = false;
             //dao.crearPedido(pedido);

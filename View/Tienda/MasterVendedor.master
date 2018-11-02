@@ -106,7 +106,7 @@
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                            <asp:Button ID="B_CerrarSesion" runat="server" Text="O" />
+                            <asp:Button ID="B_CerrarSesion" runat="server" Text="O" OnClick="B_CerrarSesion_Click1" />
                         </td>
                     </tr>
                 </table>

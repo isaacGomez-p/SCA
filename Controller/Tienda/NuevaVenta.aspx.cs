@@ -30,9 +30,8 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         L_Sede.Text = Session["sede"].ToString();
         L_Rol.Text = Session["rol_id"].ToString();
 
-        cli = dao.traerProductoss(L_Sede.Text);
-        GV_Productos.DataSource = cli;
-        GV_Productos.DataBind();
+        llenarGridView();
+
         if (!IsPostBack)
         {
             for (int i = 0; i < cli.Rows.Count; i++)
@@ -48,6 +47,17 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
                 D_Clientes.Items.Add(cli2.Rows[i]["cedula"].ToString());
             }
         }
+    }
+
+    void llenarGridView()
+    {
+        DAOUsuario dao = new DAOUsuario();
+        DataTable gri = new DataTable();
+        gri = dao.verInventario(Convert.ToString(Session["sede"]));
+
+        GV_Productos.DataSource = gri;
+        GV_Productos.DataBind();
+
     }
 
     protected void GV_Productos_SelectedIndexChanged(object sender, GridViewPageEventArgs e)
@@ -146,7 +156,7 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         else
         {
 #pragma warning disable CS0618 // El tipo o el miembro están obsoletos
-            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese todos los datos. ');</script>");
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese todos los datos.');</script>");
 #pragma warning restore CS0618 // El tipo o el miembro están obsoletos
         }
 
@@ -198,5 +208,11 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         {
             return false;
         }
+    }
+
+    protected void GV_Productos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GV_Productos.PageIndex = e.NewPageIndex;
+        this.llenarGridView();
     }
 }

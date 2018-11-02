@@ -29,8 +29,7 @@
         <tr>
             <td class="auto-style21">&nbsp;</td>
             <td class="auto-style18">
-                <asp:Button ID="B_ActualizarAsignaciones" runat="server" OnClick="B_ActualizarAsignaciones_Click" Text="Actualizar" />
-            </td>
+                &nbsp;</td>
             <td class="auto-style22">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>

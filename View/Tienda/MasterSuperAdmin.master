@@ -1,7 +1,6 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="~/Controller/Tienda/MasterTienda.master.cs" Inherits="View_Tienda_MasterTienda" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="~/Controller/Tienda/MasterSuperAdmin.master.cs" Inherits="View_Tienda_MasterTienda" %>
 
 <!DOCTYPE html>
-
 <html>
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>

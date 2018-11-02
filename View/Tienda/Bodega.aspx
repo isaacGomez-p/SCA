@@ -29,7 +29,7 @@
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td class="auto-style18">
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" DataSourceID="ObjectDataSource1">
+                <asp:GridView ID="GV_Inventario" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" AllowPaging="True" OnPageIndexChanging="GV_Inventario_PageIndexChanging" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" PageSize="5">
                     <Columns>
                         <asp:TemplateField HeaderText="#">
                             <EditItemTemplate>
@@ -53,7 +53,6 @@
                     <SortedDescendingCellStyle BackColor="#D6DFDF" />
                     <SortedDescendingHeaderStyle BackColor="#002876" />
                 </asp:GridView>
-                <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="verInventario" TypeName="DAOUsuario"></asp:ObjectDataSource>
             </td>
             <td>&nbsp;</td>
         </tr>

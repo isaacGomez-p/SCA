@@ -99,7 +99,7 @@
                 <asp:Label ID="Label4" runat="server" Text="Productos"></asp:Label>
             </td>
             <td class="auto-style19">
-                    <asp:GridView ID="GV_Productos" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="No hay productos ingresados." CssClass="auto-style10" PageSize="4">
+                    <asp:GridView ID="GV_Productos" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="No hay productos ingresados." CssClass="auto-style10" PageSize="4" OnPageIndexChanging="GV_Productos_PageIndexChanging">
                         <Columns>
                             
                             <asp:TemplateField HeaderText="Id">

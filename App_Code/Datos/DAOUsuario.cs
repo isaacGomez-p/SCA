@@ -1396,7 +1396,7 @@ public class DAOUsuario
 
     }
 
-    public DataTable verInventario()
+    public DataTable verInventario(string sede)
     {
         DataTable productos = new DataTable();
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
@@ -1405,6 +1405,7 @@ public class DAOUsuario
         {
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verinventario", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = sede;
 
             conection.Open();
             dataAdapter.Fill(productos);

@@ -51,6 +51,9 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
                             cliente.Sexo = D_Sexo.SelectedValue;
 
                             dao.CrearCliente(cliente);
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Cliente registrado exitosamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
 
                             TB_Cedula.Text = "";
                             TB_Nombre.Text = "";
@@ -62,6 +65,7 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
                             GV_Clientes.DataSource = cli;
                             GV_Clientes.DataBind();
                             DropDownList1.Items.Add(TB_Cedula.Text);
+                            DropDownList1.DataBind();
                         }
                         else
                         {
@@ -119,7 +123,7 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
         bool resultadoNombre = Regex.IsMatch(TB_Nombre0.Text, @"^[a-zA-Z]+$");
         bool resultadoApellido = Regex.IsMatch(TB_Apellido0.Text, @"^[a-zA-Z]+$");
 
-        if (validarLlenoAgregar() == true)
+        if (validarLlenoEditar() == true)
         {
             if (validarNumeros(TB_Cedula0.Text) == true)
             {

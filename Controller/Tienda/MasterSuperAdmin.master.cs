@@ -5,38 +5,47 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
+public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["user_id"] == null || Session["clave"] == null || Convert.ToInt32(Session["rol_id"]) != 3)
+        if (Session["user_id"] == null || Session["clave"] == null || Convert.ToInt32(Session["rol_id"]) != 1)
         {
+            this.cerrarSesion();
             Response.Redirect("../Login-Rec/NuevoLogin.aspx");
         }
         else
         {
-            Label_usuario.Text = Session["nombre"].ToString();
-            Label_Sede.Text = Session["sede"].ToString();
-        }
-
+            Label_Usuario.Text = Session["nombre"].ToString();
+            L_Sede.Text = Session["sede"].ToString();
+        }      
+        
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)
     {
-        Response.Redirect("NuevaVenta.aspx");
+        Response.Redirect("AgregarSede.aspx");
     }
 
-    protected void LinkBodega_Click(object sender, EventArgs e)
+    protected void LinkButton4_Click(object sender, EventArgs e)
     {
-        Response.Redirect("NuevoAbono.aspx");
+        Response.Redirect("CRUDProducto.aspx");
+    }
+
+    protected void LinkButton6_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Asignar.aspx");
     }
 
     protected void LinkButton3_Click(object sender, EventArgs e)
     {
-        Response.Redirect("CRUDCliente.aspx");
+        Response.Redirect("CRUDAdmin.aspx");
     }
 
-   
+    protected void B_CerrarSesion_Click(object sender, EventArgs e)
+    {
+        this.cerrarSesion();
+    }
 
     void cerrarSesion()
     {
@@ -47,10 +56,5 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
         Session["sede"] = null;
         Session["rol_id"] = null;
         Response.Redirect("../Login-Rec/NuevoLogin.aspx");
-    }
-
-    protected void B_CerrarSesion_Click1(object sender, EventArgs e)
-    {
-        this.cerrarSesion();
     }
 }
