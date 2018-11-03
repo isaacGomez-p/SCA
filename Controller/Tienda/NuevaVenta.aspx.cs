@@ -28,10 +28,10 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
     {
         L_Vendedor.Text = Session["nombre"].ToString();
         L_Sede.Text = Session["sede"].ToString();
+        L_Rol.Text = Session["rol_id"].ToString();
 
-        cli = dao.traerProductoss(L_Sede.Text);
-        GV_Productos.DataSource = cli;
-        GV_Productos.DataBind();
+        llenarGridView();
+
         if (!IsPostBack)
         {
             for (int i = 0; i < cli.Rows.Count; i++)
@@ -47,6 +47,17 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
                 D_Clientes.Items.Add(cli2.Rows[i]["cedula"].ToString());
             }
         }
+    }
+
+    void llenarGridView()
+    {
+        DAOUsuario dao = new DAOUsuario();
+        DataTable gri = new DataTable();
+        gri = dao.verInventario(Convert.ToString(Session["sede"]));
+
+        GV_Productos.DataSource = gri;
+        GV_Productos.DataBind();
+
     }
 
     protected void GV_Productos_SelectedIndexChanged(object sender, GridViewPageEventArgs e)
@@ -89,7 +100,7 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
             {
                 TB_refe.Text = cli.Rows[i]["referencia"].ToString();
                 TB_Talla.Text = cli.Rows[i]["talla"].ToString();
-                TB_Cantidad.Text = cli.Rows[i]["cantidad"].ToString();
+                L_Precio.Text = cli.Rows[i]["cantidad"].ToString();
                 TB_Precio.Text = cli.Rows[i]["precio"].ToString();
 
             }
@@ -98,36 +109,56 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
 
     protected void B_AgregarProducto_Click(object sender, EventArgs e)
     {
-        double pre = 0;
-        ProductoV producto = new ProductoV();
-        producto.Referencia = TB_refe.Text;
-        producto.Talla = Convert.ToDouble(TB_Talla.Text);
-        producto.Cantidad = Convert.ToInt32(TB_Cantidad.Text);
-        producto.Precio = dao.traerPrecio(producto.Referencia, producto.Talla);
-
-        pre = producto.Precio * producto.Cantidad;
-        precioFin = precioFin + pre;
-
-        if (Session["lista"] == null)
+        int cantidad = 0;
+        if (validarLleno() == true)
         {
-            productos1 = new List<ProductoV>();
-            productos1.Add(producto);
-            Session["lista"] = productos1;
+            if (validarNumeros(TB_Cantidad.Text) == true)
+            {
+                double pre = 0;
+                ProductoV producto = new ProductoV();
+                producto.Referencia = TB_refe.Text;
+                producto.Talla = Convert.ToDouble(TB_Talla.Text);
+                producto.Cantidad = Convert.ToInt32(TB_Cantidad.Text);
+                producto.Precio = dao.traerPrecio(producto.Referencia, producto.Talla);
+                cantidad = producto.Cantidad;
+                dao.editarCantidadVenta(cantidad);
+
+                pre = producto.Precio * producto.Cantidad;
+                precioFin = precioFin + pre;
+
+                if (Session["lista"] == null)
+                {
+                    productos1 = new List<ProductoV>();
+                    productos1.Add(producto);
+                    Session["lista"] = productos1;
+                }
+                else
+                {
+                    productos1 = (Session["lista"] as List<ProductoV>);
+                    productos1.Add(producto);
+                }
+                TB_refe.Text = "";
+                TB_Talla.Text = "";
+                TB_Cantidad.Text = "";
+                TB_Precio.Text = "";
+                pre = 0;
+
+                GV_Venta.DataSource = productos1;
+                GV_Venta.DataBind();
+            }
+            else
+            {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese la cantidad del producto correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+            }
         }
         else
         {
-            productos1 = (Session["lista"] as List<ProductoV>);
-            productos1.Add(producto);
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese todos los datos.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
         }
-        TB_refe.Text = "";
-        TB_Talla.Text = "";
-        TB_Cantidad.Text = "";
-        TB_Precio.Text = "";
-        pre = 0;
-
-        GV_Venta.DataSource = productos1;
-        GV_Venta.DataBind();
-
 
     }
 
@@ -152,5 +183,36 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         TB_Apellido.Text = "";
         //pre1 = 0;
         precioFin = 0;
+    }
+
+    bool validarLleno()
+    {
+        if (TB_Cantidad.Text == "")
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public bool validarNumeros(string num)
+    {
+        try
+        {
+            double x = Convert.ToDouble(num);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    protected void GV_Productos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GV_Productos.PageIndex = e.NewPageIndex;
+        this.llenarGridView();
     }
 }

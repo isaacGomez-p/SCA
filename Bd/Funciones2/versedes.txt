@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION tienda.f_obtener_sedes_solo(
+	)
+    RETURNS SETOF tienda.sedes 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
+AS $BODY$
+
+	
+	BEGIN
+		RETURN QUERY
+			SELECT
+				*
+			FROM
+				tienda.sedes;
+			
+	END
+
+$BODY$;

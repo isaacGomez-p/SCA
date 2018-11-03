@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterVendedor.master" AutoEventWireup="true" CodeFile="NuevoAbono.aspx.cs" Inherits="View_Tienda_NuevoAbono" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterVendedor.master" AutoEventWireup="true" CodeFile="~/Controller/Tienda/NuevoAbono.aspx.cs" Inherits="View_Tienda_NuevoAbono" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -128,19 +128,21 @@
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td class="auto-style18">
-                <asp:TextBox ID="TB_Refe" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Refe" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td class="auto-style18">
-                <asp:TextBox ID="TB_Talla" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Talla" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style17">&nbsp;</td>
+            <td class="auto-style17">
+                <asp:Label ID="L_Cantidad" runat="server" Text="Label"></asp:Label>
+            </td>
             <td class="auto-style18">
                 <asp:TextBox ID="TB_Cantidad" runat="server"></asp:TextBox>
             </td>
@@ -149,7 +151,7 @@
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td class="auto-style18">
-                <asp:TextBox ID="TB_Precio" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Precio" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td>
                 <asp:Button ID="B_AgregarProducto" runat="server" Text="Agregar Producto" OnClick="B_AgregarProducto_Click" />
@@ -300,14 +302,14 @@
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td class="auto-style18">
-                <asp:TextBox ID="TB_Nab" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Nab" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td class="auto-style18">
-                <asp:TextBox ID="TB_VenAbo" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_VenAbo" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
@@ -321,7 +323,7 @@
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td class="auto-style18">
-                <asp:TextBox ID="TB_Saldo" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Saldo" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td>
                 <asp:Button ID="B_Abono" runat="server" Text="Abonar" OnClick="B_Abono_Click" />
@@ -330,7 +332,7 @@
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td class="auto-style18">
-                <asp:TextBox ID="TB_ID" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_ID" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td>
                 &nbsp;</td>

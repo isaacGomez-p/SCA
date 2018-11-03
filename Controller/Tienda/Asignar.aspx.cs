@@ -42,7 +42,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 
         foreach (GridViewRow fila in GV_AsignarSinPedido.Rows)
         {
-            cont++;
+            
             asignacion.Referencia = Convert.ToString(((Label)fila.Cells[0].FindControl("L_Referencia")).Text);
             asignacion.Talla = Convert.ToDouble(((Label)fila.Cells[1].FindControl("L_Talla")).Text);
 
@@ -59,7 +59,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 
             if (asignacion.Cantidad > 0)
             {
-
+                cont++;
 
                 DataTable r = d.validarAsignacion(asignacion.Referencia, asignacion.Talla);
                 if (r.Rows.Count == 1)
@@ -132,6 +132,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                     return;
                 }
             }
+           
             
         }
         GV_ProductosBodega.DataBind();
@@ -203,7 +204,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                             DateTime fechaHoy = DateTime.Now;
                             asignacion.Fecha = fechaHoy.ToString("d");
                             asignacion.Estado = false;
-                            //aqui agrega la sede
+                            
                             asignacion.Sede = Convert.ToString(Session["sede"]);
                             if (cont == 1)
                             {
@@ -270,11 +271,6 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         GV_ProductosBodega.DataBind();
 
     }
-
-
-
-
-
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {

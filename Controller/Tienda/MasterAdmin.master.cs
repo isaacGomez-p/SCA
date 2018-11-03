@@ -9,14 +9,16 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Session["nombre"] == null || Session["sede"] == null || Convert.ToInt32(Session["rol_id"]) != 2)
+        if (Session["user_id"] == null || Session["clave"] == null || Convert.ToInt32(Session["rol_id"]) != 2)
         {
+            this.cerrarSesion();
             Response.Redirect("../Login-Rec/NuevoLogin.aspx");
         }
         else
         {
             Label_usuario.Text = Session["nombre"].ToString();
             Label_Sede.Text = Session["sede"].ToString();
+            
         }
         
     }
@@ -38,7 +40,17 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
 
     }
 
+    protected void LinkVendedor_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("CRUDAdmin.aspx");
+    }
+
     protected void B_CerrarSesion_Click(object sender, EventArgs e)
+    {
+        this.cerrarSesion();
+    }
+
+    void cerrarSesion()
     {
         Session["clave"] = null;
         Session["user_id"] = null;

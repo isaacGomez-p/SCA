@@ -21,6 +21,33 @@ public class DAOUsuario
 
     }
 
+    public void editarCantidadVenta(int cantidad)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_actualizar_cantidad_venta", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Integer).Value = cantidad;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
     public void editarSaldo(int id, double saldo)
     {
         DataTable productos = new DataTable();
@@ -1369,7 +1396,7 @@ public class DAOUsuario
 
     }
 
-    public DataTable verInventario()
+    public DataTable verInventario(string sede)
     {
         DataTable productos = new DataTable();
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
@@ -1378,6 +1405,7 @@ public class DAOUsuario
         {
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verinventario", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = sede;
 
             conection.Open();
             dataAdapter.Fill(productos);
@@ -1574,5 +1602,32 @@ public class DAOUsuario
         }
         return pe;
             
+    }
+
+    public DataTable traerSedes()
+    {
+        DataTable sedes = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_obtener_sedes_solo", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            conection.Open();
+            dataAdapter.Fill(sedes);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return sedes;
     }
 }

@@ -86,9 +86,9 @@
             </td>
             <td class="auto-style19">
                 <br />
-                <asp:TextBox ID="TB_Nombre" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Nombre" runat="server" Enabled="False"></asp:TextBox>
                 <br />
-                <asp:TextBox ID="TB_Apellido" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Apellido" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style22">
                 &nbsp;</td>
@@ -99,7 +99,7 @@
                 <asp:Label ID="Label4" runat="server" Text="Productos"></asp:Label>
             </td>
             <td class="auto-style19">
-                    <asp:GridView ID="GV_Productos" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="No hay productos ingresados." CssClass="auto-style10" PageSize="4">
+                    <asp:GridView ID="GV_Productos" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="No hay productos ingresados." CssClass="auto-style10" PageSize="4" OnPageIndexChanging="GV_Productos_PageIndexChanging">
                         <Columns>
                             
                             <asp:TemplateField HeaderText="Id">
@@ -174,12 +174,14 @@
             <td colspan="4" class="auto-style39">&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style36"></td>
+            <td class="auto-style36">
+                <asp:Label ID="L_Precio" runat="server" Text="Cantidad"></asp:Label>
+            </td>
             <td class="auto-style37">
-                <asp:TextBox ID="TB_refe" runat="server"></asp:TextBox>
-                <asp:TextBox ID="TB_Talla" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_refe" runat="server" Enabled="False"></asp:TextBox>
+                <asp:TextBox ID="TB_Talla" runat="server" Enabled="False"></asp:TextBox>
                 <asp:TextBox ID="TB_Cantidad" runat="server"></asp:TextBox>
-                <asp:TextBox ID="TB_Precio" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Precio" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style38">
                 <asp:Button ID="B_AgregarProducto" runat="server" OnClick="B_AgregarProducto_Click" Text="Agregar Producto" />
@@ -250,6 +252,8 @@
             <td>
                 <asp:Label ID="L_Vendedor" runat="server" Text="Vendedor"></asp:Label>
                 <asp:Label ID="L_Sede" runat="server" Text="Sede"></asp:Label>
+                <br />
+                <asp:Label ID="L_Rol" runat="server" Text="Rol"></asp:Label>
             </td>
             <td class="auto-style20">&nbsp;</td>
             <td class="auto-style23">

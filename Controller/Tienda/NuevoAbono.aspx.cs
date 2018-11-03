@@ -81,7 +81,7 @@ public partial class View_Tienda_NuevoAbono : System.Web.UI.Page
             {
                 TB_Refe.Text = cli.Rows[i]["referencia"].ToString();
                 TB_Talla.Text = cli.Rows[i]["talla"].ToString();
-                TB_Cantidad.Text = cli.Rows[i]["cantidad"].ToString();
+                L_Cantidad.Text = cli.Rows[i]["cantidad"].ToString();
                 TB_Precio.Text = cli.Rows[i]["precio"].ToString();
 
             }
@@ -105,36 +105,54 @@ public partial class View_Tienda_NuevoAbono : System.Web.UI.Page
 
     protected void B_AgregarProducto_Click(object sender, EventArgs e)
     {
-        double sal = 0;
-        ProductoV producto = new ProductoV();
-        producto.Referencia = TB_Refe.Text;
-        producto.Talla = Convert.ToDouble(TB_Talla.Text);
-        producto.Cantidad = Convert.ToInt32(TB_Cantidad.Text);
-        producto.Precio = Convert.ToDouble(TB_Precio.Text);
-
-        sal = Convert.ToDouble(TB_Precio.Text);
-        sal = sal * Convert.ToInt32(TB_Cantidad.Text);
-        precioFin = precioFin + sal;
-
-        if (Session["lista"] == null)
+        if (validarLleno() == true)
         {
-            productos1 = new List<ProductoV>();
-            productos1.Add(producto);
-            Session["lista"] = productos1;
+            if (validarNumeros(TB_Cantidad.Text) == true)
+            {
+                double sal = 0;
+                ProductoV producto = new ProductoV();
+                producto.Referencia = TB_Refe.Text;
+                producto.Talla = Convert.ToDouble(TB_Talla.Text);
+                producto.Cantidad = Convert.ToInt32(TB_Cantidad.Text);
+                producto.Precio = Convert.ToDouble(TB_Precio.Text);
+
+                sal = Convert.ToDouble(TB_Precio.Text);
+                sal = sal * Convert.ToInt32(TB_Cantidad.Text);
+                precioFin = precioFin + sal;
+
+                if (Session["lista"] == null)
+                {
+                    productos1 = new List<ProductoV>();
+                    productos1.Add(producto);
+                    Session["lista"] = productos1;
+                }
+                else
+                {
+                    productos1 = (Session["lista"] as List<ProductoV>);
+                    productos1.Add(producto);
+                }
+                TB_Refe.Text = "";
+                TB_Talla.Text = "";
+                TB_Cantidad.Text = "";
+                TB_Precio.Text = "";
+                sal = 0;
+
+                GV_Venta.DataSource = productos1;
+                GV_Venta.DataBind();
+            }
+            else
+            {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese la cantidad del producto correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+            }
         }
         else
         {
-            productos1 = (Session["lista"] as List<ProductoV>);
-            productos1.Add(producto);
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese todos los datos correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
         }
-        TB_Refe.Text = "";
-        TB_Talla.Text = "";
-        TB_Cantidad.Text = "";
-        TB_Precio.Text = "";
-        sal = 0;
-
-        GV_Venta.DataSource = productos1;
-        GV_Venta.DataBind();
     }
 
     protected void B_Facturar_Click(object sender, EventArgs e)
@@ -160,21 +178,76 @@ public partial class View_Tienda_NuevoAbono : System.Web.UI.Page
 
     protected void B_Abono_Click(object sender, EventArgs e)
     {
-        Abono abono2 = new Abono();
-        double sal2 = 0, sal3 = 0;
-        int idx;
+        if (validarLleno1() == true)
+        {
+            if (validarNumeros(TB_Abono.Text) == true)
+            {
+                Abono abono2 = new Abono();
+                double sal2 = 0, sal3 = 0;
+                int idx;
 
-        abono2.Abono1 = Convert.ToDouble(TB_Abono.Text);
-        sal2 = Convert.ToDouble(TB_Saldo);
-        sal3 = sal2 - abono2.Abono1;
-        idx = Convert.ToInt32(TB_ID.Text);
+                abono2.Abono1 = Convert.ToDouble(TB_Abono.Text);
+                sal2 = Convert.ToDouble(TB_Saldo);
+                sal3 = sal2 - abono2.Abono1;
+                idx = Convert.ToInt32(TB_ID.Text);
 
-        dao.editarSaldo(idx, sal3);
+                dao.editarSaldo(idx, sal3);
 
-        TB_Nab.Text = "";
-        TB_VenAbo.Text = "";
-        TB_Abono.Text = "";
-        TB_Saldo.Text = "";
-        TB_ID.Text = "";
+                TB_Nab.Text = "";
+                TB_VenAbo.Text = "";
+                TB_Abono.Text = "";
+                TB_Saldo.Text = "";
+                TB_ID.Text = "";
+            }
+            else
+            {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese la cantidad del producto correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+            }
+        }
+        else
+        {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese todos los datos correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+        }
+    }
+
+    bool validarLleno()
+    {
+        if (TB_Cantidad.Text == "")
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    bool validarLleno1()
+    {
+        if (TB_Abono.Text == "")
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public bool validarNumeros(string num)
+    {
+        try
+        {
+            double x = Convert.ToDouble(num);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

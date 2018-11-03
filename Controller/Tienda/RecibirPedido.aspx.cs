@@ -14,6 +14,7 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
         {
             Session["paginar"] = null;
             Session["paginar2"] = null;
+            this.actualizarAsignaciones();
         }
     }
 
@@ -34,12 +35,12 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
         set { Session["paginar2"] = value; }
     }
 
-    protected void B_ActualizarAsignaciones_Click(object sender, EventArgs e)
+    protected void actualizarAsignaciones()
     {
         DAOUsuario dAO = new DAOUsuario();
         DataTable datosAsignacion = new DataTable();
         Session["paginar"] = null;
-        datosAsignacion = dAO.verAsignacion("Faca");
+        datosAsignacion = dAO.verAsignacion(Convert.ToString(Session["sede"]));
         if (datosAsignacion.Rows.Count == 0)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -128,9 +129,9 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
                 inventario.Cantidad = Convert.ToInt32(((Label)fila.Cells[3].FindControl("L_Cantidad")).Text);
                 if (inventario.Referencia != null)
                 {
-                    inventario.Sede = "Faca";
+                    inventario.Sede = Convert.ToString(Session["sede"]);
 
-                    //da.crearInventario(inventario);
+                    da.crearInventario(inventario);
 #pragma warning disable CS0618 // Type or member is obsolete
                     RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Se han añadido los productos al inventario.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete

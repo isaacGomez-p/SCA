@@ -58,6 +58,8 @@ public partial class View_NuevoLogin : System.Web.UI.Page
             Session["rol_id"] = data.Rows[0]["rol_id"].ToString();
             Session["nombre"] = data.Rows[0]["nombre"].ToString();
             Session["sede"] = data.Rows[0]["sede"].ToString();
+            Session["rol_id"] = data.Rows[0]["rol_id"].ToString();
+
 
             EUsuario datosUsuario = new EUsuario();
             MAC datosConexion = new MAC();
@@ -79,7 +81,7 @@ public partial class View_NuevoLogin : System.Web.UI.Page
 
             if (datosUsuario.RolId == 2)
             {
-                Response.Redirect("~/View/Tienda/CRUDProducto.aspx");
+                Response.Redirect("~/View/Tienda/CRUDVendedor.aspx");
             }
 
             if (datosUsuario.RolId == 3)
@@ -93,11 +95,12 @@ public partial class View_NuevoLogin : System.Web.UI.Page
 #pragma warning disable CS0618 // Type or member is obsolete
             RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Usuario no está registrado o no esta activo. Consulte con el administrador.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
+
         }
     }
 
 
-    protected void LinkButton1_Click(object sender, EventArgs e)
+        protected void LinkButton1_Click(object sender, EventArgs e)
     {
         Response.Redirect("GenerarToken.aspx");
     }

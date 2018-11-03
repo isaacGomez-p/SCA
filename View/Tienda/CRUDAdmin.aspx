@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterSuperAdmin.master" AutoEventWireup="true" CodeFile="CRUDAdmin.aspx.cs" Inherits="View_Tienda_CRUDAdmin" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterSuperAdmin.master" AutoEventWireup="true" CodeFile="~/Controller/Tienda/CRUDAdmin.aspx.cs" Inherits="View_Tienda_CRUDAdmin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -58,7 +58,10 @@
         <tr>
             <td class="auto-style11">Sexo:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Sexo" runat="server" Height="22px"></asp:TextBox>
+                <asp:DropDownList ID="D_Sexo" runat="server">
+                        <asp:ListItem>Hombre</asp:ListItem>
+                        <asp:ListItem>Mujer</asp:ListItem>
+                </asp:DropDownList>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -66,9 +69,8 @@
         <tr>
             <td class="auto-style11">Sede:</td>
             <td class="auto-style13">
-                <asp:DropDownList ID="DL_Sedes" runat="server" DataSourceID="ObjectDataSource3" DataTextField="NombreSede" DataValueField="NombreSede">
+                <asp:DropDownList ID="D_Sedes" runat="server">
                 </asp:DropDownList>
-                <asp:ObjectDataSource ID="ObjectDataSource3" runat="server" SelectMethod="Sedes" TypeName="DAOUsuario"></asp:ObjectDataSource>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -84,7 +86,7 @@
         <tr>
             <td class="auto-style11">Rol:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Rol" runat="server" Enabled="False">2</asp:TextBox>
+                <asp:TextBox ID="TB_Rol" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -222,7 +224,7 @@
         <tr>
             <td class="auto-style11">Cedula:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Cedula0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Cedula0" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -262,7 +264,10 @@
         <tr>
             <td class="auto-style11">Sexo</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Sexo0" runat="server"></asp:TextBox>
+                <asp:DropDownList ID="D_Sexo0" runat="server">
+                        <asp:ListItem>Hombre</asp:ListItem>
+                        <asp:ListItem>Mujer</asp:ListItem>
+                </asp:DropDownList>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -270,10 +275,11 @@
         <tr>
             <td class="auto-style11">Sede:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Sede0" runat="server"></asp:TextBox>
+                <asp:DropDownList ID="D_Sedes0" runat="server">
+                </asp:DropDownList>
             </td>
-            <td class="auto-style12">&nbsp;</td>
-            <td>&nbsp;</td>
+            <td class="auto-style12"></td>
+            <td></td>
         </tr>
         <tr>
             <td class="auto-style11">Correo</td>
@@ -286,7 +292,7 @@
         <tr>
             <td class="auto-style11">Rol</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Rol0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Rol0" runat="server" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -312,13 +318,19 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style11">&nbsp;</td>
+            <td class="auto-style11">
+                <asp:Label ID="L_Vendedor" runat="server" Text="Vendedor"></asp:Label>
+            </td>
             <td class="auto-style13">&nbsp;</td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style11">&nbsp;</td>
+            <td class="auto-style11">
+                <asp:Label ID="L_Sede" runat="server" Text="Sede"></asp:Label>
+                <br />
+                <asp:Label ID="L_Rol" runat="server" Text="Rol"></asp:Label>
+            </td>
             <td class="auto-style13">&nbsp;</td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>

@@ -1,0 +1,12 @@
+CREATE OR REPLACE FUNCTION tienda.eliminar_cliente(
+	_cedula integer)
+    RETURNS void
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+AS $BODY$
+
+BEGIN
+DELETE FROM tienda.cliente where cedula = _cedula;
+END

@@ -107,7 +107,7 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
         
         
         if(Session["pedidos"] != null)
-        {
+        { 
             pedido.Sede = Convert.ToString(Session["sede"]);
             pedido.Fecha = fechaHoy.ToString("d");
             pedido.Estado = false;
