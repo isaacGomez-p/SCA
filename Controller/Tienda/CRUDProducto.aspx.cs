@@ -13,6 +13,11 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
         get { return Session["compara"] as String ; }
         set { Session["compara"] = value;  }
     }
+    String id
+    {
+        get { return Session["idproducto"] as String; }
+        set { Session["idproducto"] = value; }
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -54,7 +59,7 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
                         //if (referencias.Contains(producto.ReferenciaProducto))
                         //{
                         dAO.crearProducto(producto);
-                        DL_ReferenciaProducto.DataBind();
+                        
                         GV_Productos.DataBind();
                         TB_ReferenciaProducto.Text = "";
                         TB_Precio.Text = "";
@@ -97,21 +102,26 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
 
     protected void GV_Productos_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-
+        Session["idproducto"] = null;
         if (e.CommandName.Equals("Delete"))
         {
             DAOUsuario dAO = new DAOUsuario();
             int id = Convert.ToInt32(e.CommandArgument);
             dAO.eliminarProducto(id);
         }
+        if (e.CommandName.Equals("Editar"))
+        {
+            Seleccionar_Producto(Convert.ToInt32(e.CommandArgument));
+            Session["idproducto"] = Convert.ToString(e.CommandArgument);
+        }
 
     }
 
-    protected void B_SeleccionarProducto_Click(object sender, EventArgs e)
+    void Seleccionar_Producto(int r)
     {
         DAOUsuario dAO = new DAOUsuario();
         Producto producto = new Producto();
-        int refe = Convert.ToInt32(DL_ReferenciaProducto.SelectedValue);
+        int refe = r;
         DataTable productos = dAO.verProductosEditar(refe);
         if(productos != null) { 
         foreach(DataRow row in productos.Rows)
@@ -145,7 +155,7 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
                     DAOUsuario dAO = new DAOUsuario();
                     Producto producto = new Producto();
                     string comp;
-                    producto.Idproducto = Convert.ToInt32(DL_ReferenciaProducto.SelectedValue);
+                    producto.Idproducto = Convert.ToInt32(Session["idproducto"]);
                     producto.ReferenciaProducto = TB_EditarReferencia.Text;
                     producto.Cantidad = Convert.ToInt64(TB_EditarCantidad.Text);
                     producto.Precio = Convert.ToDouble(TB_EditarPrecio.Text);
@@ -164,7 +174,7 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
             #pragma warning disable CS0618 // Type or member is obsolete
                         RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Producto editado exitosamente.');</script>");
             #pragma warning restore CS0618 // Type or member is obsolete
-                        DL_ReferenciaProducto.DataBind();
+                        
                         GV_Productos.DataBind();
                         TB_EditarReferencia.Text = "";
                         TB_EditarCantidad.Text = "";

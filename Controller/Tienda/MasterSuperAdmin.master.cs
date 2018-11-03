@@ -18,8 +18,9 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
         {
             Label_Usuario.Text = Session["nombre"].ToString();
             L_Sede.Text = Session["sede"].ToString();
-        }      
-        
+        }
+
+        this.notificaciones();
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)
@@ -56,5 +57,19 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
         Session["sede"] = null;
         Session["rol_id"] = null;
         Response.Redirect("../Login-Rec/NuevoLogin.aspx");
+    }
+    
+    void notificaciones()
+    {
+        DAOUsuario dAO = new DAOUsuario();
+        int a = dAO.Notificacion_Asignaciones();
+        if(a == 0)
+        {
+            L_c.Visible = false;
+        }
+        else
+        {
+            L_c.Text = Convert.ToString(a);
+        }
     }
 }

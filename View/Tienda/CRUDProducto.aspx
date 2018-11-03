@@ -94,6 +94,11 @@
                 <td>
                     <asp:GridView ID="GV_Productos" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" DataSourceID="ObjectDataSource2" EmptyDataText="No hay productos ingresados." OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowCommand="GV_Productos_RowCommand" CssClass="auto-style10" PageSize="4">
                         <Columns>
+                            <asp:TemplateField HeaderText="Editar" ShowHeader="False">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="Editar" Text="Seleccionar" CommandArgument='<%# Bind("idproducto") %>'></asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Eliminar" ShowHeader="False">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar" CommandArgument='<%# Bind("idproducto") %>'></asp:LinkButton>
@@ -156,17 +161,9 @@
                     <asp:Label ID="Label6" runat="server" Text="Editar Datos"></asp:Label>
                 </td>
                 <td class="auto-style11">
-                    <asp:Label ID="Label7" runat="server" Text="Seleccione el dato a editar:                                                                      "></asp:Label>
-                    <asp:Label ID="Label8" runat="server" Visible="False"></asp:Label>
-                    <asp:Label ID="Label9" runat="server" Text="Label" Visible="False"></asp:Label>
-                    <asp:Label ID="Label10" runat="server" Text="Label" Visible="False"></asp:Label>
-                    <asp:DropDownList ID="DL_ReferenciaProducto" runat="server" DataSourceID="ObjectDataSource1" DataTextField="ReferenciaProducto" DataValueField="Idproducto" OnSelectedIndexChanged="DL_ReferenciaProducto_SelectedIndexChanged">
-                    </asp:DropDownList>
-                    <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="Productos" TypeName="DAOUsuario"></asp:ObjectDataSource>
-                </td>
+                    &nbsp;</td>
                 <td class="auto-style11">
-                    <asp:Button ID="B_SeleccionarProducto" runat="server" OnClick="B_SeleccionarProducto_Click" Text="Seleccionar" />
-                </td>
+                    &nbsp;</td>
             </tr>
             <tr>
                 <td class="auto-style11"></td>

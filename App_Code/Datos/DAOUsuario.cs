@@ -1630,4 +1630,45 @@ public class DAOUsuario
         }
         return sedes;
     }
+
+    public int Notificacion_Asignaciones()
+    {
+        DataTable sedes = new DataTable();
+        int cantidad = 0;
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_notificarasignaciones", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            conection.Open();
+            dataAdapter.Fill(sedes);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        if(sedes.Rows.Count == 0)
+        {
+            cantidad = 0;
+        }
+        else
+        {
+            foreach(DataRow row in sedes.Rows)
+            {
+                cantidad = Convert.ToInt32(row["f_notificarasignaciones"]);
+            }
+            
+        }
+        return cantidad;
+    }
+
 }

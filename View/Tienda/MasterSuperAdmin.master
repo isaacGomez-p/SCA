@@ -48,6 +48,11 @@
         .auto-style10 {
             text-decoration: none;
         }
+        .auto-style11 {
+            text-align: center;
+            width: 260px;
+            height: 24px;
+        }
     </style>
 </head>
 <body>
@@ -90,13 +95,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="auto-style5">
+                            <td class="auto-style11">
                                 <asp:LinkButton ID="LinkButton5" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" CssClass="auto-style10">Reporte Producto</asp:LinkButton>
                             </td>
                         </tr>
                         <tr>
                             <td class="auto-style5">
                                 <asp:LinkButton ID="LinkButton6" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton6_Click" CssClass="auto-style10">Asignar </asp:LinkButton>
+                                <asp:Label ID="L_c" runat="server" BackColor="Red" ForeColor="Black"></asp:Label>
                             </td>
                         </tr>
                         <tr>

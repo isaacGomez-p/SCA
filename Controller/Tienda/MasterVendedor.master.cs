@@ -50,7 +50,7 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
         Response.Redirect("../Login-Rec/NuevoLogin.aspx");
     }
 
-    protected void B_CerrarSesion_Click1(object sender, EventArgs e)
+    protected void B_CerrarSesion_Click(object sender, EventArgs e)
     {
         this.cerrarSesion();
     }

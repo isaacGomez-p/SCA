@@ -14,6 +14,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         DataTable cantidadPendiente = new DataTable();
         cantidadPendiente = dAO.verPedido();
         L_CantidadPendientes.Text = Convert.ToString(cantidadPendiente.Rows.Count);
+        
     }
 
     String compara
