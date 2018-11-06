@@ -38,14 +38,10 @@
         .auto-style36 {
             height: 104px;
         }
-        .auto-style37 {
-            width: 171px;
-            height: 104px;
-        }
         .auto-style38 {
             width: 139px;
             height: 104px;
-            text-align: left;
+            text-align: center;
         }
         .auto-style39 {
             height: 16px;
@@ -68,6 +64,10 @@
         }
         .auto-style44 {
             height: 23px;
+            text-align: center;
+        }
+        .auto-style46 {
+            height: 104px;
             text-align: center;
         }
     </style>
@@ -107,14 +107,14 @@
                 <asp:Label ID="Label4" runat="server" Text="Productos:"></asp:Label>
             </td>
             <td class="auto-style19">
-                <asp:GridView ID="GV_VentaPedido" runat="server" AllowPaging="True" AutoGenerateColumns="False" PageSize="5" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4">
+                <asp:GridView ID="GV_VentaPedido" runat="server" AllowPaging="True" AutoGenerateColumns="False" PageSize="5" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" OnPageIndexChanging="GV_Productos_PageIndexChanging">
                     <Columns>
                         <asp:TemplateField HeaderText="Referencia">
                             <EditItemTemplate>
-                                <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("referenciaproducto") %>'></asp:TextBox>
+                                <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("idproducto") %>'></asp:TextBox>
                             </EditItemTemplate>
                             <ItemTemplate>
-                                <asp:Label ID="L_Referencia" runat="server" Text='<%# Bind("referenciaproducto") %>'></asp:Label>
+                                <asp:Label ID="L_Referencia" runat="server" Text='<%# Bind("referencia") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Talla">
@@ -130,7 +130,7 @@
                                 <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                             </EditItemTemplate>
                             <ItemTemplate>
-                                <asp:TextBox ID="TB_Cantidad0" runat="server" TextMode="Number">0</asp:TextBox>
+                                <asp:TextBox ID="TB_Cantidad" runat="server" TextMode="Number">0</asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -163,47 +163,58 @@
             <td colspan="4" class="auto-style39">&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style36">
-                &nbsp;</td>
-            <td class="auto-style37">
-                <asp:GridView ID="GV_Venta" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" CssClass="auto-style35" Height="151px" ShowFooter="True" Width="255px" >
+            <td class="auto-style46" colspan="2">
+                <asp:GridView ID="GV_Venta" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" CssClass="auto-style35" Height="151px" ShowFooter="True" Width="295px" OnRowCommand="GV_Venta_RowCommand" OnRowDeleting="GV_Venta_RowDeleting" OnSelectedIndexChanged="GV_Venta_SelectedIndexChanged" >
                     <Columns>
+                        <asp:TemplateField ShowHeader="False" HeaderText="Eliminar">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Delete" Text="Eliminar" CommandArgument ='<%# Bind("Idproducto") %>'></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="Referencia">
                             <EditItemTemplate>
-                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("ReferenciaProducto") %>'></asp:TextBox>
                             </EditItemTemplate>
                             <ItemTemplate>
-                                <asp:Label ID="Label1" runat="server"></asp:Label>
+                                <asp:Label ID="Label1" runat="server" Text='<%# Bind("ReferenciaProducto") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Talla">
                             <EditItemTemplate>
-                                <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="TextBox3" runat="server" Text='<%# Bind("Talla") %>'></asp:TextBox>
                             </EditItemTemplate>
                             <ItemTemplate>
-                                <asp:Label ID="Label3" runat="server"></asp:Label>
+                                <asp:Label ID="Label3" runat="server" Text='<%# Bind("Talla") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Cantidad">
                             <EditItemTemplate>
-                                <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="TextBox4" runat="server" Text='<%# Bind("Cantidad") %>'></asp:TextBox>
                             </EditItemTemplate>
-                            <FooterTemplate>
-                                <asp:Label ID="Label5" runat="server" Text="Total"></asp:Label>
-                            </FooterTemplate>
                             <ItemTemplate>
-                                <asp:Label ID="Label4" runat="server"></asp:Label>
+                                <asp:Label ID="Label4" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Valor">
+                        <asp:TemplateField HeaderText="Valor Unitario">
                             <EditItemTemplate>
-                                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("Precio") %>'></asp:TextBox>
                             </EditItemTemplate>
                             <FooterTemplate>
-                                <asp:TextBox ID="TB_ValorVenta" runat="server">$00000</asp:TextBox>
+                                <asp:Label ID="Label7" runat="server" Text="Total Venta:"></asp:Label>
                             </FooterTemplate>
                             <ItemTemplate>
-                                <asp:Label ID="Label2" runat="server"></asp:Label>
+                                <asp:Label ID="Label5" runat="server" Text='<%# Bind("Precio") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Valor Total">
+                            <EditItemTemplate>
+                                <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("ValorTotal") %>'></asp:TextBox>
+                            </EditItemTemplate>
+                            <FooterTemplate>
+                                <asp:TextBox ID="TB_TotalVenta" runat="server"></asp:TextBox>
+                            </FooterTemplate>
+                            <ItemTemplate>
+                                <asp:Label ID="Label2" runat="server" Text='<%# Bind("ValorTotal") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

@@ -17,7 +17,7 @@ public class Abono
 
     private string nombre;
     private string apellido;
-    private List<ProductoV> producto;
+    private List<Producto> producto;
     private string vendedor;
     private string sede;
     private DateTime fecha;
@@ -26,7 +26,7 @@ public class Abono
 
     public string Nombre { get => nombre; set => nombre = value; }
     public string Apellido { get => apellido; set => apellido = value; }
-    public List<ProductoV> Producto { get => producto; set => producto = value; }
+    public List<Producto> Producto { get => producto; set => producto = value; }
     public string Vendedor { get => vendedor; set => vendedor = value; }
     public string Sede { get => sede; set => sede = value; }
     public DateTime Fecha { get => fecha; set => fecha = value; }

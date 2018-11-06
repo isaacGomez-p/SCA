@@ -82,7 +82,7 @@
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                                <asp:LinkButton ID="LinkRecibirPedido" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton3_Click" CssClass="auto-style12">MIS VENTAS</asp:LinkButton>
+                                <asp:LinkButton ID="LinkRecibirPedido" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton4_Click" CssClass="auto-style12">MIS VENTAS</asp:LinkButton>
                             </td>
                     </tr>
                     <tr>
@@ -92,12 +92,12 @@
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                                <asp:LinkButton ID="LinkBodega0" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkBodega_Click" CssClass="auto-style12">Mis CLientes</asp:LinkButton>
+                                <asp:LinkButton ID="LinkBodega0" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton5_Click" CssClass="auto-style12">Mis CLientes</asp:LinkButton>
                             </td>
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                                <asp:LinkButton ID="LinkBodega1" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkBodega_Click" CssClass="auto-style12">ABONOS</asp:LinkButton>
+                                <asp:LinkButton ID="LinkBodega1" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton6_Click" CssClass="auto-style12">ABONOS</asp:LinkButton>
                             </td>
                     </tr>
                     <tr>

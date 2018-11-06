@@ -26,6 +26,7 @@ public class Producto: IEquatable<Producto>
     private long cantidad;
     private double talla;
     private double precio;
+    private double valorTotal;
     private int entregado;
 
 
@@ -35,10 +36,13 @@ public class Producto: IEquatable<Producto>
     public double Precio { get => precio; set => precio = value; }
     public int Idproducto { get => idproducto; set => idproducto = value; }
     public int Entregado { get => entregado; set => entregado = value; }
+    
+    public double ValorTotal { get => valorTotal; set => valorTotal = value; }
 
     bool IEquatable<Producto>.Equals(Producto other)
     {
-        if(this.ReferenciaProducto == other.ReferenciaProducto && this.Talla == other.Talla )
+        if(this.ReferenciaProducto == other.ReferenciaProducto && this.Talla == other.Talla 
+            && this.Idproducto == other.Idproducto)
         {
             return true;
         }

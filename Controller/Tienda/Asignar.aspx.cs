@@ -27,6 +27,11 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         get { return Session["idPed"] as String; }
         set { Session["idPed"] = value; }
     }
+    List<Asignacion> listaAsignacion
+    {
+        get { return Session["asignacionl"] as List<Asignacion>; }
+        set { Session["asignacionl"] = value; }
+    }
 
     protected void B_Asignar_Click(object sender, EventArgs e)
     {
@@ -177,8 +182,6 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         int cont = 0;
         if (GV_Pedidos.Rows.Count > 0)
         {
-
-
             foreach (GridViewRow row in GV_Pedidos.Rows)
             {
                 cont++;
@@ -211,7 +214,6 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                             {
                                 d.crearAsignacion(asignacion);
                             }
-
                             DataTable id = new DataTable();
                             id = d.verUltimoId2();
                             if (id.Rows.Count > 0)
@@ -222,9 +224,6 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                                 }
                                 d.crearAsignaciones(asignacion, pedido.Idpedido);
                                 d.editarCantidad(producto.Idproducto, (asignacion.Cantidad + producto.Entregado));
-                                d.actualizarPedido(true, idPedi);
-                                
-
 #pragma warning disable CS0618 // Type or member is obsolete
                                 RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Pedido Asignado.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -233,6 +232,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                         else
                         {
 #pragma warning disable CS0618 // Type or member is obsolete
+
                             RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('En la sede principal deben quedar al menos 5 productos.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
                             return;
@@ -243,8 +243,6 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 #pragma warning disable CS0618 // Type or member is obsolete
                         RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('La cantidad de productos a asignar debe ser menor a la que esta en bodega. ');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
-
-
                     }
                 }
                 else
@@ -253,9 +251,9 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                     RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay productos con esta descripción en la bodega validar. ');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
                     return;
-                }
-                
+                }                
             }
+            d.actualizarPedido(true, idPedi);
             GV_Pedido.DataBind();
             GV_Pedidos.DataBind();
             GV_ProductosBodega.DataBind();
@@ -270,7 +268,6 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         GV_Pedido.DataBind();
         GV_Pedidos.DataBind();
         GV_ProductosBodega.DataBind();
-
     }
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)

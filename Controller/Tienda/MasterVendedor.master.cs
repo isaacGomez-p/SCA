@@ -10,7 +10,8 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["user_id"] == null || Session["clave"] == null || Convert.ToInt32(Session["rol_id"]) != 3)
+        
+        if (Session["nombre"] == null || Session["clave"] == null || Convert.ToInt32(Session["rol_id"]) != 3)
         {
             Response.Redirect("../Login-Rec/NuevoLogin.aspx");
         }
@@ -18,6 +19,7 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
         {
             Label_usuario.Text = Session["nombre"].ToString();
             Label_Sede.Text = Session["sede"].ToString();
+            L_Rol.Text = Session["rol_id"].ToString();
         }
 
     }
@@ -29,7 +31,7 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
 
     protected void LinkBodega_Click(object sender, EventArgs e)
     {
-        Response.Redirect("NuevoAbono.aspx");
+        Response.Redirect("Bodega.aspx");
     }
 
     protected void LinkButton3_Click(object sender, EventArgs e)
@@ -37,7 +39,23 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
         Response.Redirect("CRUDCliente.aspx");
     }
 
-   
+    protected void LinkButton4_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("VerVentas.aspx");
+    }
+
+    protected void LinkButton5_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("VerClientes.aspx");
+    }
+
+    protected void LinkButton6_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("NuevoAbono.aspx");
+    }
+
+
+
 
     void cerrarSesion()
     {

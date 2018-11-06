@@ -992,7 +992,7 @@ public class DAOUsuario
         }
         catch (Exception Ex)
         {
-            throw Ex;
+                throw Ex;
         }
         finally
         {
@@ -1671,4 +1671,181 @@ public class DAOUsuario
         return cantidad;
     }
 
+    public double traePrecio(string refe, double talla)
+    {
+        DataTable preciod = new DataTable();
+        double precio = 0;
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_traerprecio", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_ref", NpgsqlDbType.Text).Value = refe;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = talla;
+
+            conection.Open();
+            dataAdapter.Fill(preciod);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        if(preciod.Rows.Count > 0)
+        {
+            foreach(DataRow row in preciod.Rows)
+            {
+                precio = Convert.ToDouble(row["f_traerprecio"]);
+            }
+        }
+        else
+        {
+            precio = 0;
+        }
+        return precio;
+    }
+
+    public DataTable buscarCliente(int cedula)
+    {
+        DataTable cliente = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_buscarcliente", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = cedula;
+            conection.Open();
+            dataAdapter.Fill(cliente);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return cliente;
+    }
+
+    public void crearVenta(Venta venta, string venta1)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_crearventa", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+
+            dataAdapter.SelectCommand.Parameters.Add("_idvendedor", NpgsqlDbType.Text).Value = venta.Idvendedor;
+            dataAdapter.SelectCommand.Parameters.Add("_idcliente", NpgsqlDbType.Text).Value = venta.Idcliente;
+            dataAdapter.SelectCommand.Parameters.Add("_descripcion", NpgsqlDbType.Json).Value = venta1;
+            dataAdapter.SelectCommand.Parameters.Add("_fecha", NpgsqlDbType.Text).Value = venta.Fecha;
+            dataAdapter.SelectCommand.Parameters.Add("_precio", NpgsqlDbType.Double).Value = venta.Precio;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable actualizarInventario(Producto producto, string sede)
+    {
+        DataTable productos = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_actualizarinventario", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_referencia", NpgsqlDbType.Text).Value = producto.ReferenciaProducto;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = producto.Talla;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Integer).Value = producto.Cantidad;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = sede;
+
+            conection.Open();
+            dataAdapter.Fill(productos);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return productos;
+
+    }
+
+    public bool validarCantidad(Producto producto, string sede)
+    {
+        DataTable a = new DataTable();
+        bool b = false;
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_validarcantidad", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_referencia", NpgsqlDbType.Text).Value = producto.ReferenciaProducto;
+            dataAdapter.SelectCommand.Parameters.Add("_talla", NpgsqlDbType.Double).Value = producto.Talla;
+            dataAdapter.SelectCommand.Parameters.Add("_cantidad", NpgsqlDbType.Integer).Value = producto.Cantidad;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = sede;
+
+            conection.Open();
+            dataAdapter.Fill(a);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        if(a.Rows.Count > 0)
+        {
+            foreach (DataRow row in a.Rows)
+            {
+                b = Convert.ToBoolean(row["f_validarcantidad"]);
+            }
+        }
+        
+        return b;
+
+    }
 }
+

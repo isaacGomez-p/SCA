@@ -58,7 +58,7 @@ public partial class View_NuevoLogin : System.Web.UI.Page
             Session["rol_id"] = data.Rows[0]["rol_id"].ToString();
             Session["nombre"] = data.Rows[0]["nombre"].ToString();
             Session["sede"] = data.Rows[0]["sede"].ToString();
-            Session["rol_id"] = data.Rows[0]["rol_id"].ToString();
+            
 
 
             EUsuario datosUsuario = new EUsuario();

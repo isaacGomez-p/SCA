@@ -111,8 +111,7 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
             pedido.Sede = Convert.ToString(Session["sede"]);
             pedido.Fecha = fechaHoy.ToString("d");
             pedido.Estado = false;
-            //dao.crearPedido(pedido);
-
+            
             DataTable id = new DataTable();
             id = dao.verUltimoId();
 
@@ -122,6 +121,7 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
                 {
                     pedido.Idpedido = Convert.ToInt32(row["f_verultimoid"]);
                 }
+                dao.crearPedido(pedido);
                 foreach(Asignacion pedid in pedidos)
                 {
                     Asignacion temp = (Asignacion)pedid;
