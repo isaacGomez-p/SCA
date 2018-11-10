@@ -31,7 +31,7 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
 
     protected void LinkBodega_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Bodega.aspx");
+        Response.Redirect("BodegaVendedor.aspx");
     }
 
     protected void LinkButton3_Click(object sender, EventArgs e)
@@ -46,7 +46,7 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
 
     protected void LinkButton5_Click(object sender, EventArgs e)
     {
-        Response.Redirect("VerClientes.aspx");
+        Response.Redirect("ReportesVendedor.aspx");
     }
 
     protected void LinkButton6_Click(object sender, EventArgs e)

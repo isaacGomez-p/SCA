@@ -32,6 +32,11 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         get { return Session["asignacionl"] as List<Asignacion>; }
         set { Session["asignacionl"] = value; }
     }
+    List<Asignacion> listaAsignacion2
+    {
+        get { return Session["asignacion2"] as List<Asignacion>; }
+        set { Session["asignacion2"] = value; }
+    }
 
     protected void B_Asignar_Click(object sender, EventArgs e)
     {
@@ -155,15 +160,19 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
     {
 
     }
-       
+
     protected void GV_Pedido_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName.Equals("Select"))
         {
             DAOUsuario dAO = new DAOUsuario();
             DataTable detalle = new DataTable();
+            DataTable ped = new DataTable();
+            ped = dAO.verPedido(Convert.ToInt32(e.CommandArgument));
             detalle = dAO.verPedidos(Convert.ToInt32(e.CommandArgument));
             Session["idPed"] = Convert.ToString(e.CommandArgument);
+            string sed = Convert.ToString(ped.Rows[0]["sede"]);
+            Session["sedePedido"] = ped.Rows[0]["sede"];
             GV_Pedidos.DataSource = detalle;
             GV_Pedidos.DataBind();
             
@@ -176,7 +185,8 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         DAOUsuario d = new DAOUsuario();
         Producto producto = new Producto();
         Pedido pedido = new Pedido();
-
+        
+        Session["asignacion2"] = null;
         int cantBodega = 0;
         int idPedi = Convert.ToInt32(Session["idPed"]);
         int cont = 0;
@@ -197,7 +207,9 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                     {
                         cantBodega = Convert.ToInt32(ro["cantidad"]);
                         producto.Entregado = Convert.ToInt32(ro["entregado"]);
+                        Session["entregado"] = producto.Entregado;
                         producto.Idproducto = Convert.ToInt32(ro["idproducto"]);
+                        Session["idproducto"] = producto.Idproducto;
                         cantBodega = cantBodega - producto.Entregado;
                     }
                     if (asignacion.Cantidad < cantBodega)
@@ -208,32 +220,26 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                             DateTime fechaHoy = DateTime.Now;
                             asignacion.Fecha = fechaHoy.ToString("d");
                             asignacion.Estado = false;
-                            
-                            asignacion.Sede = Convert.ToString(Session["sede"]);
-                            if (cont == 1)
+                            asignacion.Sede = Convert.ToString(Session["sedePedido"]);
+
+                            if (Session["asignacion2"] == null)
                             {
-                                d.crearAsignacion(asignacion);
+                                listaAsignacion2 = new List<Asignacion>();
+                                listaAsignacion2.Add(asignacion);
+                                Session["asignacion2"] = listaAsignacion2;
                             }
-                            DataTable id = new DataTable();
-                            id = d.verUltimoId2();
-                            if (id.Rows.Count > 0)
+                            else
                             {
-                                foreach (DataRow ff in id.Rows)
-                                {
-                                    pedido.Idpedido = Convert.ToInt32(ff["f_verultimoid2"]);
-                                }
-                                d.crearAsignaciones(asignacion, pedido.Idpedido);
-                                d.editarCantidad(producto.Idproducto, (asignacion.Cantidad + producto.Entregado));
-#pragma warning disable CS0618 // Type or member is obsolete
-                                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Pedido Asignado.');</script>");
-#pragma warning restore CS0618 // Type or member is obsolete
+                                listaAsignacion2 = (Session["asignacion2"] as List<Asignacion>);
+                                listaAsignacion2.Add(asignacion);
+                                Session["asignacion2"] = listaAsignacion2;
                             }
                         }
                         else
                         {
 #pragma warning disable CS0618 // Type or member is obsolete
 
-                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('En la sede principal deben quedar al menos 5 productos.');</script>");
+                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('En la sede principal deben quedar al menos 5 productos. Revise el producto Referencia:"+asignacion.Referencia+" y talla "+asignacion.Talla+"');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
                             return;
                         }
@@ -243,17 +249,87 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 #pragma warning disable CS0618 // Type or member is obsolete
                         RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('La cantidad de productos a asignar debe ser menor a la que esta en bodega. ');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
+                        return;
                     }
                 }
+
                 else
                 {
 #pragma warning disable CS0618 // Type or member is obsolete
                     RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay productos con esta descripción en la bodega validar. ');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
                     return;
-                }                
+                }
             }
-            d.actualizarPedido(true, idPedi);
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('El pedido esta listo para ser enviado.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+        if (Session["asignacion2"].Equals(null) == false)
+        {
+            Button2.Enabled = true;
+            Button3.Enabled = false;
+        }
+            
+            GV_Pedido.DataBind();
+            GV_Pedidos.DataBind();
+            GV_ProductosBodega.DataBind();
+    }
+
+    
+  
+    
+
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void Button2_Click1(object sender, EventArgs e)
+    {
+        if(Session["asignacion2"].Equals(null) == false)
+        {
+            this.ingresarBD();
+        }
+        else
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('La variable de sesión esta nula.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+    }
+    void ingresarBD()
+    {
+        DAOUsuario d = new DAOUsuario();
+        listaAsignacion2 = (Session["asignacion2"] as List<Asignacion>);
+        
+        int cont = 0;
+        if (listaAsignacion2.Count > 0)
+        {
+            foreach (Asignacion a in listaAsignacion2)
+            {
+                cont++;
+                if (cont == 1)
+                {
+                    d.crearAsignacion(a);
+                }
+                DataTable id = new DataTable();
+                id = d.verUltimoId2();
+                if (id.Rows.Count > 0)
+                {
+                    foreach (DataRow ff in id.Rows)
+                    {
+                        Session["idpedido"] = Convert.ToInt32(ff["f_verultimoid2"]);
+                    }
+                    d.crearAsignaciones(a, Convert.ToInt32(Session["idpedido"]));
+                    d.editarCantidad(Convert.ToInt32(Session["idproducto"]), (a.Cantidad + Convert.ToInt32(Session["entregado"])));
+                    d.actualizarPedido(true, Convert.ToInt32(Session["idpedido"]));
+#pragma warning disable CS0618 // Type or member is obsolete
+                    RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Base de Datos actualizada. Asignación completada.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+                }
+            }
             GV_Pedido.DataBind();
             GV_Pedidos.DataBind();
             GV_ProductosBodega.DataBind();
@@ -261,17 +337,8 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         else
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Seleccione un pedido para asignar. ');</script>");
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay una lista llena para enviar.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
-            return;
         }
-        GV_Pedido.DataBind();
-        GV_Pedidos.DataBind();
-        GV_ProductosBodega.DataBind();
-    }
-
-    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
     }
 }

@@ -9,7 +9,8 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["user_id"] == null || Session["clave"] == null || Convert.ToInt32(Session["rol_id"]) != 2 )
+        
+        if (Session["user_id"] == null || Session["clave"] == null|| Convert.ToInt32(Session["rol_id"]) != 2  )
         {
             this.cerrarSesion();
             Response.Redirect("../Login-Rec/NuevoLogin.aspx");

@@ -9,14 +9,14 @@ using System.Web.UI.WebControls;
 
 public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
 {
-    
+
     Cliente cliente = new Cliente();
     DataTable cli = new DataTable();
     Producto producto = new Producto();
     DataTable cli2 = new DataTable();
     DataTable cli3 = new DataTable();
 
-    
+
 
     private List<Producto> listaVenta
     {
@@ -38,13 +38,13 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
 
         if (!IsPostBack)
         {
             llenarGridView();
         }
-        
+
     }
 
     void llenarGridView()
@@ -54,13 +54,13 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         gri = dao.verInventario(Convert.ToString(Session["sede"]));
 
         GV_VentaPedido.DataSource = gri;
-        GV_VentaPedido.DataBind();   
+        GV_VentaPedido.DataBind();
 
     }
 
     protected void GV_Productos_SelectedIndexChanged(object sender, GridViewPageEventArgs e)
     {
-        
+
     }
 
     protected void B_BuscarCliente_Click(object sender, EventArgs e)
@@ -68,10 +68,10 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         DAOUsuario dao = new DAOUsuario();
         DataTable cliente = new DataTable();
         cliente = dao.buscarCliente(Convert.ToInt32(TB_BuscarCliente.Text));
-        if(cliente.Rows.Count > 0)
+        if (cliente.Rows.Count > 0)
         {
             L_InfoCliente.Text = "Se ha encontrado el cliente";
-            foreach(DataRow row in cliente.Rows)
+            foreach (DataRow row in cliente.Rows)
             {
                 TB_Nombre.Text = Convert.ToString(row["nombre"]);
                 TB_Apellido.Text = Convert.ToString(row["apellido"]);
@@ -82,13 +82,13 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         {
             L_InfoCliente.Text = "El cliente no se encuentra en la base de datos";
         }
-        
+
     }
 
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        
+
 
     }
 
@@ -99,7 +99,7 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         Session["l"] = null;
         DAOUsuario dAO = new DAOUsuario();
         int cont = 0;
-        foreach(GridViewRow row in GV_VentaPedido.Rows)
+        foreach (GridViewRow row in GV_VentaPedido.Rows)
         {
             Producto producto = new Producto();
             if (((TextBox)row.Cells[2].FindControl("TB_Cantidad")).Text == "")
@@ -157,7 +157,7 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
                 }
             }
         }
-        if(cont == 0)
+        if (cont == 0)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay productos para añadir a la venta.');</script>");
@@ -167,7 +167,7 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         else
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Se han añadido "+cont+" productos a la venta.');</script>");
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Se han añadido " + cont + " productos a la venta.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
 
 
@@ -200,10 +200,10 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
             }
             Response.Write("El valor de esta venta es de:" + precioTotal);
             Session["valorVenta"] = Convert.ToString(precioTotal);
-            
+
         }
-        
-        
+
+
     }
 
     void actualizarGV_Venta()
@@ -215,11 +215,16 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         if (Session["valorVenta"] != null)
         {
             //TextBox total = new TextBox();
-            /*total =*/ ((TextBox)GV_Venta.FooterRow.FindControl("TB_TotalVenta")).Text = Session["valorVenta"].ToString();
+            /*total =*/
+            ((TextBox)GV_Venta.FooterRow.FindControl("TB_TotalVenta")).Text = Session["valorVenta"].ToString();
             //total.Text = Session["valorVenta"].ToString();
         }
     }
 
+    void irAFactura()
+    {
+        Response.Redirect("../Tienda/VistaFactura.aspx");
+    }
 
     protected void B_Facturar_Click(object sender, EventArgs e)
     {
@@ -241,9 +246,11 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
                 venta.Producto = (Session["l"] as List<Producto>);
                 venta.Fecha = fechaHoy.ToString("d");
                 venta.Precio = Convert.ToDouble(Session["valorVenta"]);
-                dAO.crearVenta(venta, JsonConvert.SerializeObject(venta));
+                venta.Sede = Convert.ToString(Session["sede"]);
+                dAO.crearVenta(venta, JsonConvert.SerializeObject(venta.Producto));
                 actualizarInventario();
                 reiniciar();
+                this.irAFactura();
 
             }
         }
@@ -327,5 +334,34 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
         TB_Apellido.Text = "";
         L_InfoCliente.Text = "";
 
+    }
+
+    protected void B_Abono_Click(object sender, EventArgs e)
+    {
+        
+        if (Session["idCliente"] == null)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Elija un cliente para la venta.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+        else
+        {
+            if (Session["l"] != null && Session["valorVenta"] != null)
+            {
+                DAOUsuario dAO = new DAOUsuario();
+                Abono venta = new Abono();
+                DateTime fechaHoy = DateTime.Now;
+                venta.Idcliente = Convert.ToInt32(Session["idCliente"]);
+                venta.Producto = (Session["l"] as List<Producto>);
+                venta.Fecha = fechaHoy.ToString("d");
+                venta.Precio = Convert.ToDouble(Session["valorVenta"]);
+                venta.Sede = Convert.ToString(Session["sede"]);
+                dAO.crearAbono(venta, JsonConvert.SerializeObject(venta.Producto));
+                actualizarInventario();
+                reiniciar();
+
+            }
+        }
     }
 }
