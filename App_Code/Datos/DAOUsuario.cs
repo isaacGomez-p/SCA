@@ -734,6 +734,7 @@ public class DAOUsuario
                 conection.Close();
             }
         }
+
     }
 
     public void crearProducto(Producto producto)
@@ -1092,6 +1093,7 @@ public class DAOUsuario
             }
         }
     }
+<<<<<<< Updated upstream
 
     public void crearPedido(Pedido pedido)
     {
@@ -1369,10 +1371,16 @@ public class DAOUsuario
     public DataTable actualizarAsignacion(bool estado, int idpedido)
     {
         DataTable productos = new DataTable();
+=======
+    public DataTable ObtenerDatos(String cedula)
+    {
+        DataTable datos = new DataTable();
+>>>>>>> Stashed changes
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
 
         try
         {
+<<<<<<< Updated upstream
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_actualizarasignacion", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
@@ -1438,6 +1446,14 @@ public class DAOUsuario
 
             conection.Open();
             dataAdapter.Fill(usuario);
+=======
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_obtener_datos", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = cedula;
+
+            conection.Open();
+            dataAdapter.Fill(datos);
+>>>>>>> Stashed changes
         }
         catch (Exception Ex)
         {
@@ -1450,16 +1466,26 @@ public class DAOUsuario
                 conection.Close();
             }
         }
+<<<<<<< Updated upstream
         return usuario;
     }
 
     public DataTable traerClientes()
     {
         DataTable cliente = new DataTable();
+=======
+        return datos;
+    }
+
+    public void crearUsuario(Usuario usuario)
+    {
+        DataTable usuarios = new DataTable();
+>>>>>>> Stashed changes
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
 
         try
         {
+<<<<<<< Updated upstream
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_obtener_cliente_solo", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
@@ -1492,6 +1518,26 @@ public class DAOUsuario
 
             conection.Open();
             dataAdapter.Fill(producto);
+=======
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("usuario.f_insertar_usuario", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = usuario.Cedula;
+            dataAdapter.SelectCommand.Parameters.Add("_nombre", NpgsqlDbType.Text).Value = usuario.Nombre;
+            dataAdapter.SelectCommand.Parameters.Add("_clave", NpgsqlDbType.Text).Value = usuario.Clave;
+            dataAdapter.SelectCommand.Parameters.Add("_direccion", NpgsqlDbType.Text).Value = usuario.Direccion;
+            dataAdapter.SelectCommand.Parameters.Add("_telefono", NpgsqlDbType.Integer).Value = usuario.Telefono;
+            dataAdapter.SelectCommand.Parameters.Add("_sexo", NpgsqlDbType.Text).Value = usuario.Sexo;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = usuario.Sede;
+            dataAdapter.SelectCommand.Parameters.Add("_correo", NpgsqlDbType.Text).Value = usuario.Correo;
+            dataAdapter.SelectCommand.Parameters.Add("_estado", NpgsqlDbType.Integer).Value = usuario.Estado;
+            dataAdapter.SelectCommand.Parameters.Add("_session", NpgsqlDbType.Text).Value = usuario.Session;
+            dataAdapter.SelectCommand.Parameters.Add("_rol_id", NpgsqlDbType.Integer).Value = usuario.Rol;
+            dataAdapter.SelectCommand.Parameters.Add("_last_modified", NpgsqlDbType.Date).Value = usuario.Time;
+
+            conection.Open();
+            dataAdapter.Fill(usuarios);
+>>>>>>> Stashed changes
         }
         catch (Exception Ex)
         {
@@ -1504,22 +1550,39 @@ public class DAOUsuario
                 conection.Close();
             }
         }
+<<<<<<< Updated upstream
         return producto;
     }
 
     public DataTable traerProductoss(string sede)
     {
         DataTable producto = new DataTable();
+=======
+    }
+
+    public DataTable verUsuariosEditar(int refe)
+    {
+        DataTable usuarios = new DataTable();
+>>>>>>> Stashed changes
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
 
         try
         {
+<<<<<<< Updated upstream
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_obtener_productoss_solo", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
             dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = sede;
 
             conection.Open();
             dataAdapter.Fill(producto);
+=======
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verusuarioseditar", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = refe;
+
+            conection.Open();
+            dataAdapter.Fill(usuarios);
+>>>>>>> Stashed changes
         }
         catch (Exception Ex)
         {
@@ -1532,6 +1595,7 @@ public class DAOUsuario
                 conection.Close();
             }
         }
+<<<<<<< Updated upstream
         return producto;
     }
 
@@ -1566,10 +1630,20 @@ public class DAOUsuario
     {
         DataTable cliente = new DataTable();
         double pe = 0;
+=======
+        return usuarios;
+
+    }
+
+    public void editarUsuario(Usuario usuario)
+    {
+        DataTable usuarios = new DataTable();
+>>>>>>> Stashed changes
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
 
         try
         {
+<<<<<<< Updated upstream
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_precioproducto", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
             dataAdapter.SelectCommand.Parameters.Add("_referencia", NpgsqlDbType.Text).Value = refe;
@@ -1617,6 +1691,25 @@ public class DAOUsuario
 
             conection.Open();
             dataAdapter.Fill(sedes);
+=======
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("usuario.f_editar_usuario", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = usuario.Cedula;
+            dataAdapter.SelectCommand.Parameters.Add("_nombre", NpgsqlDbType.Text).Value = usuario.Nombre;
+            dataAdapter.SelectCommand.Parameters.Add("_clave", NpgsqlDbType.Text).Value = usuario.Clave;
+            dataAdapter.SelectCommand.Parameters.Add("_direccion", NpgsqlDbType.Text).Value = usuario.Direccion;
+            dataAdapter.SelectCommand.Parameters.Add("_telefono", NpgsqlDbType.Integer).Value = usuario.Telefono;
+            dataAdapter.SelectCommand.Parameters.Add("_sexo", NpgsqlDbType.Text).Value = usuario.Sexo;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = usuario.Sede;
+            dataAdapter.SelectCommand.Parameters.Add("_correo", NpgsqlDbType.Text).Value = usuario.Correo;
+            dataAdapter.SelectCommand.Parameters.Add("_estado", NpgsqlDbType.Integer).Value = usuario.Estado;
+            dataAdapter.SelectCommand.Parameters.Add("_session", NpgsqlDbType.Text).Value = usuario.Session;
+            dataAdapter.SelectCommand.Parameters.Add("_rol_id", NpgsqlDbType.Integer).Value = usuario.Rol;
+
+
+            conection.Open();
+            dataAdapter.Fill(usuarios);
+>>>>>>> Stashed changes
         }
         catch (Exception Ex)
         {
@@ -1629,6 +1722,7 @@ public class DAOUsuario
                 conection.Close();
             }
         }
+<<<<<<< Updated upstream
         return sedes;
     }
 
@@ -1636,10 +1730,18 @@ public class DAOUsuario
     {
         DataTable sedes = new DataTable();
         int cantidad = 0;
+=======
+    }
+
+    public DataTable verUsuarios()
+    {
+        DataTable usuarios = new DataTable();
+>>>>>>> Stashed changes
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
 
         try
         {
+<<<<<<< Updated upstream
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_notificarasignaciones", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
@@ -1685,6 +1787,14 @@ public class DAOUsuario
 
             conection.Open();
             dataAdapter.Fill(cliente);
+=======
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_verusuarios", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+
+            conection.Open();
+            dataAdapter.Fill(usuarios);
+>>>>>>> Stashed changes
         }
         catch (Exception Ex)
         {
@@ -1697,6 +1807,7 @@ public class DAOUsuario
                 conection.Close();
             }
         }
+<<<<<<< Updated upstream
         return cliente;
     }
 
@@ -1782,4 +1893,33 @@ public class DAOUsuario
         }
         return cliente;
     }
+=======
+        return usuarios;
+
+    }
+
+    public List<Usuario> CedulaUsuario()
+    {
+        DataTable usuarios = verUsuarios();
+        List<Usuario> referencias = new List<Usuario>();
+        foreach (DataRow row in usuarios.Rows)
+        {
+            Usuario usu = new Usuario();
+            usu.Cedula = Convert.ToInt32(row["cedula"]);
+            usu.Nombre = Convert.ToString(row["nombre"]);
+            usu.Clave = Convert.ToString(row["clave"]);
+            usu.Direccion = Convert.ToString(row["direccion"]);
+            usu.Telefono = Convert.ToInt32(row["telefono"]);
+            usu.Sexo = Convert.ToString(row["sexo"]);
+            usu.Sede = Convert.ToString(row["sede"]);
+            usu.Correo = Convert.ToString(row["correo"]);
+            usu.Estado = Convert.ToInt32(row["estado"]);
+            usu.Session = Convert.ToString(row["session"]);
+            usu.Rol = Convert.ToInt32(row["rol_id"]);
+            referencias.Add(usu);
+        }
+        return referencias;
+    }
+
+>>>>>>> Stashed changes
 }

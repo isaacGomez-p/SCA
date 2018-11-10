@@ -68,7 +68,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="auto-style10">&nbsp;</td>
+                        <td class="auto-style10">
+                            <asp:Label ID="L_Nombre" runat="server" Text="Nombre"></asp:Label>
+                        </td>
                     </tr>
                     <tr>
                         <td class="auto-style10">

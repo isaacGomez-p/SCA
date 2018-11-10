@@ -104,4 +104,6 @@ public partial class View_NuevoLogin : System.Web.UI.Page
     {
         Response.Redirect("GenerarToken.aspx");
     }
+
+    
 }

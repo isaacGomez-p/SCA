@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -20,6 +21,13 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
             Label_Sede.Text = Session["sede"].ToString();
         }
 
+        string cedula = Session["user_id"].ToString();
+        d3 = dao.ObtenerDatos(cedula);
+
+        Session["nombre"] = d3.Rows[0]["nombre"].ToString();
+        Session["sede"] = d3.Rows[0]["sede"].ToString();
+        L_Nombre.Text = Session["nombre"].ToString();
+        Label_Sede.Text = Session["sede"].ToString();
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)

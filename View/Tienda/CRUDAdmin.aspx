@@ -1,3 +1,4 @@
+                </asp:DropDownList>
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterSuperAdmin.master" AutoEventWireup="true" CodeFile="~/Controller/Tienda/CRUDAdmin.aspx.cs" Inherits="View_Tienda_CRUDAdmin" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
