@@ -163,7 +163,8 @@ public class DAOUsuario
             dataAdapter.SelectCommand.Parameters.Add("_direccion", NpgsqlDbType.Text).Value = cliente.Direccion;
             dataAdapter.SelectCommand.Parameters.Add("_telefono", NpgsqlDbType.Integer).Value = cliente.Telefono;
             dataAdapter.SelectCommand.Parameters.Add("_sexo", NpgsqlDbType.Text).Value = cliente.Sexo;
-            
+            dataAdapter.SelectCommand.Parameters.Add("_estado", NpgsqlDbType.Integer).Value = cliente.Estado;
+
 
             conection.Open();
             dataAdapter.Fill(Cliente);
@@ -214,16 +215,16 @@ public class DAOUsuario
 
     }
 
-    public void eliminarCliente(Cliente cliente)
+    public void eliminarCliente(int cedula)
     {
         DataTable Cliente = new DataTable();
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
 
         try
         {
-            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.eliminar_cliente", conection);
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_editar_eliminacion_cliente", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = cliente.Cedula;
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = cedula;
 
 
             conection.Open();
@@ -242,16 +243,16 @@ public class DAOUsuario
         }
     }
 
-    public void eliminarUsuario(Usuario usuario)
+    public void eliminarUsuario(string cedula)
     {
         DataTable Usuario = new DataTable();
         NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
 
         try
         {
-            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("usuario.eliminar_usuario", conection);
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("usuario.f_editar_eliminacion", conection);
             dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = usuario.Cedula;
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = cedula;
             
 
             conection.Open();
@@ -1671,4 +1672,114 @@ public class DAOUsuario
         return cantidad;
     }
 
+    public DataTable traerUsuarios2(string sede)
+    {
+        DataTable cliente = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("usuario.f_obtener_usuarios_solos", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_sede", NpgsqlDbType.Text).Value = sede;
+
+            conection.Open();
+            dataAdapter.Fill(cliente);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return cliente;
+    }
+
+    public void agregarUsuarioNuevamente(string cedula)
+    {
+        DataTable Usuario = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("usuario.f_editar_reingresar", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = cedula;
+
+
+            conection.Open();
+            dataAdapter.Fill(Usuario);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public void agregarClienteNuevamente(string cedula)
+    {
+        DataTable Usuario = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_editar_reingresar_cliente", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            dataAdapter.SelectCommand.Parameters.Add("_cedula", NpgsqlDbType.Integer).Value = cedula;
+
+
+            conection.Open();
+            dataAdapter.Fill(Usuario);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+    }
+
+    public DataTable traerCLientes2()
+    {
+        DataTable cliente = new DataTable();
+        NpgsqlConnection conection = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Postgres"].ConnectionString);
+
+        try
+        {
+            NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter("tienda.f_obtener_clientes_solos", conection);
+            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            conection.Open();
+            dataAdapter.Fill(cliente);
+        }
+        catch (Exception Ex)
+        {
+            throw Ex;
+        }
+        finally
+        {
+            if (conection != null)
+            {
+                conection.Close();
+            }
+        }
+        return cliente;
+    }
 }
