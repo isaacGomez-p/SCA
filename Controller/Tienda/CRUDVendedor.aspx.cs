@@ -16,7 +16,7 @@ public partial class View_Tienda_CRUDVendedor : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        usu = dao.traerUsuarios2(Session["sede"].ToString());
+        usu = dao.traerUsuarios();
         GV_Productos.DataSource = usu;
         GV_Productos.DataBind();
         sedess = dao.traerSedes();
@@ -44,7 +44,7 @@ public partial class View_Tienda_CRUDVendedor : System.Web.UI.Page
                 DropDownList1.Items.Add(usu.Rows[i]["cedula"].ToString());
             }
         }
-        TB_Rol.Text = "3";
+        TB_Rol.Text = "2";
     }
 
     protected void B_Agregar_Click(object sender, EventArgs e)
@@ -59,55 +59,32 @@ public partial class View_Tienda_CRUDVendedor : System.Web.UI.Page
                 {
                     if (validarNumeros(TB_Cedula.Text) == true)
                     {
-                        if (validarCedula() == true)
-                        {
-                            
-                                usuario.Cedula = int.Parse(TB_Cedula.Text);
-                                usuario.Nombre = TB_Nombre.Text;
-                                usuario.Clave = TB_Clave.Text;
-                                usuario.Direccion = TB_Direccion.Text;
-                                usuario.Telefono = int.Parse(TB_Telefono.Text);
-                                usuario.Sexo = TB_Sexo.Text;
-                                usuario.Sede = D_Sedes.SelectedValue;
-                                usuario.Correo = TB_Correo.Text;
-                                usuario.Estado = 1;
-                                usuario.Session = "hola";
-                                usuario.RolId = int.Parse(TB_Rol.Text);
-                                usuario.LastModified = DateTime.Now;
+                        usuario.Cedula = int.Parse(TB_Cedula.Text);
+                        usuario.Nombre = TB_Nombre.Text;
+                        usuario.Clave = TB_Clave.Text;
+                        usuario.Direccion = TB_Direccion.Text;
+                        usuario.Telefono = int.Parse(TB_Telefono.Text);
+                        usuario.Sexo = TB_Sexo.Text;
+                        usuario.Sede = D_Sedes.SelectedValue;
+                        usuario.Correo = TB_Correo.Text;
+                        usuario.Estado = 1;
+                        usuario.Session = "hola";
+                        usuario.RolId = int.Parse(TB_Rol.Text);
+                        usuario.LastModified = DateTime.Now;
 
-                                dao.CrearUsuario(usuario);
+                        dao.CrearUsuario(usuario);
 
-                                TB_Cedula.Text = "";
-                                TB_Nombre.Text = "";
-                                TB_Clave.Text = "";
-                                TB_Direccion.Text = "";
-                                TB_Telefono.Text = "";
-                                TB_Correo.Text = "";
+                        TB_Cedula.Text = "";
+                        TB_Nombre.Text = "";
+                        TB_Clave.Text = "";
+                        TB_Direccion.Text = "";
+                        TB_Telefono.Text = "";
+                        TB_Correo.Text = "";
 
-                                usu = dao.traerUsuarios2(Session["sede"].ToString());
-                                GV_Productos.DataSource = usu;
-                                GV_Productos.DataBind();
-                                DropDownList1.Items.Add(TB_Cedula.Text);
-                        }
-                        else
-                        {
-                            dao.agregarUsuarioNuevamente(TB_Cedula.Text);
-                            usu = dao.traerUsuarios2(Session["sede"].ToString());
-                            GV_Productos.DataSource = usu;
-                            GV_Productos.DataBind();
-                            DropDownList1.Items.Add(TB_Cedula.Text);
-
-                            TB_Cedula.Text = "";
-                            TB_Nombre.Text = "";
-                            TB_Clave.Text = "";
-                            TB_Direccion.Text = "";
-                            TB_Telefono.Text = "";
-                            TB_Correo.Text = "";
-
-#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
-                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Este usuario ya existe.');</script>");
-#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
-                        }
+                        usu = dao.traerUsuarios();
+                        GV_Productos.DataSource = usu;
+                        GV_Productos.DataBind();
+                        DropDownList1.Items.Add(TB_Cedula.Text);
                     }
                     else
                     {
@@ -191,7 +168,7 @@ public partial class View_Tienda_CRUDVendedor : System.Web.UI.Page
                     TB_Telefono0.Text = "";
                     TB_Correo0.Text = "";
 
-                    usu = dao.traerUsuarios2(Session["sede"].ToString());
+                    usu = dao.traerUsuarios();
                     GV_Productos.DataSource = usu;
                     GV_Productos.DataBind();
                     DropDownList1.Items.Add(TB_Cedula.Text);
@@ -222,9 +199,9 @@ public partial class View_Tienda_CRUDVendedor : System.Web.UI.Page
     {
         Usuario usuario3 = new Usuario();
         usuario3.Cedula = int.Parse(DropDownList1.SelectedItem.ToString());
-        dao.eliminarUsuario(DropDownList1.SelectedItem.ToString());
+        dao.eliminarUsuario(usuario3);
 
-        usu = dao.traerUsuarios2(Session["sede"].ToString());
+        usu = dao.traerUsuarios();
         GV_Productos.DataSource = usu;
         GV_Productos.DataBind();
         DropDownList1.Items.Remove(DropDownList1.SelectedItem.ToString());
@@ -265,35 +242,5 @@ public partial class View_Tienda_CRUDVendedor : System.Web.UI.Page
         {
             return false;
         }
-    }
-
-    public bool validarCedula()
-    {
-        DataTable cedula = new DataTable();
-
-        cedula = dao.traerUsuarios();
-        for (int i = 0; i < cedula.Rows.Count; i++)
-        {
-            if (cedula.Rows[i]["cedula"].ToString() == TB_Cedula.Text)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public bool validarIngresado()
-    {
-        DataTable cedula = new DataTable();
-
-        cedula = dao.traerUsuarios();
-        for (int i = 0; i < cedula.Rows.Count; i++)
-        {
-            if (cedula.Rows[i]["cedula"].ToString() == TB_Cedula.Text && cedula.Rows[i]["estado"].ToString() == "2")
-            {
-                return false;
-            }
-        }
-        return true;
     }
 }

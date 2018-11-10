@@ -15,7 +15,7 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        cli = dao.traerCLientes2();
+        cli = dao.traerClientes();
         GV_Clientes.DataSource = cli;
         GV_Clientes.DataBind();
 
@@ -43,52 +43,29 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
                     {
                         if (validarNumeros(TB_Telefono.Text) == true)
                         {
-                            if (validarCedula() == true)
-                            {
-                                cliente.Cedula = int.Parse(TB_Cedula.Text);
-                                cliente.Nombre = TB_Nombre.Text;
-                                cliente.Apellido = TB_Apellido.Text;
-                                cliente.Direccion = TB_Direccion.Text;
-                                cliente.Telefono = int.Parse(TB_Telefono.Text);
-                                cliente.Sexo = D_Sexo.SelectedValue;
-                                cliente.Estado = 1;
+                            cliente.Cedula = int.Parse(TB_Cedula.Text);
+                            cliente.Nombre = TB_Nombre.Text;
+                            cliente.Apellido = TB_Apellido.Text;
+                            cliente.Direccion = TB_Direccion.Text;
+                            cliente.Telefono = int.Parse(TB_Telefono.Text);
+                            cliente.Sexo = D_Sexo.SelectedValue;
 
-                                dao.CrearCliente(cliente);
+                            dao.CrearCliente(cliente);
 #pragma warning disable CS0618 // El tipo o el miembro están obsoletos
-                                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Cliente registrado exitosamente.');</script>");
+                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Cliente registrado exitosamente.');</script>");
 #pragma warning restore CS0618 // El tipo o el miembro están obsoletos
 
-                                TB_Cedula.Text = "";
-                                TB_Nombre.Text = "";
-                                TB_Apellido.Text = "";
-                                TB_Direccion.Text = "";
-                                TB_Telefono.Text = "";
+                            TB_Cedula.Text = "";
+                            TB_Nombre.Text = "";
+                            TB_Apellido.Text = "";
+                            TB_Direccion.Text = "";
+                            TB_Telefono.Text = "";
 
-                                cli = dao.traerCLientes2();
-                                GV_Clientes.DataSource = cli;
-                                GV_Clientes.DataBind();
-                                DropDownList1.Items.Add(TB_Cedula.Text);
-                                DropDownList1.DataBind();
-                            }
-                            else
-                            {
-                                dao.agregarClienteNuevamente(TB_Cedula.Text);
-                                cli = dao.traerCLientes2();
-                                GV_Clientes.DataSource = cli;
-                                GV_Clientes.DataBind();
-                                DropDownList1.Items.Add(TB_Cedula.Text);
-
-                                TB_Cedula.Text = "";
-                                TB_Nombre.Text = "";
-                                TB_Apellido.Text = "";
-                                TB_Direccion.Text = "";
-                                TB_Telefono.Text = "";
-
-#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
-                                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('El cliente ya existe.');</script>");
-#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
-                            }
-
+                            cli = dao.traerClientes();
+                            GV_Clientes.DataSource = cli;
+                            GV_Clientes.DataBind();
+                            DropDownList1.Items.Add(TB_Cedula.Text);
+                            DropDownList1.DataBind();
                         }
                         else
                         {
@@ -156,32 +133,30 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
                     {
                         if (validarNumeros(TB_Telefono0.Text) == true)
                         {
-                                Cliente cliente2 = new Cliente();
+                            Cliente cliente2 = new Cliente();
 
-                                cliente2.Cedula = int.Parse(TB_Cedula0.Text);
-                                cliente2.Nombre = TB_Nombre0.Text;
-                                cliente2.Apellido = TB_Apellido0.Text;
-                                cliente2.Direccion = TB_Direccion0.Text;
-                                cliente2.Telefono = int.Parse(TB_Telefono0.Text);
-                                cliente2.Sexo = D_Sexo0.SelectedValue;
+                            cliente2.Cedula = int.Parse(TB_Cedula0.Text);
+                            cliente2.Nombre = TB_Nombre0.Text;
+                            cliente2.Apellido = TB_Apellido0.Text;
+                            cliente2.Direccion = TB_Direccion0.Text;
+                            cliente2.Telefono = int.Parse(TB_Telefono0.Text);
+                            cliente2.Sexo = D_Sexo0.SelectedValue;
 
-                                dao.actualizarCliente(cliente2);
+                            dao.actualizarCliente(cliente2);
 
-                                TB_Cedula0.Text = "";
-                                TB_Nombre0.Text = "";
-                                TB_Apellido0.Text = "";
-                                TB_Direccion0.Text = "";
-                                TB_Telefono0.Text = "";
+                            TB_Cedula0.Text = "";
+                            TB_Nombre0.Text = "";
+                            TB_Apellido0.Text = "";
+                            TB_Direccion0.Text = "";
+                            TB_Telefono0.Text = "";
 
-                                cli = dao.traerCLientes2();
-                                GV_Clientes.DataSource = cli;
-                                GV_Clientes.DataBind();
-                                DropDownList1.Items.Add(TB_Cedula.Text);
-                           
+                            cli = dao.traerClientes();
+                            GV_Clientes.DataSource = cli;
+                            GV_Clientes.DataBind();
+                            DropDownList1.Items.Add(TB_Cedula.Text);
                         }
                         else
                         {
-
 #pragma warning disable CS0618 // El tipo o el miembro están obsoletos
                             RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese el telefono del Cliente correctamente.');</script>");
 #pragma warning restore CS0618 // El tipo o el miembro están obsoletos
@@ -220,10 +195,9 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
     {
         Cliente cliente3 = new Cliente();
         cliente3.Cedula = int.Parse(DropDownList1.SelectedItem.ToString());
+        dao.eliminarCliente(cliente3);
 
-        dao.eliminarCliente(int.Parse(DropDownList1.SelectedItem.ToString()));
-
-        cli = dao.traerCLientes2();
+        cli = dao.traerClientes();
         GV_Clientes.DataSource = cli;
         GV_Clientes.DataBind();
         DropDownList1.Items.Remove(DropDownList1.SelectedItem.ToString());
@@ -264,20 +238,5 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
         {
             return false;
         }
-    }
-
-    public bool validarCedula()
-    {
-        DataTable cedula = new DataTable();
-
-        cedula = dao.traerClientes();
-        for (int i = 0; i < cedula.Rows.Count; i++)
-        {
-            if (cedula.Rows[i]["cedula"].ToString() == TB_Cedula.Text)
-            {
-                return false;
-            }
-        }
-        return true;
     }
 }

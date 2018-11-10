@@ -21,7 +21,6 @@ public class Cliente
     string direccion;
     int telefono;
     string sexo;
-    int estado;
 
     public int Cedula { get => cedula; set => cedula = value; }
     public string Nombre { get => nombre; set => nombre = value; }
@@ -29,5 +28,4 @@ public class Cliente
     public string Direccion { get => direccion; set => direccion = value; }
     public int Telefono { get => telefono; set => telefono = value; }
     public string Sexo { get => sexo; set => sexo = value; }
-    public int Estado { get => estado; set => estado = value; }
 }

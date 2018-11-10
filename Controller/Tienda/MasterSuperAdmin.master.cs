@@ -18,11 +18,9 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
         {
             Label_Usuario.Text = Session["nombre"].ToString();
             L_Sede.Text = Session["sede"].ToString();
-            
         }
 
         this.notificaciones();
-        Response.Redirect("CRUDAdmin.aspx");
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)
