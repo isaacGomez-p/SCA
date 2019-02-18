@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_AgregarSede : System.Web.UI.Page
 {
@@ -39,6 +40,7 @@ public partial class View_Tienda_AgregarSede : System.Web.UI.Page
                     }
                     else
                     {
+                        dAO.editarAgregarSedeNuevamente(sede.NombreSede, sede.Ciudad);
 #pragma warning disable CS0618 // Type or member is obsolete
                         RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ya hay una sede en esta ciudad.  ');</script>");
                         return;
@@ -100,4 +102,6 @@ public partial class View_Tienda_AgregarSede : System.Web.UI.Page
             return true;
         }
     }
+
+   
 }

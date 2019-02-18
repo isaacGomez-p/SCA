@@ -1,10 +1,13 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
 {
@@ -80,7 +83,7 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
                 compara2 = datosAsignaciones;
                 Session["paginar2"] = compara2;
             }
-            if(Session["idAsig"] == null)
+            if (Session["idAsig"] == null)
             {
                 idAsig = Convert.ToString(e.CommandArgument);
                 Session["idAsig"] = idAsig;
@@ -94,7 +97,7 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
     protected void GV_Asignacion_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         GV_Asignacion.PageIndex = e.NewPageIndex;
-        GV_Asignacion.DataSource = (DataTable) Session["paginar"];
+        GV_Asignacion.DataSource = (DataTable)Session["paginar"];
         GV_Asignacion.DataBind();
     }
 
@@ -105,8 +108,11 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
         GV_Asignaciones.DataBind();
     }
 
+
     protected void B_AgregarInventario_Click(object sender, EventArgs e)
     {
+        //this.mensaje();
+        Session["listaDev"] = null;
         DAOUsuario da = new DAOUsuario();
         int idAsignacion = Convert.ToInt32(Session["idAsig"]);
 
@@ -119,19 +125,37 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
         }
         else
         {
-
-
+            List<Inventario> listaDevolucion;
             foreach (GridViewRow fila in GV_Asignaciones.Rows)
             {
                 Inventario inventario = new Inventario();
+                bool dev;
                 inventario.Referencia = Convert.ToString(((Label)fila.Cells[1].FindControl("L_Referencia")).Text);
                 inventario.Talla = Convert.ToDouble(((Label)fila.Cells[2].FindControl("L_Talla")).Text);
                 inventario.Cantidad = Convert.ToInt32(((Label)fila.Cells[3].FindControl("L_Cantidad")).Text);
+                dev = Convert.ToBoolean(((CheckBox)fila.Cells[4].FindControl("CB_Recibido")).Checked);
                 if (inventario.Referencia != null)
                 {
                     inventario.Sede = Convert.ToString(Session["sede"]);
-
-                    da.crearInventario(inventario);
+                    if(dev == true)
+                    {
+                        da.crearInventario(inventario);
+                    }
+                    else if(dev == false)
+                    {
+                        if(Session["listaDev"] == null)
+                        {
+                            listaDevolucion = new List<Inventario>();
+                            listaDevolucion.Add(inventario);
+                            Session["listaDev"] = listaDevolucion;
+                        }
+                        else
+                        {
+                            listaDevolucion = (Session["listaDev"] as List<Inventario>);
+                            listaDevolucion.Add(inventario);
+                            Session["listaDev"] = listaDevolucion;
+                        }                        
+                    }                    
 #pragma warning disable CS0618 // Type or member is obsolete
                     RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Se han añadido los productos al inventario.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -144,11 +168,9 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
                 }
 
             }
-
+            llenarGV_Devoluciones();
             GV_Asignacion.DataBind();
             GV_Asignaciones.DataBind();
-
-
         }
     }
 
@@ -156,4 +178,74 @@ public partial class View_Tienda_RecibirPedido : System.Web.UI.Page
     {
 
     }
+     void llenarGV_Devoluciones()
+    {
+        List<Inventario> inventarios;
+        if(Session["listaDev"] == null)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay productos con conflictos para enviar.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+        else
+        {
+            inventarios = (Session["listaDev"] as List<Inventario>);
+            GV_Devolver.DataSource = inventarios;
+            GV_Devolver.DataBind();
+        }        
+    }
+    
+
+    void imprimir2()
+    {
+        Response.Write("Cancel");
+    }
+
+    [WebMethod]
+    public string OkClick(object sender, EventArgs e)
+    {
+        
+        return "Ok";
+    }
+
+    [WebMethod]
+    public static string CancalClick(object sender, EventArgs e)
+    {
+        return "Cancel";
+    }
+
+    protected void B_Conflicto_Click(object sender, EventArgs e)
+    {
+        DAOUsuario dAO = new DAOUsuario();
+        Pedido devolver = new Pedido();
+        DateTime fechaHoy = DateTime.Now;
+        devolver.Sede = Convert.ToString(Session["sede"]);
+        devolver.Fecha = fechaHoy.ToString("d");
+        devolver.Estado = false;
+        dAO.crearPedido(devolver, TB_Observación.Text);
+        DataTable id = new DataTable();
+        id = dAO.verUltimoId();
+        if (id.Rows.Count > 0)
+        {
+            foreach (DataRow rowe in id.Rows)
+            {
+                devolver.Idpedido = Convert.ToInt32(rowe["f_verultimoid"]);
+            }
+            
+            foreach (GridViewRow row in GV_Devolver.Rows)
+            {
+                Asignacion temp =  new Asignacion();
+                temp.Referencia = Convert.ToString(((Label)row.Cells[0].FindControl("L_Referencia")).Text);
+                temp.Talla = Convert.ToDouble(((Label)row.Cells[1].FindControl("L_Talla")).Text);
+                temp.Cantidad = Convert.ToInt32(((Label)row.Cells[1].FindControl("L_Cantidad")).Text);
+                dAO.crearPedidos(temp, devolver.Idpedido);
+            }
+        }
+        TB_Observación.Text = "";
+        GV_Devolver.DataSource = null;
+        GV_Devolver.DataBind();
+        
+    }
 }
+
+    

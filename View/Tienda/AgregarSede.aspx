@@ -16,7 +16,7 @@
                         <asp:Label ID="Label2" runat="server" Text="Nombre sede:"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="TB_NombreSede" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TB_NombreSede" runat="server" MaxLength="15"></asp:TextBox>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -26,7 +26,7 @@
                         <asp:Label ID="Ciudad" runat="server" Text="Ciudad:"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="TB_Ciudad" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TB_Ciudad" runat="server" MaxLength="15"></asp:TextBox>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -36,7 +36,7 @@
                         <asp:Label ID="Label1" runat="server" Text="Direccion:"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="TB_Direccion" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TB_Direccion" runat="server" MaxLength="15"></asp:TextBox>
                     </td>
                     <td>&nbsp;</td>
                 </tr>

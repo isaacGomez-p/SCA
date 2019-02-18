@@ -122,7 +122,7 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>S</td>
+            <td>&nbsp;</td>
             <td class="auto-style10">
                 <div class="auto-style30">
                 <asp:GridView ID="GV_ProductosBodega" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource4" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4">
@@ -256,10 +256,12 @@
         <tr>
             <td class="auto-style15"></td>
             <td class="auto-style16">
+                <asp:Button ID="Button3" runat="server" Text="Validar" OnClick="Button2_Click" />
                 <asp:Label ID="Label12" runat="server" Text="Label" Visible="False"></asp:Label>
                 <asp:Label ID="Label13" runat="server" Text="Label" Visible="False"></asp:Label>
                 <asp:Label ID="Label14" runat="server" Text="Label" Visible="False"></asp:Label>
-                <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Asignar" />
+                <asp:Button ID="Button2" runat="server" Text="Asignar" Enabled="False" OnClick="Button2_Click1" />
+                <asp:Label ID="Label17" runat="server" Text="Label" Visible="False"></asp:Label>
             </td>
             <td class="auto-style17">
                 &nbsp;</td>
@@ -309,7 +311,7 @@
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                             </EditItemTemplate>
                             <ItemTemplate>
-                                <asp:TextBox ID="TB_Cantidad" runat="server" TextMode="Number">0</asp:TextBox>
+                                <asp:TextBox ID="TB_Cantidad" runat="server" MaxLength="3">0</asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

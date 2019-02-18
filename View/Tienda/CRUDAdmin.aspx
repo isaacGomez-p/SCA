@@ -18,7 +18,7 @@
         <tr>
             <td class="auto-style11">Cedula:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Cedula" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Cedula" runat="server" MaxLength="7"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -26,7 +26,7 @@
         <tr>
             <td class="auto-style11">Nombre:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Nombre" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Nombre" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -34,7 +34,7 @@
         <tr>
             <td class="auto-style11">Clave:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Clave" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Clave" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -42,7 +42,7 @@
         <tr>
             <td class="auto-style11">Direccion:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Direccion" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Direccion" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -50,7 +50,7 @@
         <tr>
             <td class="auto-style11">Telefono:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Telefono" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Telefono" runat="server" MaxLength="12"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -69,7 +69,7 @@
         <tr>
             <td class="auto-style11">Sede:</td>
             <td class="auto-style13">
-                <asp:DropDownList ID="D_Sedes" runat="server">
+                <asp:DropDownList ID="D_Sedes" runat="server" OnSelectedIndexChanged="D_Sedes_SelectedIndexChanged">
                 </asp:DropDownList>
             </td>
             <td class="auto-style12">&nbsp;</td>
@@ -78,16 +78,15 @@
         <tr>
             <td class="auto-style11">Correo:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Correo" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Correo" runat="server" MaxLength="30" TextMode="Email"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style11">Rol:</td>
+            <td class="auto-style11">&nbsp;</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Rol" runat="server" Enabled="False"></asp:TextBox>
-            </td>
+                &nbsp;</td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
@@ -95,6 +94,7 @@
             <td class="auto-style11">&nbsp;</td>
             <td class="auto-style13">
                 <asp:Button ID="B_Agregar" runat="server" OnClick="B_Agregar_Click" Text="Agregar" />
+                <asp:Button ID="B_Cancelar1" runat="server" OnClick="B_Cancelar1_Click" Text="Cancelar" />
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -102,15 +102,25 @@
         <tr>
             <td class="auto-style11">&nbsp;</td>
             <td class="auto-style13">
-                    &nbsp;</td>
+                    Tabla de usuario de todas las sedes::</td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style11">&nbsp;</td>
             <td class="auto-style13">
-                    <asp:GridView ID="GV_Productos" runat="server" AllowPaging="false" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="No hay productos ingresados." CssClass="auto-style10">
+                    <asp:GridView ID="GV_Productos" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="No hay productos ingresados." CssClass="auto-style10" OnPageIndexChanging="GV_Productos_PageIndexChanging" PageSize="5" OnRowCommand="GV_Productos_RowCommand">
                         <Columns>
+                            <asp:TemplateField HeaderText="Eliminar" ShowHeader="False">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="Eliminar" Text="Eliminar" CommandArgument='<%# Bind("cedula") %>'></asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Editar" ShowHeader="False">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Editar" Text="Editar" CommandArgument='<%# Bind("cedula") %>'></asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Cedula">
                                 <EditItemTemplate>
                                     <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("cedula") %>'></asp:TextBox>
@@ -175,14 +185,6 @@
                                     <asp:Label ID="Label8" runat="server" Text='<%# Bind("correo") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Rol">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TextBox9" runat="server" Text='<%# Bind("rol_id") %>'></asp:TextBox>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Label9" runat="server" Text='<%# Bind("rol_id") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
                         </Columns>
                         <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
                         <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
@@ -195,29 +197,21 @@
                         <SortedDescendingHeaderStyle BackColor="#002876" />
                     </asp:GridView>
                     <br />
-                <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
             </td>
+            <td class="auto-style12">&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="auto-style11">&nbsp;</td>
+            <td class="auto-style13">Editar Datos de un Administrador:</td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style11">&nbsp;</td>
             <td class="auto-style13">&nbsp;</td>
-            <td class="auto-style12">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="auto-style11">&nbsp;</td>
-            <td class="auto-style13">Seleccione una cedula:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:DropDownList ID="DropDownList1" runat="server">
-                </asp:DropDownList>
-                <br />
-                <asp:ObjectDataSource ID="ObjectDataSource2" runat="server"></asp:ObjectDataSource>
-            </td>
             <td class="auto-style12">
-                <asp:Button ID="B_Seleccionar" runat="server" OnClick="B_Seleccionar_Click" Text="Seleccionar" />
                 <br />
-                <asp:Button ID="B_Eliminar" runat="server" OnClick="B_Eliminar_Click" Text="Eliminar" />
             </td>
             <td>&nbsp;</td>
         </tr>
@@ -232,7 +226,7 @@
         <tr>
             <td class="auto-style11">Nombre:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Nombre0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Nombre0" runat="server" MaxLength="15" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -240,7 +234,7 @@
         <tr>
             <td class="auto-style11">Clave:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Clave0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Clave0" runat="server" MaxLength="15" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -248,7 +242,7 @@
         <tr>
             <td class="auto-style11">Direccion</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Direccion0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Direccion0" runat="server" MaxLength="15" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -256,7 +250,7 @@
         <tr>
             <td class="auto-style11">Telefono:</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Telefono0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Telefono0" runat="server" MaxLength="15" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
@@ -264,7 +258,7 @@
         <tr>
             <td class="auto-style11">Sexo</td>
             <td class="auto-style13">
-                <asp:DropDownList ID="D_Sexo0" runat="server">
+                <asp:DropDownList ID="D_Sexo0" runat="server" Enabled="False">
                         <asp:ListItem>Hombre</asp:ListItem>
                         <asp:ListItem>Mujer</asp:ListItem>
                 </asp:DropDownList>
@@ -275,7 +269,7 @@
         <tr>
             <td class="auto-style11">Sede:</td>
             <td class="auto-style13">
-                <asp:DropDownList ID="D_Sedes0" runat="server">
+                <asp:DropDownList ID="D_Sedes0" runat="server" Enabled="False">
                 </asp:DropDownList>
             </td>
             <td class="auto-style12"></td>
@@ -284,30 +278,31 @@
         <tr>
             <td class="auto-style11">Correo</td>
             <td class="auto-style13">
-                <asp:TextBox ID="TB_Correo0" runat="server"></asp:TextBox>
-            </td>
-            <td class="auto-style12">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="auto-style11">Rol</td>
-            <td class="auto-style13">
-                <asp:TextBox ID="TB_Rol0" runat="server" Enabled="False"></asp:TextBox>
+                <asp:TextBox ID="TB_Correo0" runat="server" MaxLength="15" Enabled="False"></asp:TextBox>
             </td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style11">&nbsp;</td>
-            <td class="auto-style13">&nbsp;</td>
+            <td class="auto-style13">
+                &nbsp;</td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style11">&nbsp;</td>
             <td class="auto-style13">
-                <asp:Button ID="B_Actualizar" runat="server" Text="Actualizar" OnClick="B_Actualizar_Click" />
+                <asp:Button ID="B_Actualizar" runat="server" Text="Actualizar" OnClick="B_Actualizar_Click" Enabled="False" />
+                <asp:Button ID="B_Cancelar" runat="server" Enabled="False" OnClick="B_Cancelar_Click" Text="Cancelar" />
             </td>
+            <td class="auto-style12">&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="auto-style11">&nbsp;</td>
+            <td class="auto-style13">
+                &nbsp;</td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
@@ -319,17 +314,14 @@
         </tr>
         <tr>
             <td class="auto-style11">
-                <asp:Label ID="L_Vendedor" runat="server" Text="Vendedor"></asp:Label>
-            </td>
+                &nbsp;</td>
             <td class="auto-style13">&nbsp;</td>
             <td class="auto-style12">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style11">
-                <asp:Label ID="L_Sede" runat="server" Text="Sede"></asp:Label>
                 <br />
-                <asp:Label ID="L_Rol" runat="server" Text="Rol"></asp:Label>
             </td>
             <td class="auto-style13">&nbsp;</td>
             <td class="auto-style12">&nbsp;</td>

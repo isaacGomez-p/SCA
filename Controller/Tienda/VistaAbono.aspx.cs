@@ -4,24 +4,25 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using Datos;
 using System.Web.UI.WebControls;
 
-public partial class View_Tienda_VistaFactura : System.Web.UI.Page
+public partial class View_Tienda_VistaAbono : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         DAOUsuario dAO = new DAOUsuario();
         DataTable idd = new DataTable();
-        idd = dAO.verUltimoId3();
+        idd = dAO.verUltimoId4();
         if (idd.Rows.Count > 0)
         {
-            foreach(DataRow row in idd.Rows)
+            foreach (DataRow row in idd.Rows)
             {
-                if (Session["idVenta"] == null)
+                if (Session["idVenta1"] == null)
                 {
-                    Session["idVenta"] = Convert.ToString(row["f_verultimoid3"]);
+                    Session["idVenta1"] = Convert.ToString(row["f_verultimoid4"]);
                 }
-            }            
+            }
         }
         else
         {
@@ -32,8 +33,8 @@ public partial class View_Tienda_VistaFactura : System.Web.UI.Page
 
         try
         {
-            DS_Factura dS_Factura = ObtenerInforme();
-            CrystalReportSource1.ReportDocument.SetDataSource(dS_Factura);
+            DS_Abono ds = ObtenerInforme();
+            CrystalReportSource1.ReportDocument.SetDataSource(ds);
             CrystalReportViewer1.ReportSource = CrystalReportSource1;
         }
         catch (Exception)
@@ -44,15 +45,15 @@ public partial class View_Tienda_VistaFactura : System.Web.UI.Page
 
     }
 
-    protected DS_Factura ObtenerInforme()
+    protected DS_Abono ObtenerInforme()
     {
         DataRow fila;
         DataTable multasInformacion = new DataTable();
-        DS_Factura datos = new DS_Factura();
+        DS_Abono datos = new DS_Abono();
 
-        multasInformacion = datos.Tables["Venta"];
+        multasInformacion = datos.Tables["Abono"];
         DAOUsuario dao = new DAOUsuario();
-        if (Session["idVenta"] == null)
+        if (Session["idVenta1"] == null)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay id en la variable de sesion.');</script>");
@@ -60,16 +61,14 @@ public partial class View_Tienda_VistaFactura : System.Web.UI.Page
         }
         else
         {
-
-
-            DataTable intermedio = dao.verFactura(Convert.ToInt32(Session["idVenta"]));
-            DataTable data = dao.verDescripcionVenta(Convert.ToInt32(Session["idVenta"]));
+            DataTable intermedio = dao.verReporteAbonos(Convert.ToInt32(Session["idVenta1"]));
+            DataTable data = dao.verDescripcionAbono(Convert.ToInt32(Session["idVenta1"]));
 
             for (int i = 0; i < data.Rows.Count; i++)
             {
                 fila = multasInformacion.NewRow();
                 if (i == 0)
-                { 
+                {
                     fila["nombre_c"] = intermedio.Rows[i]["nombre_c"].ToString();
                     fila["apellido_c"] = intermedio.Rows[i]["apellido_c"].ToString();
                     fila["id_cliente"] = Convert.ToInt32(intermedio.Rows[i]["id_cliente"].ToString());
@@ -86,7 +85,7 @@ public partial class View_Tienda_VistaFactura : System.Web.UI.Page
                 multasInformacion.Rows.Add(fila);
             }
         }
-        Session["idVenta"] = null;
+        Session["idVenta1"] = null;
         return datos;
     }
 }

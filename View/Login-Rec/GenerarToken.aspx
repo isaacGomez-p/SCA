@@ -10,6 +10,30 @@
         .auto-style1 {
             width: 100%;
         }
+        .auto-style3 {
+            width: 354px;
+        }
+        .auto-style4 {
+            width: 438px;
+            background-color: #FFFFFF;
+        }
+        .auto-style5 {
+            width: 354px;
+            text-align: center;
+            font-size: xx-large;
+            color: #FFFFFF;
+            background-color: #0000CC;
+        }
+        .auto-style7 {
+            background-color: #FFFFFF;
+        }
+        .auto-style8 {
+            width: 354px;
+            background-color: #FFFFFF;
+        }
+        .auto-style9 {
+            font-size: medium;
+        }
     </style>
 </head>
 <body>
@@ -17,22 +41,100 @@
         <div>
             <table class="auto-style1">
                 <tr>
-                    <td>
-                        <asp:Label ID="L_User_Name" runat="server" Text="Digite su User Name: "></asp:Label>
-                        <asp:TextBox ID="TB_User_Name" runat="server"></asp:TextBox>
-                    </td>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style8">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style8">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style5" rowspan="10">RECUPERAR<br />
+                        CLAVE<br />
+                        <asp:Label ID="L_User_Name" runat="server" CssClass="auto-style9" ForeColor="White" Text="Digite su cédula:"></asp:Label>
+                        <br />
+                        <asp:TextBox ID="TB_User_Name" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:Label ID="L_Mensaje" runat="server" CssClass="auto-style9"></asp:Label>
+                        <br />
                         <asp:Button ID="B_Recuperar" runat="server" OnClick="B_Recuperar_Click" Text="Recuperar" />
                     </td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style4">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td class="auto-style7">&nbsp;</td>
+                </tr>
+            </table>
+            <br />
+            <table class="auto-style1">
+                <tr>
+                    <td>
+                        &nbsp;</td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="L_Mensaje" runat="server"></asp:Label>
-                    </td>
+                        &nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        &nbsp;</td>
                 </tr>
             </table>
+            <br />
+            <br />
+            <br />
+            <asp:Label ID="L_Aviso" runat="server" Text="..."></asp:Label>
         </div>
     </form>
 </body>

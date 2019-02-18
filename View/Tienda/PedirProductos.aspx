@@ -45,8 +45,8 @@
         </tr>
         <tr>
             <td class="auto-style18">&nbsp;</td>
-            <td class="auto-style17" runat="server">
-                &nbsp;</td>
+            <td class="auto-style19" runat="server">
+                Tabla de productos en bodega principal</td>
             <td class="auto-style17">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
@@ -76,7 +76,7 @@
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                             </EditItemTemplate>
                             <ItemTemplate>
-                                <asp:TextBox ID="TB_Cantidad" runat="server" TextMode="Number">0</asp:TextBox>
+                                <asp:TextBox ID="TB_Cantidad" runat="server" MaxLength="4">0</asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

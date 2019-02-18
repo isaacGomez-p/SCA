@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_VerPedidos : System.Web.UI.Page
 {

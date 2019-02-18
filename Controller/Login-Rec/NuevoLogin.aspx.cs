@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Utilitarios;
+using Logica;
 
 public partial class View_NuevoLogin : System.Web.UI.Page
 {
@@ -17,91 +19,71 @@ public partial class View_NuevoLogin : System.Web.UI.Page
     {
         Response.Redirect("GenerarToken.aspx");
     }
-
-    /*protected void L_Autenticate_Authenticate(object sender, EventArgs e)
-    {
-        DAOUsuario guardarUsuario = new DAOUsuario();
-        DataTable data = guardarUsuario.loggin(TB_Usuario.ToString(), TB_Contraseña.ToString());
-
-        if (int.Parse(data.Rows[0]["user_id"].ToString()) > 0)
-        {
-            Session["nombre"] = data.Rows[0]["nombre"].ToString();
-            Session["user_id"] = data.Rows[0]["user_id"].ToString();
-
-            EUsuario datosUsuario = new EUsuario();
-            MAC datosConexion = new MAC();
-
-            /* ipAddress = HttpContext.Current.Request.UserHostAddress;
-             mac = Utilidades.Mac.GetMAC(ref ipAddress);*/
-
-    /* datosUsuario.UserId = int.Parse(Session["user_id"].ToString());
-     datosUsuario.Ip = datosConexion.ip();
-     datosUsuario.Mac = datosConexion.mac();
-     datosUsuario.Session = Session.SessionID;
-
-     guardarUsuario.guardadoSession(datosUsuario);
-
-     Response.Redirect("MenuAdmin.aspx");
- }
-}*/
-
     protected void B_Login_Click(object sender, EventArgs e)
     {
-        DAOUsuario guardarUsuario = new DAOUsuario();
-        DataTable data = guardarUsuario.loggin(TB_Cedula.Text.ToString(), TB_Clave.Text.ToString());
-        
-        if (int.Parse(data.Rows[0]["cedula"].ToString()) > 0)
+        if (validarNumeros(TB_Cedula.Text) == true)
         {
-            Session["clave"] = data.Rows[0]["clave"].ToString();
-            Session["user_id"] = data.Rows[0]["cedula"].ToString();
-            Session["nombre_rol"] = data.Rows[0]["rol_name"].ToString();
-            Session["rol_id"] = data.Rows[0]["rol_id"].ToString();
-            Session["nombre"] = data.Rows[0]["nombre"].ToString();
-            Session["sede"] = data.Rows[0]["sede"].ToString();
-            
+            MAC a = new MAC();
+
+            UUsuario user = new UUsuario();
+            user.Usuario = TB_Cedula.Text.ToString();
+            user.Clave = TB_Clave.Text.ToString();
+            user.Ip = HttpContext.Current.Request.UserHostAddress;
+            user.Mac = a.traerMac();
+
+            DAOUsuario guardarUsuario = new DAOUsuario();
+            DataTable data = guardarUsuario.loggin(user.Usuario, user.Clave);
+
+            user = new CoreUser().autenticar(user);
 
 
-            EUsuario datosUsuario = new EUsuario();
-            MAC datosConexion = new MAC();
+            Session["clave"] = user.Clave;
+            Session["user_id"] = user.Usuario;
+            Session["nombre_rol"] = user.Nombre_rol;
+            Session["rol_id"] = user.Rol_id;
+            Session["nombre"] = user.Nombre;
+            Session["sede"] = user.Sede;
 
-            /* ipAddress = HttpContext.Current.Request.UserHostAddress;
-             mac = Utilidades.Mac.GetMAC(ref ipAddress);*/
+            Response.Write("<script>window.alert('" + user.Mensaje + "');</script>");
 
-            datosUsuario.UserId = int.Parse(Session["user_id"].ToString());
-            datosUsuario.Ip = datosConexion.ip();
-            datosUsuario.Mac = datosConexion.mac();
-            datosUsuario.Session = Session.SessionID;
-            datosUsuario.RolId = int.Parse(data.Rows[0]["rol_id"].ToString());
-            Session["user"] = datosUsuario;
-            guardarUsuario.guardadoSession(datosUsuario);
-            if (datosUsuario.RolId == 1)
+            if (user.Rol_id == 1)
             {
                 Response.Redirect("~/View/Tienda/AgregarSede.aspx");
             }
 
-            if (datosUsuario.RolId == 2)
+            if (user.Rol_id == 2)
             {
                 Response.Redirect("~/View/Tienda/CRUDVendedor.aspx");
             }
 
-            if (datosUsuario.RolId == 3)
+            if (user.Rol_id == 3)
             {
                 Response.Redirect("~/View/Tienda/CRUDCliente.aspx");
             }
 
-        }
-        else
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Usuario no está registrado o no esta activo. Consulte con el administrador.');</script>");
-#pragma warning restore CS0618 // Type or member is obsolete
+
+            
 
         }
     }
 
 
+
         protected void LinkButton1_Click(object sender, EventArgs e)
     {
         Response.Redirect("GenerarToken.aspx");
+    }
+
+    public bool validarNumeros(string num)
+    {
+        try
+        {
+            double x = Convert.ToDouble(num);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

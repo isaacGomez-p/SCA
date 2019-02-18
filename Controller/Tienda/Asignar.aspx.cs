@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_Asignar : System.Web.UI.Page
 {
@@ -40,6 +41,8 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 
     protected void B_Asignar_Click(object sender, EventArgs e)
     {
+        //VALLIDAR
+
         DAOUsuario d = new DAOUsuario();
         Asignacion asignacion = new Asignacion();
         List<Producto> productos = new List<Producto>();
@@ -53,101 +56,112 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 
         foreach (GridViewRow fila in GV_AsignarSinPedido.Rows)
         {
-            
-            asignacion.Referencia = Convert.ToString(((Label)fila.Cells[0].FindControl("L_Referencia")).Text);
-            asignacion.Talla = Convert.ToDouble(((Label)fila.Cells[1].FindControl("L_Talla")).Text);
-
-            if (((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text == "")
+            string aa = ((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text;
+            if (validarNumeros(aa.ToString()) == true)
             {
-                asignacion.Cantidad = 0;
-            }
-            else
-            {
-                asignacion.Cantidad = Convert.ToInt32(((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text);
-            }
 
+                asignacion.Referencia = Convert.ToString(((Label)fila.Cells[0].FindControl("L_Referencia")).Text);
+                asignacion.Talla = Convert.ToDouble(((Label)fila.Cells[1].FindControl("L_Talla")).Text);
 
-
-            if (asignacion.Cantidad > 0)
-            {
-                cont++;
-
-                DataTable r = d.validarAsignacion(asignacion.Referencia, asignacion.Talla);
-                if (r.Rows.Count == 1)
+                if (((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text == "")
                 {
-                    foreach (DataRow row in r.Rows)
-                    {
-                        cantBodega = Convert.ToInt32(row["cantidad"]);
-                        producto.Entregado = Convert.ToInt32(row["entregado"]);
-                        producto.Idproducto = Convert.ToInt32(row["idproducto"]);
-                        cantBodega = cantBodega - producto.Entregado;
-                    }
-                    if (asignacion.Cantidad < cantBodega)
-                    {
+                    asignacion.Cantidad = 0;
+                }
+                else
+                {
+                    asignacion.Cantidad = Convert.ToInt32(((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text);
+                }
 
-                        Response.Write("esto da" + (cantBodega - asignacion.Cantidad));
-                        if ((cantBodega - asignacion.Cantidad) >= 5)
+
+
+                if (asignacion.Cantidad > 0)
+                {
+                    cont++;
+
+                    DataTable r = d.validarAsignacion(asignacion.Referencia, asignacion.Talla);
+                    if (r.Rows.Count == 1)
+                    {
+                        foreach (DataRow row in r.Rows)
                         {
-                            DateTime fechaHoy = DateTime.Now;
-                            asignacion.Fecha = fechaHoy.ToString("d");
-                            asignacion.Estado = false;
-                            asignacion.Sede = DL_Sedes.SelectedValue;
-                            if (cont == 1)
-                            {
-                                d.crearAsignacion(asignacion);
-                            }
+                            cantBodega = Convert.ToInt32(row["cantidad"]);
+                            producto.Entregado = Convert.ToInt32(row["entregado"]);
+                            producto.Idproducto = Convert.ToInt32(row["idproducto"]);
+                            cantBodega = cantBodega - producto.Entregado;
+                        }
+                        if (asignacion.Cantidad < cantBodega)
+                        {
 
-                            DataTable id = new DataTable();
-                            id = d.verUltimoId2();
-                            if (id.Rows.Count > 0)
+                            Response.Write("esto da" + (cantBodega - asignacion.Cantidad));
+                            if ((cantBodega - asignacion.Cantidad) >= 5)
                             {
-                                foreach (DataRow ff in id.Rows)
+                                DateTime fechaHoy = DateTime.Now;
+                                asignacion.Fecha = fechaHoy.ToString("d");
+                                asignacion.Estado = false;
+                                asignacion.Sede = DL_Sedes.SelectedValue;
+                                if (cont == 1)
                                 {
-                                    pedido.Idpedido = Convert.ToInt32(ff["f_verultimoid2"]);
+                                    d.crearAsignacion(asignacion);
                                 }
-                                d.crearAsignaciones(asignacion, pedido.Idpedido);
-                                d.editarCantidad(producto.Idproducto, (asignacion.Cantidad + producto.Entregado));
-                                
+
+                                DataTable id = new DataTable();
+                                id = d.verUltimoId2();
+                                if (id.Rows.Count > 0)
+                                {
+                                    foreach (DataRow ff in id.Rows)
+                                    {
+                                        pedido.Idpedido = Convert.ToInt32(ff["f_verultimoid2"]);
+                                    }
+                                    d.crearAsignaciones(asignacion, pedido.Idpedido);
+                                    d.editarCantidad(producto.Idproducto, (asignacion.Cantidad + producto.Entregado));
+
 
 
 #pragma warning disable CS0618 // Type or member is obsolete
-                                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Asignación completada.');</script>");
+                                    RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Asignación completada.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
+                                }
+
+
+
                             }
-
-
-
+                            else
+                            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('En la sede principal deben quedar al menos 5 productos.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+                                return;
+                            }
                         }
                         else
                         {
 #pragma warning disable CS0618 // Type or member is obsolete
-                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('En la sede principal deben quedar al menos 5 productos.');</script>");
+                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('La cantidad de productos a asignar debe ser menor a la que esta e bodega. ');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
-                            return;
+
+
                         }
                     }
                     else
                     {
 #pragma warning disable CS0618 // Type or member is obsolete
-                        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('La cantidad de productos a asignar debe ser menor a la que esta e bodega. ');</script>");
+                        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay productos con esta descripción en la bodega validar. ');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
-
-
+                        return;
                     }
                 }
-                else
-                {
-#pragma warning disable CS0618 // Type or member is obsolete
-                    RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay productos con esta descripción en la bodega validar. ');</script>");
-#pragma warning restore CS0618 // Type or member is obsolete
-                    return;
-                }
-            }
-           
-            
-        }
-        GV_ProductosBodega.DataBind();
+                GV_ProductosBodega.DataBind();
 
+            }
+            else
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Solo se pueden ingresar numeros. ');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
+
+
+        }
+    
     }
 
     protected void GV_Asignaciones_SelectedIndexChanged(object sender, EventArgs e)
@@ -181,7 +195,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        Asignacion asignacion = new Asignacion();
+        
         DAOUsuario d = new DAOUsuario();
         Producto producto = new Producto();
         Pedido pedido = new Pedido();
@@ -194,6 +208,7 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
         {
             foreach (GridViewRow row in GV_Pedidos.Rows)
             {
+                Asignacion asignacion = new Asignacion();
                 cont++;
                 asignacion.Referencia = Convert.ToString(((Label)row.Cells[0].FindControl("L_Referencia")).Text);
                 asignacion.Talla = Convert.ToDouble(((Label)row.Cells[1].FindControl("L_Talla")).Text);
@@ -322,9 +337,10 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
                     {
                         Session["idpedido"] = Convert.ToInt32(ff["f_verultimoid2"]);
                     }
+                    
                     d.crearAsignaciones(a, Convert.ToInt32(Session["idpedido"]));
                     d.editarCantidad(Convert.ToInt32(Session["idproducto"]), (a.Cantidad + Convert.ToInt32(Session["entregado"])));
-                    d.actualizarPedido(true, Convert.ToInt32(Session["idpedido"]));
+                    d.actualizarPedido(true, Convert.ToInt32(Session["idPed"]));
 #pragma warning disable CS0618 // Type or member is obsolete
                     RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Base de Datos actualizada. Asignación completada.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -339,6 +355,19 @@ public partial class View_Tienda_Asignar : System.Web.UI.Page
 #pragma warning disable CS0618 // Type or member is obsolete
             RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay una lista llena para enviar.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
+        }
+    }
+
+    public bool validarNumeros(string num)
+    {
+        try
+        {
+            double x = Convert.ToDouble(num);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
 {
@@ -47,9 +48,15 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
                             cliente.Nombre = TB_Nombre.Text;
                             cliente.Apellido = TB_Apellido.Text;
                             cliente.Direccion = TB_Direccion.Text;
-                            cliente.Telefono = int.Parse(TB_Telefono.Text);
+                            cliente.Telefono = Convert.ToInt64(TB_Telefono.Text);
                             cliente.Sexo = D_Sexo.SelectedValue;
-
+                            if(cliente.Cedula <= 0 || cliente.Telefono <= 0)
+                            {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese los datos correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+                                return;
+                            }
                             dao.CrearCliente(cliente);
 #pragma warning disable CS0618 // El tipo o el miembro están obsoletos
                             RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Cliente registrado exitosamente.');</script>");
@@ -136,12 +143,19 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
                             Cliente cliente2 = new Cliente();
 
                             cliente2.Cedula = int.Parse(TB_Cedula0.Text);
+
                             cliente2.Nombre = TB_Nombre0.Text;
                             cliente2.Apellido = TB_Apellido0.Text;
                             cliente2.Direccion = TB_Direccion0.Text;
-                            cliente2.Telefono = int.Parse(TB_Telefono0.Text);
+                            cliente2.Telefono = Convert.ToInt64(TB_Telefono0.Text);
                             cliente2.Sexo = D_Sexo0.SelectedValue;
-
+                            if (cliente.Cedula <= 0 || cliente.Telefono <= 0)
+                            {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese los datos correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+                                return;
+                            }
                             dao.actualizarCliente(cliente2);
 
                             TB_Cedula0.Text = "";
@@ -238,5 +252,13 @@ public partial class View_Tienda_CRUDCliente : System.Web.UI.Page
         {
             return false;
         }
+    }
+
+    protected void GV_Clientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GV_Clientes.PageIndex = e.NewPageIndex;
+        cli = dao.traerClientes();
+        GV_Clientes.DataSource = cli;
+        GV_Clientes.DataBind();
     }
 }

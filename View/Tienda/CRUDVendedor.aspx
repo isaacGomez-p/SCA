@@ -15,57 +15,58 @@
         <tr>
             <td class="auto-style17">Cedula:</td>
             <td>
-                <asp:TextBox ID="TB_Cedula" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Cedula" runat="server" MaxLength="6"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Nombre:</td>
             <td>
-                <asp:TextBox ID="TB_Nombre" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Nombre" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Clave:</td>
             <td>
-                <asp:TextBox ID="TB_Clave" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Clave" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Direccion:</td>
             <td>
-                <asp:TextBox ID="TB_Direccion" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Direccion" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Telefono:</td>
             <td>
-                <asp:TextBox ID="TB_Telefono" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Telefono" runat="server" MaxLength="12"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Sexo:</td>
             <td>
-                <asp:TextBox ID="TB_Sexo" runat="server" Height="22px"></asp:TextBox>
+                <asp:DropDownList ID="D_Sexo0" runat="server">
+                        <asp:ListItem>Hombre</asp:ListItem>
+                        <asp:ListItem>Mujer</asp:ListItem>
+                </asp:DropDownList>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style17">Sede:</td>
+            <td class="auto-style17">&nbsp;</td>
             <td>
-                <asp:DropDownList ID="D_Sedes" runat="server">
-                </asp:DropDownList>
-                </td>
+                &nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Correo:</td>
             <td>
-                <asp:TextBox ID="TB_Correo" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Correo" runat="server" MaxLength="30"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
@@ -80,12 +81,13 @@
             <td class="auto-style17">&nbsp;</td>
             <td>
                 <asp:Button ID="B_Agregar" runat="server" OnClick="B_Agregar_Click" Text="Agregar" />
+                <br />
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">&nbsp;</td>
-            <td>&nbsp;</td>
+            <td class="auto-style10">Usuarios registrados</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
@@ -206,50 +208,51 @@
         <tr>
             <td class="auto-style17">Nombre:</td>
             <td>
-                <asp:TextBox ID="TB_Nombre0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Nombre0" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Clave:</td>
             <td>
-                <asp:TextBox ID="TB_Clave0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Clave0" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Direccion:</td>
             <td>
-                <asp:TextBox ID="TB_Direccion0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Direccion0" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Telefono:</td>
             <td>
-                <asp:TextBox ID="TB_Telefono0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Telefono0" runat="server" MaxLength="12"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Sexo:</td>
             <td>
-                <asp:TextBox ID="TB_Sexo0" runat="server"></asp:TextBox>
+                <asp:DropDownList ID="D_Sexo" runat="server">
+                        <asp:ListItem>Hombre</asp:ListItem>
+                        <asp:ListItem>Mujer</asp:ListItem>
+                </asp:DropDownList>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td class="auto-style17">Sede:</td>
+            <td class="auto-style17">&nbsp;</td>
             <td>
-                <asp:DropDownList ID="D_Sedes0" runat="server">
-                </asp:DropDownList>
-                </td>
+                &nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Correo:</td>
             <td>
-                <asp:TextBox ID="TB_Correo0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Correo0" runat="server" MaxLength="30"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>

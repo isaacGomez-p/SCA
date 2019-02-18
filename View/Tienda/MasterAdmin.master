@@ -62,7 +62,6 @@
                         <td class="auto-style10">
                             <asp:Label ID="Label_Sede" runat="server"></asp:Label>
                             <br />
-                            <asp:Label ID="L_Rol" runat="server" Text="Rol"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -70,12 +69,12 @@
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                                <asp:LinkButton ID="LinkButton2" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton2_Click" CssClass="auto-style12">Pedir Productos</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton2" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton8_Click" CssClass="auto-style12">Pedir Productos</asp:LinkButton>
                             </td>
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                                <asp:LinkButton ID="LinkVerPedido" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton3_Click" CssClass="auto-style12">VER PEDIDOS</asp:LinkButton>
+                                <asp:LinkButton ID="LinkVerPedido" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton2_Click" CssClass="auto-style12">VER PEDIDOS</asp:LinkButton>
                             </td>
                     </tr>
                     <tr>
@@ -98,7 +97,7 @@
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                            <asp:Button ID="B_CerrarSesion" runat="server" Text="O" OnClick="B_CerrarSesion_Click" />
+                            <asp:Button ID="B_CerrarSesion" runat="server" Text="O" OnClick="B_CerrarSesion_Click" Height="26px" />
                         </td>
                     </tr>
                     <tr>

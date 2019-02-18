@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
 {
@@ -19,7 +20,7 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
         {
             Label_usuario.Text = Session["nombre"].ToString();
             Label_Sede.Text = Session["sede"].ToString();
-            L_Rol.Text = Session["rol_id"].ToString();
+
         }
 
     }
@@ -65,6 +66,7 @@ public partial class View_Tienda_MasterVendedor : System.Web.UI.MasterPage
         Session["nombre"] = null;
         Session["sede"] = null;
         Session["rol_id"] = null;
+        Response.Cache.SetNoStore();
         Response.Redirect("../Login-Rec/NuevoLogin.aspx");
     }
 

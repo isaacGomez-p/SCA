@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterSuperAdmin.master" AutoEventWireup="true" CodeFile="~/Controller/Tienda/CRUDProducto.aspx.cs" Inherits="View_Tienda_CRUDProducto" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="/View/Tienda/MasterSuperAdmin.master" AutoEventWireup="true" CodeFile="/Controller/Tienda/CRUDProducto.aspx.cs" Inherits="View_Tienda_CRUDProducto" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -21,7 +21,7 @@
                     <asp:Label ID="Label1" runat="server" Text="Referencia Producto"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="TB_ReferenciaProducto" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TB_ReferenciaProducto" runat="server" MaxLength="10"></asp:TextBox>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -31,7 +31,7 @@
                     <asp:Label ID="Label2" runat="server" Text="Precio"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="TB_Precio" runat="server" TextMode="Number"></asp:TextBox>
+                    <asp:TextBox ID="TB_Precio" runat="server" MaxLength="6"></asp:TextBox>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -41,7 +41,7 @@
                     <asp:Label ID="Label4" runat="server" Text="Cantidad"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="TB_Cantidad" runat="server" TextMode="Number"></asp:TextBox>
+                    <asp:TextBox ID="TB_Cantidad" runat="server" MaxLength="3"></asp:TextBox>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -171,7 +171,7 @@
                     <asp:Label ID="Label11" runat="server" Text="Referencia Producto"></asp:Label>
                 </td>
                 <td class="auto-style11">
-                    <asp:TextBox ID="TB_EditarReferencia" runat="server" Enabled="False"></asp:TextBox>
+                    <asp:TextBox ID="TB_EditarReferencia" runat="server" Enabled="False" MaxLength="10"></asp:TextBox>
                 </td>
                 <td class="auto-style11"></td>
             </tr>
@@ -181,7 +181,7 @@
                     <asp:Label ID="Label12" runat="server" Text="Precio"></asp:Label>
                 </td>
                 <td class="auto-style11">
-                    <asp:TextBox ID="TB_EditarPrecio" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TB_EditarPrecio" runat="server" MaxLength="6"></asp:TextBox>
                 </td>
                 <td class="auto-style11"></td>
             </tr>
@@ -191,7 +191,7 @@
                     <asp:Label ID="Label13" runat="server" Text="Cantidad"></asp:Label>
                 </td>
                 <td class="auto-style11">
-                    <asp:TextBox ID="TB_EditarCantidad" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TB_EditarCantidad" runat="server" MaxLength="3"></asp:TextBox>
                 </td>
                 <td class="auto-style11"></td>
             </tr>

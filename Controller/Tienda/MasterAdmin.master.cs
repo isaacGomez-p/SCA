@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
 {
@@ -24,9 +25,16 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
         
     }
 
+    protected void LinkButton8_Click(object sender, EventArgs e)
+    {
+
+        Response.Redirect("PedirProductos.aspx");
+    }
+
     protected void LinkButton2_Click(object sender, EventArgs e)
     {
-        Response.Redirect("PedirProductos.aspx");
+        
+        Response.Redirect("VerPedidos.aspx");
     }
 
     protected void LinkButton3_Click(object sender, EventArgs e)
@@ -59,6 +67,7 @@ public partial class View_Tienda_MasterAdmin : System.Web.UI.MasterPage
         Session["nombre"] = null;
         Session["sede"] = null;
         Session["rol_id"] = null;
+        Response.Cache.SetNoStore();
         Response.Redirect("../Login-Rec/NuevoLogin.aspx");
     }
 }

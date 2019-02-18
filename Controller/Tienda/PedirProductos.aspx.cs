@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_PedirProductos : System.Web.UI.Page
 {
@@ -28,62 +29,75 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
         
         foreach (GridViewRow fila in GV_Pedidos.Rows)
         {
-            Asignacion asignacion = new Asignacion
+            string aa = ((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text;
+            if (validarNumeros(aa.ToString()) == true)
             {
-                Referencia = Convert.ToString(((Label)fila.Cells[0].FindControl("L_Referencia")).Text),
-                Talla = Convert.ToDouble(((Label)fila.Cells[1].FindControl("L_Talla")).Text)
-            };
-            try
-            {
-                int a = Convert.ToInt32(((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text);
-            }
-            catch (Exception ex)
-            {
-#pragma warning disable CS0618 // Type or member is obsolete
-                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Revise los datos." + ex + " ');</script>");
-                return;
-#pragma warning restore CS0618 // Type or member is obsolete
-            }
-            if(((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text == "")
-            {
-                asignacion.Cantidad = 0;
-            }
-            else
-            { 
-               asignacion.Cantidad = Convert.ToInt32(((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text);
-            }
-            if (asignacion.Cantidad > 0) { 
-                if (Session["pedidos"] == null)
+                Asignacion asignacion = new Asignacion
                 {
-                    pedidos = new List<Asignacion>();
-                    pedidos.Add(asignacion);
-                    Session["pedidos"] = pedidos;
+                    Referencia = Convert.ToString(((Label)fila.Cells[0].FindControl("L_Referencia")).Text),
+                    Talla = Convert.ToDouble(((Label)fila.Cells[1].FindControl("L_Talla")).Text)
+                };
+                try
+                {
+                    int a = Convert.ToInt32(((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text);
+                }
+                catch (Exception ex)
+                {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Productos agregados al pedido" + asignacion.Cantidad + asignacion.Referencia + asignacion.Talla + "');</script>");
+                    RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Revise los datos." + ex + " ');</script>");
+                    return;
 #pragma warning restore CS0618 // Type or member is obsolete
+                }
+                if (((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text == "")
+                {
+                    asignacion.Cantidad = 0;
                 }
                 else
                 {
-                    if (pedidos.Contains(asignacion))
+                    asignacion.Cantidad = Convert.ToInt32(((TextBox)fila.Cells[2].FindControl("TB_Cantidad")).Text);
+                }
+                if (asignacion.Cantidad > 0)
+                {
+                    if (Session["pedidos"] == null)
                     {
+                        pedidos = new List<Asignacion>();
+                        pedidos.Add(asignacion);
+                        Session["pedidos"] = pedidos;
 #pragma warning disable CS0618 // Type or member is obsolete
-                        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No puede agregar dos veces el mismo producto al pedido');</script>");
-                        return;
+                        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Productos agregados al pedido" + asignacion.Cantidad + asignacion.Referencia + asignacion.Talla + "');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
                     }
                     else
-                    { 
-                
-                        pedidos = (Session["pedidos"] as List<Asignacion>);
-                        pedidos.Add(asignacion);
+                    {
+                        if (pedidos.Contains(asignacion))
+                        {
 #pragma warning disable CS0618 // Type or member is obsolete
-                        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Productos agregados al pedido"+asignacion.Cantidad+asignacion.Referencia+asignacion.Talla+"');</script>");
-                        
+                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No puede agregar dos veces el mismo producto al pedido');</script>");
+                            return;
 #pragma warning restore CS0618 // Type or member is obsolete
+                        }
+                        else
+                        {
+
+                            pedidos = (Session["pedidos"] as List<Asignacion>);
+                            pedidos.Add(asignacion);
+#pragma warning disable CS0618 // Type or member is obsolete
+                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Productos agregados al pedido" + asignacion.Cantidad + asignacion.Referencia + asignacion.Talla + "');</script>");
+
+#pragma warning restore CS0618 // Type or member is obsolete
+                        }
                     }
                 }
-            }
 
+
+            }
+            else
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Debe ingresar solo numeros.');</script>");
+
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
         }
         GV_Ped.DataSource = Session["pedidos"];
         GV_Ped.DataBind();
@@ -111,17 +125,18 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
             pedido.Sede = Convert.ToString(Session["sede"]);
             pedido.Fecha = fechaHoy.ToString("d");
             pedido.Estado = false;
-            
+            dao.crearPedido(pedido);
             DataTable id = new DataTable();
             id = dao.verUltimoId();
 
             if(id.Rows.Count > 0)
             {
+                
                 foreach (DataRow row in id.Rows)
                 {
                     pedido.Idpedido = Convert.ToInt32(row["f_verultimoid"]);
                 }
-                dao.crearPedido(pedido);
+                
                 foreach(Asignacion pedid in pedidos)
                 {
                     Asignacion temp = (Asignacion)pedid;
@@ -155,5 +170,18 @@ public partial class View_Tienda_PedirProductos : System.Web.UI.Page
     protected void GV_Ped_SelectedIndexChanged(object sender, EventArgs e)
     {
 
+    }
+
+    public bool validarNumeros(string num)
+    {
+        try
+        {
+            double x = Convert.ToDouble(num);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

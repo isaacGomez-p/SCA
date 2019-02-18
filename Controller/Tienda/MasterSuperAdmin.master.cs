@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
 {
@@ -21,6 +22,7 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
         }
 
         this.notificaciones();
+        this.notificaciones2();
     }
 
     protected void LinkButton2_Click(object sender, EventArgs e)
@@ -43,6 +45,11 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
         Response.Redirect("CRUDAdmin.aspx");
     }
 
+    protected void LinkButton7_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("SuperVentasReportes.aspx");
+    }
+
     protected void B_CerrarSesion_Click(object sender, EventArgs e)
     {
         this.cerrarSesion();
@@ -56,6 +63,7 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
         Session["nombre"] = null;
         Session["sede"] = null;
         Session["rol_id"] = null;
+        Response.Cache.SetNoStore();
         Response.Redirect("../Login-Rec/NuevoLogin.aspx");
     }
     
@@ -71,5 +79,24 @@ public partial class View_Tienda_MasterTienda : System.Web.UI.MasterPage
         {
             L_c.Text = Convert.ToString(a);
         }
+    }
+
+    void notificaciones2()
+    {
+        DAOUsuario dAO = new DAOUsuario();
+        int a = dAO.Notificacion_Conflictos();
+        if(a == 0)
+        {
+            L_c1.Visible = false;
+        }
+        else
+        {
+            L_c1.Text = Convert.ToString(a);
+        }
+    }
+
+    protected void LinkButton5_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Conflictos.aspx");
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterVendedor.master" AutoEventWireup="true" CodeFile="ReportesVendedor.aspx.cs" Inherits="View_Tienda_ReportesVendedor" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Tienda/MasterVendedor.master" AutoEventWireup="true" CodeFile="~/Controller/Tienda/ReportesVendedor.aspx.cs" Inherits="View_Tienda_ReportesVendedor" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
@@ -45,10 +45,10 @@
                 <asp:Label ID="Label5" runat="server" Text="Numero de la Venta:"></asp:Label>
             </td>
             <td class="auto-style20">
-                <asp:TextBox ID="TB_Factura" runat="server" TextMode="Number"></asp:TextBox>
+                <asp:TextBox ID="TB_Factura" runat="server" MaxLength="6"></asp:TextBox>
             </td>
             <td class="auto-style22">
-                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Buscar" />
             </td>
             <td>&nbsp;</td>
         </tr>

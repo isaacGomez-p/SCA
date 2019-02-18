@@ -64,7 +64,6 @@
                         <td class="auto-style10">
                             <asp:Label ID="Label_Sede" runat="server"></asp:Label>
                             <br />
-                            <asp:Label ID="L_Rol" runat="server" Text="Rol"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -92,7 +91,7 @@
                     </tr>
                     <tr>
                         <td class="auto-style10">
-                                <asp:LinkButton ID="LinkBodega0" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton5_Click" CssClass="auto-style12">Mis CLientes</asp:LinkButton>
+                                <asp:LinkButton ID="LinkBodega0" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton5_Click" CssClass="auto-style12">Ver Facturas</asp:LinkButton>
                             </td>
                     </tr>
                     <tr>

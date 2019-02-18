@@ -22,35 +22,35 @@
         <tr>
             <td class="auto-style17">Cedula:</td>
             <td>
-                <asp:TextBox ID="TB_Cedula" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Cedula" runat="server" MaxLength="7"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Nombre:</td>
             <td>
-                <asp:TextBox ID="TB_Nombre" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Nombre" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Apellido:</td>
             <td>
-                <asp:TextBox ID="TB_Apellido" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Apellido" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Direccion:</td>
             <td>
-                <asp:TextBox ID="TB_Direccion" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Direccion" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Telefono:</td>
             <td>
-                <asp:TextBox ID="TB_Telefono" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Telefono" runat="server" MaxLength="12"></asp:TextBox>
             </td>
             <td></td>
         </tr>
@@ -79,7 +79,7 @@
         <tr>
             <td class="auto-style17">&nbsp;</td>
             <td>
-                    <asp:GridView ID="GV_Clientes" runat="server" AllowPaging="false" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="No hay productos ingresados." CssClass="auto-style10">
+                    <asp:GridView ID="GV_Clientes" runat="server" AllowPaging="True" AutoGenerateColumns="False" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" EmptyDataText="No hay clientes ingresados." CssClass="auto-style10" OnPageIndexChanging="GV_Clientes_PageIndexChanging" PageSize="5">
                         <Columns>
                             <asp:TemplateField HeaderText="Cedula">
                                 <EditItemTemplate>
@@ -145,12 +145,12 @@
         </tr>
         <tr>
             <td class="auto-style17">&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>Editar datos de un cliente:</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">&nbsp;</td>
-            <td>Seleccione una cedula:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:DropDownList ID="DropDownList1" runat="server">
+            <td>Seleccione una cedula a editar:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:DropDownList ID="DropDownList1" runat="server">
                 </asp:DropDownList>
             </td>
             <td>
@@ -174,28 +174,28 @@
         <tr>
             <td class="auto-style18">Nombre:</td>
             <td class="auto-style19">
-                <asp:TextBox ID="TB_Nombre0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Nombre0" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td class="auto-style19"></td>
         </tr>
         <tr>
             <td class="auto-style17">Apellido:</td>
             <td>
-                <asp:TextBox ID="TB_Apellido0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Apellido0" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Direccion:</td>
             <td>
-                <asp:TextBox ID="TB_Direccion0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Direccion0" runat="server" MaxLength="15"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style17">Telefono:</td>
             <td>
-                <asp:TextBox ID="TB_Telefono0" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_Telefono0" runat="server" MaxLength="12"></asp:TextBox>
             </td>
             <td>&nbsp;</td>
         </tr>

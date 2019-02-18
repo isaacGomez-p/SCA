@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
 {
@@ -39,6 +40,13 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
                     producto.Cantidad = Convert.ToInt64(TB_Cantidad.Text);
                     producto.Precio = Convert.ToDouble(TB_Precio.Text);
                     producto.Talla = Convert.ToDouble(DL_Tallas.SelectedValue);
+                    if(producto.Precio <= 0 || producto.Cantidad <= 0)
+                    {
+#pragma warning disable CS0618 // Type or member is obsolete
+                        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese un valor mayor a cero.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+                        return;
+                    }
 
                     producto2.ReferenciaProducto = TB_ReferenciaProducto.Text;
                     producto2.Precio = Convert.ToDouble(TB_Precio.Text);
@@ -160,7 +168,13 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
                     producto.Cantidad = Convert.ToInt64(TB_EditarCantidad.Text);
                     producto.Precio = Convert.ToDouble(TB_EditarPrecio.Text);
                     producto.Talla = Convert.ToDouble(DL_EditarTallas.SelectedValue);
-                    //VALIDACIONES //
+                    if (producto.Precio <= 0 || producto.Cantidad <= 0)
+                    {
+#pragma warning disable CS0618 // Type or member is obsolete
+                        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese un valor mayor a cero.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
+                        return;
+                    }
                     comp = Convert.ToString(Session["compara"]);
                     if (Convert.ToInt32(producto.Cantidad) < Convert.ToInt32(comp))
                     {
@@ -258,5 +272,10 @@ public partial class View_Tienda_CRUDProducto : System.Web.UI.Page
         {
             return false;
         }
+    }
+
+    protected void TB_EditarPrecio_TextChanged(object sender, EventArgs e)
+    {
+
     }
 }

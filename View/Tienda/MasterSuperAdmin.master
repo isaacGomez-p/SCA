@@ -28,9 +28,6 @@
             text-align: center;
             width: 260px;
         }
-        .auto-style6 {
-            width: 260px;
-        }
         .auto-style7 {
             text-align: center;
             width: 629px;
@@ -53,6 +50,16 @@
             width: 260px;
             height: 24px;
         }
+        .auto-style12 {
+            text-align: center;
+            width: 260px;
+            height: 5px;
+        }
+        .auto-style13 {
+            text-align: center;
+            width: 260px;
+            height: 25px;
+        }
     </style>
 </head>
 <body>
@@ -68,16 +75,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="auto-style5">
+                            <td class="auto-style12">
                                 <asp:Label ID="Label_Usuario" runat="server" Font-Size="Medium" CssClass="auto-style9"></asp:Label>
                                 <br />
-                                <asp:Label ID="L_Sede" runat="server" CssClass="auto-style9" Text="Sede"></asp:Label>
                                 <br />
-                                <asp:Label ID="L_Rol" runat="server" CssClass="auto-style9" Text="Rol"></asp:Label>
                             </td>
                         </tr>
                         <tr>
-                            <td class="auto-style6">&nbsp;</td>
+                            <td class="auto-style5">
+                                <asp:Label ID="L_Sede" runat="server" CssClass="auto-style9"></asp:Label>
+                                </td>
                         </tr>
                         <tr>
                             <td class="auto-style5">
@@ -96,17 +103,19 @@
                         </tr>
                         <tr>
                             <td class="auto-style11">
-                                <asp:LinkButton ID="LinkButton5" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" CssClass="auto-style10">Reporte Producto</asp:LinkButton>
+                                <asp:LinkButton ID="LinkButton5" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" CssClass="auto-style10" OnClick="LinkButton5_Click">Conflictos</asp:LinkButton>
+                                <asp:Label ID="L_c1" runat="server" BackColor="Red" ForeColor="Black"></asp:Label>
                             </td>
                         </tr>
                         <tr>
-                            <td class="auto-style5">
+                            <td class="auto-style13">
                                 <asp:LinkButton ID="LinkButton6" runat="server" Font-Names="Engravers MT" Font-Size="Large" ForeColor="Black" OnClick="LinkButton6_Click" CssClass="auto-style10">Asignar </asp:LinkButton>
                                 <asp:Label ID="L_c" runat="server" BackColor="Red" ForeColor="Black"></asp:Label>
                             </td>
                         </tr>
                         <tr>
-                            <td class="auto-style6">&nbsp;</td>
+                            <td class="auto-style5">
+                                &nbsp;</td>
                         </tr>
                         <tr>
                             <td class="auto-style5">

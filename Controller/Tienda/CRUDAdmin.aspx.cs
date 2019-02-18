@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
 
 public partial class View_Tienda_CRUDAdmin : System.Web.UI.Page
 {
@@ -13,23 +14,21 @@ public partial class View_Tienda_CRUDAdmin : System.Web.UI.Page
     Usuario usuario = new Usuario();
     DataTable usu = new DataTable();
     DataTable sedess = new DataTable();
+    DataTable admins = new DataTable();
 
     protected void Page_Load(object sender, EventArgs e)
-    {
-        L_Vendedor.Text = Session["nombre"].ToString();
-        L_Sede.Text = Session["sede"].ToString();
-        L_Rol.Text = Session["rol_id"].ToString();
-
-        usu = dao.traerUsuarios();
+    {        
+        usu = dao.traerUsuariosAdmin();
         GV_Productos.DataSource = usu;
         GV_Productos.DataBind();
         sedess = dao.traerSedes();
+        admins = dao.traerUsuariosAdmin();
 
         if (!IsPostBack)
         {
             for (int i = 0; i < sedess.Rows.Count; i++)
             {
-                D_Sedes.Items.Add(sedess.Rows[i]["nombresede"].ToString());
+                D_Sedes.Items.Add(sedess.Rows[i]["nombresede"].ToString() + "-" + sedess.Rows[i]["ciudad"].ToString());
             }
         }
 
@@ -37,19 +36,10 @@ public partial class View_Tienda_CRUDAdmin : System.Web.UI.Page
         {
             for (int i = 0; i < sedess.Rows.Count; i++)
             {
-                D_Sedes0.Items.Add(sedess.Rows[i]["nombresede"].ToString());
+                D_Sedes0.Items.Add(sedess.Rows[i]["nombresede"].ToString()+"-"+sedess.Rows[i]["ciudad"].ToString());
             }
-        }
-
-        if (!IsPostBack)
-        {
-            for (int i = 0; i < usu.Rows.Count; i++)
-            {
-                DropDownList1.Items.Add(usu.Rows[i]["cedula"].ToString());
-            }
-        }
-        TB_Rol.Text = "2";
-        TB_Rol0.Text = "2";
+        }       
+        
     }
 
     protected void B_Agregar_Click(object sender, EventArgs e)
@@ -64,32 +54,65 @@ public partial class View_Tienda_CRUDAdmin : System.Web.UI.Page
                 {
                     if (validarNumeros(TB_Cedula.Text) == true)
                     {
-                        usuario.Cedula = int.Parse(TB_Cedula.Text);
-                        usuario.Nombre = TB_Nombre.Text;//
-                        usuario.Clave = TB_Clave.Text;
-                        usuario.Direccion = TB_Direccion.Text;
-                        usuario.Telefono = int.Parse(TB_Telefono.Text);//
-                        usuario.Sexo = D_Sexo.SelectedValue;
-                        usuario.Sede = D_Sedes.SelectedValue;
-                        usuario.Correo = TB_Correo.Text;
-                        usuario.Estado = 1;
-                        usuario.Session = "hola";
-                        usuario.RolId = int.Parse(TB_Rol.Text);
-                        usuario.LastModified = DateTime.Now;
+                        if (validarCedula() == true)
+                        {
+                            if (validarAdmin() == true)
+                            {
+                                usuario.Cedula = Convert.ToInt64(TB_Cedula.Text);
+                                if(usuario.Cedula <= 0)
+                                {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                                    RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese los datos de la cédula correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+                                    return;
+                                }
+                                usuario.Nombre = TB_Nombre.Text;//
+                                usuario.Clave = TB_Clave.Text;
+                                usuario.Direccion = TB_Direccion.Text;
+                                usuario.Telefono = Convert.ToInt64(TB_Telefono.Text);//
+                                if (usuario.Telefono <= 0)
+                                {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                                    RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ingrese los datos del teléfono correctamente.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+                                    return;
+                                }
+                                usuario.Sexo = D_Sexo.SelectedValue;
+                                usuario.Sede = D_Sedes.SelectedValue;
+                                usuario.Correo = TB_Correo.Text;
+                                usuario.Estado = 1;
+                                usuario.Session = "hola";
+                                usuario.RolId = 2;
+                                usuario.LastModified = DateTime.Now;
 
-                        dao.CrearUsuario(usuario);
+                                dao.CrearUsuario(usuario);
 
-                        TB_Cedula.Text = "";
-                        TB_Nombre.Text = "";
-                        TB_Clave.Text = "";
-                        TB_Direccion.Text = "";
-                        TB_Telefono.Text = "";
-                        TB_Correo.Text = "";
+                                this.limpiar();
 
-                        usu = dao.traerUsuarios();
-                        GV_Productos.DataSource = usu;
-                        GV_Productos.DataBind();
-                        DropDownList1.Items.Add(TB_Cedula.Text);
+                                this.llenarGV_Usuarios();
+                                
+                            }
+                            else
+                            {
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                                RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ya existe un usuario para esta sede.');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+                            }
+                        }
+                        else
+                        {
+                            dao.agregarUsuarioNuevamente(TB_Cedula.Text);
+                            usu = dao.traerUsuariosAdmin();
+                            GV_Productos.DataSource = usu;
+                            GV_Productos.DataBind();
+                            
+
+                            
+
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Este usuario ya existe');</script>");
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
+                        }
                     }
                     else
                     {
@@ -120,23 +143,22 @@ public partial class View_Tienda_CRUDAdmin : System.Web.UI.Page
         }
     }
 
-    protected void B_Seleccionar_Click(object sender, EventArgs e)
+    void traerEditar(int a)
     {
-        for(int i =0; i< usu.Rows.Count; i++)
+        for (int i = 0; i < usu.Rows.Count; i++)
         {
-            if (DropDownList1.SelectedItem.ToString() == usu.Rows[i]["cedula"].ToString())
+            if (a == Convert.ToInt32(usu.Rows[i]["cedula"]))
             {
                 TB_Cedula0.Text = usu.Rows[i]["cedula"].ToString();
                 TB_Nombre0.Text = usu.Rows[i]["nombre"].ToString();
                 TB_Clave0.Text = usu.Rows[i]["clave"].ToString();
                 TB_Direccion0.Text = usu.Rows[i]["direccion"].ToString();
                 TB_Telefono0.Text = usu.Rows[i]["telefono"].ToString();
-                
+
                 TB_Correo0.Text = usu.Rows[i]["correo"].ToString();
-                TB_Rol0.Text = usu.Rows[i]["rol_id"].ToString();
+                
             }
         }
-        
     }
 
     protected void B_Actualizar_Click(object sender, EventArgs e)
@@ -155,28 +177,20 @@ public partial class View_Tienda_CRUDAdmin : System.Web.UI.Page
                     usuario2.Nombre = TB_Nombre0.Text;
                     usuario2.Clave = TB_Clave0.Text;
                     usuario2.Direccion = TB_Direccion0.Text;
-                    usuario2.Telefono = int.Parse(TB_Telefono0.Text);
+                    usuario2.Telefono = Convert.ToInt64(TB_Telefono0.Text);
                     usuario2.Sexo = D_Sexo0.SelectedValue;
                     usuario2.Sede = D_Sedes0.SelectedValue;
                     usuario2.Correo = TB_Correo0.Text;
                     usuario2.Estado = 1;
-                    usuario2.Session = "hola";
-                    usuario2.RolId = int.Parse(TB_Rol0.Text);
+                    usuario2.Session = "";
+                    usuario2.RolId = 2;
                     usuario2.LastModified = DateTime.Now;
 
                     dao.actualizarUsuario(usuario2);
 
-                    TB_Cedula0.Text = "";
-                    TB_Nombre0.Text = "";
-                    TB_Clave0.Text = "";
-                    TB_Direccion0.Text = "";
-                    TB_Telefono0.Text = "";
-                    TB_Correo0.Text = "";
-
-                    usu = dao.traerUsuarios();
-                    GV_Productos.DataSource = usu;
-                    GV_Productos.DataBind();
-                    DropDownList1.Items.Add(TB_Cedula.Text);
+                    this.limpiarEditar();
+                     
+                    this.llenarGV_Usuarios();
                 }
                 else
                 {
@@ -200,17 +214,38 @@ public partial class View_Tienda_CRUDAdmin : System.Web.UI.Page
         }
     }
 
-    protected void B_Eliminar_Click(object sender, EventArgs e)
+    void estadoEditar(bool x)
     {
-        Usuario usuario3 = new Usuario();
-        usuario3.Cedula = int.Parse(DropDownList1.SelectedItem.ToString());
-        dao.eliminarUsuario(usuario3);
+        TB_Cedula0.Enabled = x;
+        TB_Nombre0.Enabled = x;
+        TB_Clave0.Enabled = x;
+        TB_Direccion0.Enabled = x;
+        TB_Telefono0.Enabled = x;
+        TB_Correo0.Enabled = x;
+        D_Sexo0.Enabled = x;
+        D_Sedes0.Enabled = x;
+        B_Actualizar.Enabled = x;
+        B_Cancelar.Enabled = x;
+    }
+     
+    void limpiarEditar()
+    {
+        TB_Cedula0.Text = "";
+        TB_Nombre0.Text = "";
+        TB_Clave0.Text = "";
+        TB_Direccion0.Text = "";
+        TB_Telefono0.Text = "";
+        TB_Correo0.Text = "";
+    }
 
-        usu = dao.traerUsuarios();
-        GV_Productos.DataSource = usu;
-        GV_Productos.DataBind();
-        DropDownList1.Items.Remove(DropDownList1.SelectedItem.ToString());
-
+    void limpiar()
+    {
+        TB_Cedula.Text = "";
+        TB_Nombre.Text = "";
+        TB_Clave.Text = "";
+        TB_Direccion.Text = "";
+        TB_Telefono.Text = "";
+        TB_Correo.Text = "";
     }
 
     bool validarLlenoAgregar()
@@ -248,5 +283,86 @@ public partial class View_Tienda_CRUDAdmin : System.Web.UI.Page
         {
             return false;
         }
+    }
+
+    public bool validarCedula()
+    {
+        DataTable cedula = new DataTable();
+
+        cedula = dao.traerUsuariosAdmin();
+        for (int i = 0; i < cedula.Rows.Count; i++)
+        {
+            if (cedula.Rows[i]["cedula"].ToString() == TB_Cedula.Text)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool validarAdmin()
+    {
+        DataTable sede = new DataTable();
+
+        sede = dao.traerUsuariosAdmin();
+
+        for (int i = 0; i < sede.Rows.Count; i++)
+        {
+            if (sede.Rows[i]["sede"].ToString() == D_Sedes.SelectedValue && sede.Rows[i]["rol_id"].ToString() == "2")
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected void D_Sedes_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void GV_Productos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        GV_Productos.PageIndex = e.NewPageIndex;
+        this.llenarGV_Usuarios();
+    }
+
+    protected void GV_Productos_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName.Equals("Editar"))
+        {
+            this.traerEditar(Convert.ToInt32(e.CommandArgument));
+            this.estadoEditar(true);
+        }
+        if (e.CommandName.Equals("Eliminar"))
+        {
+            this.eliminarUsuario(Convert.ToString(e.CommandArgument));           
+            
+        }
+    }
+
+    void eliminarUsuario(string a)
+    {
+        dao.eliminarUsuario(a);
+        this.llenarGV_Usuarios();
+    }
+
+    void llenarGV_Usuarios()
+    {
+        usu = dao.traerUsuariosAdmin();
+        GV_Productos.DataSource = usu;
+        GV_Productos.DataBind();
+        
+    }
+
+    protected void B_Cancelar_Click(object sender, EventArgs e)
+    {
+        this.limpiarEditar();
+        this.estadoEditar(false);
+    }
+
+    protected void B_Cancelar1_Click(object sender, EventArgs e)
+    {
+        this.limpiarEditar();
     }
 }

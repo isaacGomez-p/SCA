@@ -6,6 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Datos;
+using Logica;
+using Utilitarios;
 
 public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
 {
@@ -15,6 +18,7 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
     Producto producto = new Producto();
     DataTable cli2 = new DataTable();
     DataTable cli3 = new DataTable();
+    bool pbNV;
 
 
 
@@ -38,51 +42,50 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
-
         if (!IsPostBack)
         {
             llenarGridView();
+            Session["lis"] = null;
         }
 
-    }
 
-    void llenarGridView()
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////arreglado
+    public void llenarGridView()
     {
-        DAOUsuario dao = new DAOUsuario();
-        DataTable gri = new DataTable();
-        gri = dao.verInventario(Convert.ToString(Session["sede"]));
-
-        GV_VentaPedido.DataSource = gri;
+        LlenarGridViews llenara = new LlenarGridViews();
+        
+        GV_VentaPedido.DataSource = llenara.llenarGridView(Session["sede"].ToString(), pbNV); 
         GV_VentaPedido.DataBind();
-
     }
+    
 
     protected void GV_Productos_SelectedIndexChanged(object sender, GridViewPageEventArgs e)
     {
 
     }
+    
 
     protected void B_BuscarCliente_Click(object sender, EventArgs e)
     {
         DAOUsuario dao = new DAOUsuario();
         DataTable cliente = new DataTable();
-        cliente = dao.buscarCliente(Convert.ToInt32(TB_BuscarCliente.Text));
-        if (cliente.Rows.Count > 0)
-        {
-            L_InfoCliente.Text = "Se ha encontrado el cliente";
-            foreach (DataRow row in cliente.Rows)
-            {
-                TB_Nombre.Text = Convert.ToString(row["nombre"]);
-                TB_Apellido.Text = Convert.ToString(row["apellido"]);
-            }
-            Session["idCliente"] = TB_BuscarCliente.Text;
-        }
-        else
-        {
-            L_InfoCliente.Text = "El cliente no se encuentra en la base de datos";
-        }
+        BuscarCliente clnte = new BuscarCliente();
+        Cliente datosCliente = new Cliente();
+        
+#pragma warning disable CS0618 // Type or member is obsolete
+        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('"+ clnte.buscarVacio(TB_BuscarCliente.Text) + "');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
 
+        cliente = dao.buscarCliente(int.Parse(TB_BuscarCliente.Text));
+        datosCliente = clnte.BuscarDatosCliente(TB_BuscarCliente.Text, cliente.Rows.Count);
+
+            
+        TB_Nombre.Text = datosCliente.Nombre;
+        TB_Apellido.Text = datosCliente.Apellido;
+        B_Seleccionar.Enabled = true;
+            
+        Session["idCliente"] = TB_BuscarCliente.Text;
     }
 
 
@@ -96,104 +99,37 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
 
     protected void B_Seleccionar_Click(object sender, EventArgs e)
     {
-        Session["l"] = null;
-        DAOUsuario dAO = new DAOUsuario();
-        int cont = 0;
+        //Session["l"] = null;
+        AgregarProductos agregar = new AgregarProductos();
         foreach (GridViewRow row in GV_VentaPedido.Rows)
-        {
-            Producto producto = new Producto();
-            if (((TextBox)row.Cells[2].FindControl("TB_Cantidad")).Text == "")
-            {
-                producto.Cantidad = 0;
-            }
-            else
-            {
-                producto.Cantidad = Convert.ToInt64(((TextBox)row.Cells[2].FindControl("TB_Cantidad")).Text);
-            }
-            producto.ReferenciaProducto = Convert.ToString(((Label)row.Cells[0].FindControl("L_Referencia")).Text);
-            producto.Talla = Convert.ToDouble(((Label)row.Cells[1].FindControl("L_Talla")).Text);
-
-
-            if (producto.Cantidad > 0)
-            {
-                bool vof;
-                cont++;
-                vof = dAO.validarCantidad(producto, Convert.ToString(Session["sede"]));
-                if (vof == false)
-                {
+        {            
+            llenarVenta(agregar.AnalizarGridView(Convert.ToString(((TextBox)row.Cells[2].FindControl("TB_Cantidad")).Text), Convert.ToDouble(((Label)row.Cells[1].FindControl("L_Talla")).Text), Convert.ToString(((Label)row.Cells[0].FindControl("L_Referencia")).Text), Session["sede"].ToString(), (List<Producto>) Session["lis"]));
+            string msg = agregar.get_mensaje();
 #pragma warning disable CS0618 // Type or member is obsolete
-                    RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('La cantidad de productos para la referencia " + producto.ReferenciaProducto + " con talla " + producto.Talla + " es inferior a la de la venta. Escriba otra cantidad');</script>");
-                    return;
-#pragma warning restore CS0618 // Type or member is obsolete
-                }
-                else
-                {
-                    producto.Precio = dAO.traePrecio(producto.ReferenciaProducto, producto.Talla);
-                    producto.ValorTotal = producto.Precio * producto.Cantidad;
-                    producto.Idproducto = cont;
-                    if (Session["l"] == null)
-                    {
-                        listaVenta = new List<Producto>();
-                        listaVenta.Add(producto);
-                        Session["l"] = listaVenta;
-                    }
-                    else
-                    {
-                        listaVenta = (Session["l"] as List<Producto>);
-                        if (listaVenta.Contains(producto))
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Ya ha agregado este poducto a la venta. Elimine el producto de la venta para añadir mas cantidad.');</script>");
-                            return;
-#pragma warning restore CS0618 // Type or member is obsolete
-                        }
-                        else
-                        {
-
-                            listaVenta.Add(producto);
-                            Session["l"] = listaVenta;
-                        }
-                    }
-                }
-            }
-        }
-        if (cont == 0)
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay productos para añadir a la venta.');</script>");
-            return;
+            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('" + msg + "');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
         }
-        else
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Se han añadido " + cont + " productos a la venta.');</script>");
-#pragma warning restore CS0618 // Type or member is obsolete
-
-
-        }
-        llenarVenta();
         actualizarGV_Venta();
-
     }
 
-    void llenarVenta()
+    void llenarVenta(List<Producto> listaVV)
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Entra a llenar venta.');</script>");
-#pragma warning restore CS0618 // Type or member is obsolete
-        //Session["l"] = null;
-        if (Session["l"] == null)
+        Session["lis"] = listaVV;
+//#pragma warning disable CS0618 // Type or member is obsolete
+  //      RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Entra a llenar venta.');</script>");
+//#pragma warning restore CS0618 // Type or member is obsolete
+        //Session["l"   ] = null;
+        /*if (Session["l"] == null)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('No hay productos para añadir a la venta.');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
         }
         else
-        {
+        {*/
             double precioTotal = 0;
             List<Producto> listaV = new List<Producto>();
-            listaV = (Session["l"] as List<Producto>);
+            listaV = (Session["lis"] as List<Producto>);
             foreach (Producto p in listaV)
             {
                 precioTotal = precioTotal + p.ValorTotal;
@@ -201,107 +137,90 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
             Response.Write("El valor de esta venta es de:" + precioTotal);
             Session["valorVenta"] = Convert.ToString(precioTotal);
 
-        }
+        //}
 
 
     }
+
+
 
     void actualizarGV_Venta()
     {
         List<Producto> listaV = new List<Producto>();
-        listaV = (Session["l"] as List<Producto>);
+        listaV = (Session["lis"] as List<Producto>);
         GV_Venta.DataSource = listaV;
         GV_Venta.DataBind();
-        if (Session["valorVenta"] != null)
-        {
-            //TextBox total = new TextBox();
-            /*total =*/
-            ((TextBox)GV_Venta.FooterRow.FindControl("TB_TotalVenta")).Text = Session["valorVenta"].ToString();
-            //total.Text = Session["valorVenta"].ToString();
-        }
+        AgregarProductos p = new AgregarProductos();
+        ((TextBox)GV_Venta.FooterRow.FindControl("TB_TotalVenta")).Text = p.valorVenta(Session["valorVenta"].ToString());          
     }
 
     void irAFactura()
     {
+        Session["lis"] = null;
         Response.Redirect("../Tienda/VistaFactura.aspx");
+    }
+     void irAFactura2()
+    {
+        Session["lis"] = null;
+        Response.Redirect("../Tienda/VistaAbono.aspx");
     }
 
     protected void B_Facturar_Click(object sender, EventArgs e)
     {
-        if (Session["idCliente"] == null)
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Elija un cliente para la venta.');</script>");
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-        else
-        {
-            if (Session["l"] != null && Session["valorVenta"] != null)
-            {
-                DAOUsuario dAO = new DAOUsuario();
+                
                 Venta venta = new Venta();
                 DateTime fechaHoy = DateTime.Now;
                 venta.Idcliente = Convert.ToInt32(Session["idCliente"]);
                 venta.Idvendedor = Convert.ToInt32(Session["user_id"]);
-                venta.Producto = (Session["l"] as List<Producto>);
+                venta.Producto = (Session["list"] as List<Producto>);
                 venta.Fecha = fechaHoy.ToString("d");
                 venta.Precio = Convert.ToDouble(Session["valorVenta"]);
                 venta.Sede = Convert.ToString(Session["sede"]);
-                dAO.crearVenta(venta, JsonConvert.SerializeObject(venta.Producto));
+                AgregarProductos fact = new AgregarProductos();
+                fact.actualizarVenta(venta);
                 actualizarInventario();
                 reiniciar();
-                this.irAFactura();
-
-            }
-        }
+                this.irAFactura();                  
     }
+    
+
 
     void actualizarInventario()
     {
         List<Producto> refresh = new List<Producto>();
-        DAOUsuario dAO = new DAOUsuario();
-
-        refresh = (Session["l"] as List<Producto>);
+        AgregarProductos actInvt = new AgregarProductos();
+        refresh = (Session["lis"] as List<Producto>);
         foreach(Producto p in refresh)
         {
-            dAO.actualizarInventario(p, Convert.ToString(Session["sede"]));
+            actInvt.actualizarInvent(Session["sede"].ToString(), p);
         }
 
     }
-
-    public bool validarNumeros(string num)
-    {
-        try
-        {
-            double x = Convert.ToDouble(num);
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
-
+   
     protected void GV_Productos_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         GV_VentaPedido.PageIndex = e.NewPageIndex;
         this.llenarGridView();
     }
+    /////////////////////////////////////////////////////////////////////////////////////////arreglado
 
     protected void GV_Venta_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName.Equals("Delete"))
         {
+#pragma warning disable CS0618 // Type or member is obsolete
+            RegisterStartupScript("mensaje", "<script type='text/javascript"+e.CommandName+">alert('No se que pasa.');</script>");
+#pragma warning restore CS0618 // Type or member is obsolete
             List<Producto> pventa = new List<Producto>();
-            pventa = (Session["l"] as List<Producto>);
-            if (pventa.Count.Equals(0) != false)
+            pventa = (Session["lis"] as List<Producto>);
+            if (pventa.Count.Equals(0) != true)
             {
                 foreach(Producto p in pventa)
                 {
                     if(p.Idproducto == Convert.ToInt32(e.CommandArgument))
                     {
                         pventa.RemoveAt(Convert.ToInt32(e.CommandArgument) - 1);
-                        Session["l"] = pventa;
+                        Session["lis"] = pventa;
                         actualizarGV_Venta();
                     }
                     else
@@ -327,41 +246,50 @@ public partial class View_Tienda_NuevaVenta : System.Web.UI.Page
 
     void reiniciar()
     {
-        Session["l"] = null;
+        Session["lis"] = null;
         llenarGridView();
         actualizarGV_Venta();
         TB_Nombre.Text = "";
         TB_Apellido.Text = "";
         L_InfoCliente.Text = "";
-
+        TB_BuscarCliente.Text = "";
     }
 
     protected void B_Abono_Click(object sender, EventArgs e)
     {
-        
-        if (Session["idCliente"] == null)
-        {
+        AgregarProductos abono = new AgregarProductos();
+        Abono venta = new Abono();
+        DateTime fechaHoy = DateTime.Now;
+        venta.Idcliente = Convert.ToInt32(Session["idCliente"]);
+        venta.Idvendedor = Convert.ToInt32(Session["user_id"]);
+        venta.Producto = (Session["lis"] as List<Producto>);
+        venta.Fecha = fechaHoy.ToString("d");
+        venta.Precio = Convert.ToDouble(Session["valorVenta"]);
+        venta.Sede = Convert.ToString(Session["sede"]);
+        string msj2 = abono.crearAbono(Convert.ToInt32(Session["idCliente"]), venta);
 #pragma warning disable CS0618 // Type or member is obsolete
-            RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('Elija un cliente para la venta.');</script>");
+        RegisterStartupScript("mensaje", "<script type='text/javascript'>alert('" + msj2 + "');</script>");
 #pragma warning restore CS0618 // Type or member is obsolete
-        }
-        else
-        {
-            if (Session["l"] != null && Session["valorVenta"] != null)
-            {
-                DAOUsuario dAO = new DAOUsuario();
-                Abono venta = new Abono();
-                DateTime fechaHoy = DateTime.Now;
-                venta.Idcliente = Convert.ToInt32(Session["idCliente"]);
-                venta.Producto = (Session["l"] as List<Producto>);
-                venta.Fecha = fechaHoy.ToString("d");
-                venta.Precio = Convert.ToDouble(Session["valorVenta"]);
-                venta.Sede = Convert.ToString(Session["sede"]);
-                dAO.crearAbono(venta, JsonConvert.SerializeObject(venta.Producto));
-                actualizarInventario();
-                reiniciar();
-
-            }
-        }
+        actualizarInventario();
+        reiniciar();
+        this.irAFactura2();
     }
+
+    protected void B_BuscarProducto_Click(object sender, EventArgs e)
+    {
+        AgregarProductos boton = new AgregarProductos();        
+        GV_VentaPedido.DataSource = boton.actualizar(((TextBox)GV_VentaPedido.HeaderRow.FindControl("TB_BuscarReferencia")).Text, ((TextBox)GV_VentaPedido.HeaderRow.FindControl("TB_BuscarTalla")).Text, Convert.ToString(Session["sede"]), pbNV); ;
+        GV_VentaPedido.DataBind();        
+    }
+
+    protected void GV_VentaPedido_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void B_Cancelar_Click(object sender, EventArgs e)
+    {
+        this.reiniciar();
+    }
+
 }

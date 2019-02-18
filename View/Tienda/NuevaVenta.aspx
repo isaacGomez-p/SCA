@@ -79,7 +79,7 @@
                 <asp:Label ID="Label6" runat="server" Text="Buscar Cliente:"></asp:Label>
             </td>
             <td class="auto-style18">
-                <asp:TextBox ID="TB_BuscarCliente" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TB_BuscarCliente" runat="server" MaxLength="7"></asp:TextBox>
                 <br />
             </td>
             <td class="auto-style21">
@@ -107,20 +107,26 @@
                 <asp:Label ID="Label4" runat="server" Text="Productos:"></asp:Label>
             </td>
             <td class="auto-style19">
-                <asp:GridView ID="GV_VentaPedido" runat="server" AllowPaging="True" AutoGenerateColumns="False" PageSize="5" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" OnPageIndexChanging="GV_Productos_PageIndexChanging">
+                <asp:GridView ID="GV_VentaPedido" runat="server" AllowPaging="True" AutoGenerateColumns="False" PageSize="1" BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px" CellPadding="4" OnPageIndexChanging="GV_Productos_PageIndexChanging" OnSelectedIndexChanged="GV_VentaPedido_SelectedIndexChanged">
                     <Columns>
                         <asp:TemplateField HeaderText="Referencia">
                             <EditItemTemplate>
                                 <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("idproducto") %>'></asp:TextBox>
                             </EditItemTemplate>
+                            <HeaderTemplate>
+                                <asp:TextBox ID="TB_BuscarReferencia" runat="server" MaxLength="15"></asp:TextBox>
+                            </HeaderTemplate>
                             <ItemTemplate>
-                                <asp:Label ID="L_Referencia" runat="server" Text='<%# Bind("referencia") %>'></asp:Label>
+                                <asp:Label ID="L_Referencia" runat="server" Text='<%# Bind("referenciaProducto") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Talla">
                             <EditItemTemplate>
                                 <asp:TextBox ID="TextBox6" runat="server" Text='<%# Bind("talla") %>'></asp:TextBox>
                             </EditItemTemplate>
+                            <HeaderTemplate>
+                                <asp:TextBox ID="TB_BuscarTalla" runat="server" MaxLength="4"></asp:TextBox>
+                            </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label ID="L_Talla" runat="server" Text='<%# Bind("talla") %>'></asp:Label>
                             </ItemTemplate>
@@ -129,8 +135,11 @@
                             <EditItemTemplate>
                                 <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                             </EditItemTemplate>
+                            <HeaderTemplate>
+                                <asp:Button ID="B_BuscarProducto" runat="server" OnClick="B_BuscarProducto_Click" Text="Buscar Producto" />
+                            </HeaderTemplate>
                             <ItemTemplate>
-                                <asp:TextBox ID="TB_Cantidad" runat="server" TextMode="Number">0</asp:TextBox>
+                                <asp:TextBox ID="TB_Cantidad" runat="server" MaxLength="3">0</asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -146,7 +155,7 @@
                 </asp:GridView>
             </td>
             <td class="auto-style23">
-                <asp:Button ID="B_Seleccionar" runat="server" OnClick="B_Seleccionar_Click" Text="Agregar a la venta" />
+                <asp:Button ID="B_Seleccionar" runat="server" OnClick="B_Seleccionar_Click" Text="Agregar a la venta" Enabled="False" />
             </td>
             <td>&nbsp;</td>
         </tr>
@@ -211,7 +220,7 @@
                                 <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("ValorTotal") %>'></asp:TextBox>
                             </EditItemTemplate>
                             <FooterTemplate>
-                                <asp:TextBox ID="TB_TotalVenta" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="TB_TotalVenta" runat="server" Enabled="False"></asp:TextBox>
                             </FooterTemplate>
                             <ItemTemplate>
                                 <asp:Label ID="Label2" runat="server" Text='<%# Bind("ValorTotal") %>'></asp:Label>
@@ -230,7 +239,8 @@
                 </asp:GridView>
             </td>
             <td class="auto-style38">
-                <asp:Button ID="B_Facturar" runat="server" Text="Facturar" OnClick="B_Facturar_Click" />
+                <asp:Button ID="B_Facturar" runat="server" Text="Facturar" OnClick="B_Facturar_Click" style="height: 26px" />
+                <asp:Button ID="B_Abono" runat="server" OnClick="B_Abono_Click" Text="Abono" />
             </td>
             <td class="auto-style36"></td>
         </tr>
@@ -239,7 +249,7 @@
             <td class="auto-style19">
                 &nbsp;</td>
             <td class="auto-style22">
-                <asp:Button ID="B_Cancelar" runat="server" Text="Cancelar" />
+                <asp:Button ID="B_Cancelar" runat="server" Text="Cancelar" OnClick="B_Cancelar_Click" />
             </td>
             <td>&nbsp;</td>
         </tr>

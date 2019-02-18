@@ -21,7 +21,7 @@ using System.Net.NetworkInformation;
             // TODO: Agregar aquí la lógica del constructor
             //
         }
-        public String mac()
+        public String traerMac()
         {
 
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
